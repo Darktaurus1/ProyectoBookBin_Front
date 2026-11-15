@@ -1,4 +1,4 @@
-export async pedirJSON(ruta, opciones = {}) {
+export async function pedirJSON(ruta, opciones = {}) {
     let res;
     try {
         res = await fetch(`/api${ruta}`,{
