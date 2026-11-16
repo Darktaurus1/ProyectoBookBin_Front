@@ -1,4 +1,6 @@
+import { useState } from 'react';
 import Link from 'next/link';
+import ModalReporte from './ModalReporte';
 import styles from './TargetaCreacion.module.css';
 
 export default function TargetaCreacion({ creacion, onGuardar }) {
@@ -7,13 +9,16 @@ export default function TargetaCreacion({ creacion, onGuardar }) {
         ? creacion.materiales.map((m) => `#${m.nombre || m}`).join(' ')
         : creacion.materiales || '#Material';
 
-    return (    
+    const [menuAbierto, setMenuAbierto] = useState(false);
+    const [reportando, setReportando] = useState(false);
+
+    return (
         <article className={styles.fila}>
             <div className={styles.imagenCaja}>
-                {creacion.imagen ? (                   
-                    <img 
-                        src={creacion.imagen.startsWith('http') ? creacion.imagen : `http://localhost:4000${creacion.imagen}`} 
-                        alt={creacion.nombre} 
+                {creacion.imagen ? (
+                    <img
+                        src={creacion.imagen.startsWith('http') ? creacion.imagen : `http://localhost:4000${creacion.imagen}`}
+                        alt={creacion.nombre}
                     />
                 ) : (
                     <svg width="48" height="48" viewBox="0 0 24 24" fill="#6B8797">
@@ -34,6 +39,31 @@ export default function TargetaCreacion({ creacion, onGuardar }) {
                     </svg>
                 </button>
 
+                {/* Tres puntitos: abre y cierra el menú de opciones */}
+                <button
+                    type="button"
+                    className={styles.botonMenu}
+                    title="Más opciones"
+                    aria-label="Más opciones"
+                    onClick={() => setMenuAbierto(!menuAbierto)}
+                >
+                    ⋮
+                </button>
+
+                {menuAbierto && (
+                    <div className={styles.menuOpciones}>
+                        <button
+                            type="button"
+                            onClick={() => {
+                                setMenuAbierto(false);
+                                setReportando(true);
+                            }}
+                        >
+                            Reportar
+                        </button>
+                    </div>
+                )}
+
                 <div className={styles.encabezado}>
                     <Link href={`/creaciones/${id}`} className={styles.titulo}>
                         {creacion.nombre}
@@ -50,6 +80,11 @@ export default function TargetaCreacion({ creacion, onGuardar }) {
                     <Link href={`/creaciones/${id}`} className={styles.verMas}>Más...</Link>
                 </div>
             </div>
+
+            {/* Formulario de reporte: solo se muestra al elegir "Reportar" */}
+            {reportando && (
+                <ModalReporte idCreacion={id} onCerrar={() => setReportando(false)} />
+            )}
         </article>
     );
 }
