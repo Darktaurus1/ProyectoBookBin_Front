@@ -39,10 +39,11 @@
     display: flex;
     justify-content: space-between;
     align-items: flex-start;
-    padding-right: 64px;
+    padding-right: 32px;
 }
 
 .titulo {
+    margin: 0;  
     margin: 0;  
     font-size: 18px;
     color: #183648;
@@ -72,6 +73,7 @@
     font-size: 13px;
     color: #3B6075;
     margin: 4px 0;
+    padding-right: 30px;
 }
 
 .filaDescripcion {
@@ -98,21 +100,23 @@
 }
 .botonMenu {
     position: absolute;
-    top: 8px;
-    right: 44px;
+    top: 46px;
+    right: 14px;
+    width: 28px;
     background: none;
     border: none;
     cursor: pointer;
     color: #183648;
     font-size: 22px;
     line-height: 1;
-    padding: 4px 8px;
+    padding: 4px 0;
+    text-align: center;
 }
 
 .menuOpciones {
     position: absolute;
-    top: 40px;
-    right: 44px;
+    top: 44px;
+    right: 46px;
     background: white;
     border-radius: 8px;
     box-shadow: 0 3px 8px rgba(0, 0, 0, 0.25);
