@@ -1,9 +1,8 @@
 import { useEffect, useState } from 'react';
 import Link from 'next/link';
 import { pedirJSON } from '../lib/api';
-import TarjetaCreacion from '../components/TarjetaCreacion'; // Verifica si tu archivo se llama TarjetaCreacion.js o TarjetaCreacion.js
+import TarjetaCreacion from '../components/TarjetaCreacion';
 import styles from './index.module.css';
-
 function mezclar(lista) {
     const copia = [...lista];
     for (let i = copia.length - 1; i > 0; i--) {
@@ -18,12 +17,11 @@ export default function Home() {
     const [usuario, setUsuario] = useState(null);
     const [idsFavoritos, setIdsFavoritos] = useState([]);
     const [pestana, setPestana] = useState('recomendados'); // 'recomendados' | 'mis-creaciones'
-    const [mostrarMateriales, setMostrarMateriales] = useState(false);
-    const [materialFiltro, setMaterialFiltro] = useState('');
-    const [error, setError] = useState('');
     const [materiales, setMateriales] = useState([]);
     const [materialSeleccionado, setMaterialSeleccionado] = useState('');
+    const [error, setError] = useState('');
 
+    // Carga el usuario y sus favoritos una sola vez
     useEffect(() => {
         const u = localStorage.getItem('usuario');
         if (u) {
@@ -35,12 +33,9 @@ export default function Home() {
                 .then((favs) => setIdsFavoritos(favs.map((f) => f.id_creacion ?? f.id)))
                 .catch(() => {});
         }
-
-        pedirJSON('/creaciones')
-            .then(setCreaciones)
-            .catch((err) => setError(err.message));
     }, []);
 
+    // Carga el catálogo de materiales una sola vez
     useEffect(() => {
         pedirJSON('/materiales')
             .then((datos) => setMateriales(Array.isArray(datos) ? datos : []))
@@ -62,28 +57,12 @@ export default function Home() {
         return () => { vigente = false; };
     }, [materialSeleccionado]);
 
-    // Extraer materiales únicos disponibles
-    const materialesDisponibles = Array.from(
-        new Set(
-            creaciones.flatMap((c) =>
-                Array.isArray(c.materiales)
-                    ? c.materiales.map((m) => m.nombre || m)
-                    : []
-            )
-        )
-    );
-
+    // El filtro por material ya lo aplica el backend; aquí solo se filtra por pestaña
     const creacionesFiltradas = creaciones.filter((c) => {
         if (pestana === 'mis-creaciones') {
             const idUsuarioActual = usuario?.id_usuario ?? usuario?.id;
             const idAutor = c.id_usuario ?? c.usuario_id;
             if (!idUsuarioActual || idAutor !== idUsuarioActual) return false;
-        }
-        if (materialFiltro) {
-            const lista = Array.isArray(c.materiales)
-                ? c.materiales.map((m) => m.nombre || m)
-                : [];
-            if (!lista.includes(materialFiltro)) return false;
         }
         return true;
     });
@@ -134,54 +113,24 @@ export default function Home() {
                 </button>
             </div>
 
-            <div className='filtroMateriales'>
-                <label htmlFor='filtro-material'>Filtrar por material: </label>
+            {/* Select de materiales */}
+            <div className={styles.barraMateriales}>
+                <label htmlFor="filtro-material" className={styles.etiquetaMateriales}>
+                    Filtrar por material:
+                </label>
                 <select
-                    id='filtro-material'
+                    id="filtro-material"
+                    className={styles.selectMateriales}
                     value={materialSeleccionado}
                     onChange={(e) => setMaterialSeleccionado(e.target.value)}
                 >
-                    <option value=''>Todos los materiales</option>
+                    <option value="">Todos los materiales</option>
                     {materiales.map((m) => (
                         <option key={m.id_materiales} value={m.id_materiales}>
                             {m.nombre}
                         </option>
                     ))}
                 </select>
-            </div>
-
-            {/* Desplegable de Materiales */}
-            <div className={styles.barraMateriales}>
-                <button
-                    type="button"
-                    className={styles.botonMateriales}
-                    onClick={() => setMostrarMateriales(!mostrarMateriales)}
-                >
-                    <span>Materiales {materialFiltro ? `(${materialFiltro})` : ''}</span>
-                    <span>{mostrarMateriales ? 'v' : '>'}</span>
-                </button>
-
-                {mostrarMateriales && (
-                    <div className={styles.listaChips}>
-                        <button
-                            type="button"
-                            className={`${styles.chip} ${materialFiltro === '' ? styles.chipActivo : ''}`}
-                            onClick={() => setMaterialFiltro('')}
-                        >
-                            Todos
-                        </button>
-                        {materialesDisponibles.map((mat) => (
-                            <button
-                                key={mat}
-                                type="button"
-                                className={`${styles.chip} ${materialFiltro === mat ? styles.chipActivo : ''}`}
-                                onClick={() => setMaterialFiltro(mat)}
-                            >
-                                #{mat}
-                            </button>
-                        ))}
-                    </div>
-                )}
             </div>
 
             {/* Contenedor de tarjetas */}
