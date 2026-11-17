@@ -1,8 +1,8 @@
 import { useEffect, useState } from 'react';
 import Link from 'next/link';
-import { pedirJSON } from '../lib/api';
-import TarjetaCreacion from '../components/TarjetaCreacion';
-import styles from './index.module.css';
+import { pedirJSON } from '../../lib/api';
+import TarjetaCreacion from '../../components/TarjetaCreacion';
+import styles from '../index.module.css';
 
 export default function Guardados() {
     // undefined = leyendo localStorage, null = sin sesión
