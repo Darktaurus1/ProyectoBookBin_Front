@@ -1,9 +1,9 @@
 import { useState } from 'react';
 import Link from 'next/link';
 import ModalReporte from './ModalReporte';
-import styles from './TargetaCreacion.module.css';
+import styles from './TarjetaCreacion.module.css';
 
-export default function TargetaCreacion({ creacion, onGuardar }) {
+export default function TarjetaCreacion({ creacion, onGuardar, guardado = false }) {
     const id = creacion.id_creacion ?? creacion.id;
     const materialesTexto = Array.isArray(creacion.materiales)
         ? creacion.materiales.map((m) => `#${m.nombre || m}`).join(' ')
@@ -31,10 +31,18 @@ export default function TargetaCreacion({ creacion, onGuardar }) {
                 <button
                     type="button"
                     className={styles.botonGuardar}
-                    title="Guardar creación"
+                    title={guardado ? 'Quitar de guardados' : 'Guardar creación'}
+                    aria-label={guardado ? 'Quitar de guardados' : 'Guardar creación'}
                     onClick={() => onGuardar && onGuardar(id)}
                 >
-                    <svg width="20" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2">
+                    <svg
+                        width="20"
+                        height="24"
+                        viewBox="0 0 24 24"
+                        fill={guardado ? 'currentColor' : 'none'}
+                        stroke="currentColor"
+                        strokeWidth="2"
+                    >
                         <path d="M19 21l-7-5-7 5V5a2 2 0 0 1 2-2h10a2 2 0 0 1 2 2z" />
                     </svg>
                 </button>
