@@ -7,7 +7,7 @@ export default function Menu() {
             <h2 className={styles.logo}>BookBin</h2>
 
             <Link href="/">Inicio</Link>
-            <Link href="/favoritos">Favoritos</Link>
+            <Link href="/creaciones/favoritos">Favoritos</Link>
             <Link href="/notificaciones">Notificaciones</Link>
 
             <div className={styles.searchBox}>
