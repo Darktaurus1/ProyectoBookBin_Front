@@ -46,6 +46,9 @@ export default function NuevaCreacion() {
             .then((datos) => {
                 if (Array.isArray(datos)) {
                     setCatalogoMateriales(datos);
+                    // Quita del borrador los materiales que ya no existen en el catálogo
+                    const idsValidos = datos.map((m) => m.id_materiales);
+                    setMaterialesSeleccionados((prev) => prev.filter((id) => idsValidos.includes(id)));
                 }
             })
             .catch(() => setError('No se pudieron cargar los materiales disponibles.'));

@@ -39,7 +39,7 @@ export default function Creacion() {
         if(guardados.some((a) => a.creacion_id === creacion.id && a.usuario_id === usuario.id)) return setErrorCarga('Ya has guardado esta Creacion');
 
         try {
-            await pedirJSON('/guardados', {
+            await pedirJSON('/favoritos', {
                 method: 'POST',
                 body: JSON.stringify({
                     id_usuarios: usuario.id,

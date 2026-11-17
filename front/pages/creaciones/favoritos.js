@@ -17,7 +17,7 @@ export default function Guardados() {
 
             if (u) {
                 const idUsuario = u.id_usuario ?? u.id;
-                pedirJSON(`/guardados/${idUsuario}`)
+                pedirJSON(`/favoritos/${idUsuario}`)
                     .then(setFavoritos)
                     .catch((err) => setError(err.message));
             }
@@ -32,7 +32,7 @@ export default function Guardados() {
         const idUsuario = usuario.id_usuario ?? usuario.id;
 
         try {
-            await pedirJSON('/guardados', {
+            await pedirJSON('/favoritos', {
                 method: 'DELETE',
                 body: JSON.stringify({
                     id_usuarios: idUsuario,
