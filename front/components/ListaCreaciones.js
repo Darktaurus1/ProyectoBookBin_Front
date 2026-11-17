@@ -1,11 +1,11 @@
-import TargetaCreacion from './TargetaCreacion';
+import TarjetaCreacion from './TarjetaCreacion';
 
 export default function ListaCreaciones({ listaCreaciones }) {
     return (
-        <article className='targeta'>
+        <article className='tarjeta'>
             <div className='listaCreacion'>
                 {listaCreaciones.map((c) => (
-                    <TargetaCreacion key={c.id_creacion} creacion={c} />
+                    <TarjetaCreacion key={c.id_creacion} creacion={c} />
                 ))}
             </div>
         </article>

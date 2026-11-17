@@ -1,19 +1,24 @@
+import { useState } from 'react';
 import Link from 'next/link';
-import styles from './TargetaCreacion.module.css';
+import ModalReporte from './ModalReporte';
+import styles from './TarjetaCreacion.module.css';
 
-export default function TargetaCreacion({ creacion, onGuardar }) {
+export default function TarjetaCreacion({ creacion, onGuardar, guardado = false }) {
     const id = creacion.id_creacion ?? creacion.id;
     const materialesTexto = Array.isArray(creacion.materiales)
         ? creacion.materiales.map((m) => `#${m.nombre || m}`).join(' ')
         : creacion.materiales || '#Material';
 
-    return (    
+    const [menuAbierto, setMenuAbierto] = useState(false);
+    const [reportando, setReportando] = useState(false);
+
+    return (
         <article className={styles.fila}>
             <div className={styles.imagenCaja}>
-                {creacion.imagen ? (                   
-                    <img 
-                        src={creacion.imagen.startsWith('http') ? creacion.imagen : `http://localhost:4000${creacion.imagen}`} 
-                        alt={creacion.nombre} 
+                {creacion.imagen ? (
+                    <img
+                        src={creacion.imagen.startsWith('http') ? creacion.imagen : `http://localhost:4000${creacion.imagen}`}
+                        alt={creacion.nombre}
                     />
                 ) : (
                     <svg width="48" height="48" viewBox="0 0 24 24" fill="#6B8797">
@@ -26,13 +31,46 @@ export default function TargetaCreacion({ creacion, onGuardar }) {
                 <button
                     type="button"
                     className={styles.botonGuardar}
-                    title="Guardar creación"
+                    title={guardado ? 'Quitar de guardados' : 'Guardar creación'}
+                    aria-label={guardado ? 'Quitar de guardados' : 'Guardar creación'}
                     onClick={() => onGuardar && onGuardar(id)}
                 >
-                    <svg width="20" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2">
+                    <svg
+                        width="20"
+                        height="24"
+                        viewBox="0 0 24 24"
+                        fill={guardado ? 'currentColor' : 'none'}
+                        stroke="currentColor"
+                        strokeWidth="2"
+                    >
                         <path d="M19 21l-7-5-7 5V5a2 2 0 0 1 2-2h10a2 2 0 0 1 2 2z" />
                     </svg>
                 </button>
+
+                {/* Tres puntitos: abre y cierra el menú de opciones */}
+                <button
+                    type="button"
+                    className={styles.botonMenu}
+                    title="Más opciones"
+                    aria-label="Más opciones"
+                    onClick={() => setMenuAbierto(!menuAbierto)}
+                >
+                    ⋮
+                </button>
+
+                {menuAbierto && (
+                    <div className={styles.menuOpciones}>
+                        <button
+                            type="button"
+                            onClick={() => {
+                                setMenuAbierto(false);
+                                setReportando(true);
+                            }}
+                        >
+                            Reportar
+                        </button>
+                    </div>
+                )}
 
                 <div className={styles.encabezado}>
                     <Link href={`/creaciones/${id}`} className={styles.titulo}>
@@ -50,6 +88,11 @@ export default function TargetaCreacion({ creacion, onGuardar }) {
                     <Link href={`/creaciones/${id}`} className={styles.verMas}>Más...</Link>
                 </div>
             </div>
+
+            {/* Formulario de reporte: solo se muestra al elegir "Reportar" */}
+            {reportando && (
+                <ModalReporte idCreacion={id} onCerrar={() => setReportando(false)} />
+            )}
         </article>
     );
 }

@@ -1,0 +1,57 @@
+.fondo {
+    position: fixed;
+    inset: 0;
+    background: rgba(0, 0, 0, 0.5);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    z-index: 100;
+}
+
+.caja {
+    background: #DCE6EC;
+    color: #183648;
+    border-radius: 12px;
+    padding: 24px;
+    width: 90%;
+    max-width: 420px;
+}
+
+.caja form {
+    display: flex;
+    flex-direction: column;
+    gap: 8px;
+}
+
+.caja h2 { margin: 0 0 8px; }
+
+.caja select,
+.caja textarea {
+    padding: 8px;
+    border: 1px solid #6B8797;
+    border-radius: 8px;
+    font: inherit;
+}
+
+.caja textarea { min-height: 90px; resize: vertical; }
+
+.error { color: #7a0019; margin: 0; }
+
+.botones {
+    display: flex;
+    justify-content: flex-end;
+    gap: 10px;
+    margin-top: 10px;
+}
+
+.botonCancelar,
+.botonEnviar {
+    padding: 8px 18px;
+    border: none;
+    border-radius: 8px;
+    font-weight: 700;
+    cursor: pointer;
+}
+
+.botonCancelar { background: #B6C7D1; color: #183648; }
+.botonEnviar { background: #183648; color: white; }
