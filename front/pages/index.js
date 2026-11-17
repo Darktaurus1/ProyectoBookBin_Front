@@ -1,25 +1,66 @@
 import { useEffect, useState } from 'react';
 import Link from 'next/link';
 import { pedirJSON } from '../lib/api';
-import TargetaCreacion from '../components/TargetaCreacion';
+import TarjetaCreacion from '../components/TarjetaCreacion'; // Verifica si tu archivo se llama TarjetaCreacion.js o TarjetaCreacion.js
 import styles from './index.module.css';
+
+function mezclar(lista) {
+    const copia = [...lista];
+    for (let i = copia.length - 1; i > 0; i--) {
+        const j = Math.floor(Math.random() * (i + 1));
+        [copia[i], copia[j]] = [copia[j], copia[i]];
+    }
+    return copia;
+}
 
 export default function Home() {
     const [creaciones, setCreaciones] = useState([]);
     const [usuario, setUsuario] = useState(null);
+    const [idsFavoritos, setIdsFavoritos] = useState([]);
     const [pestana, setPestana] = useState('recomendados'); // 'recomendados' | 'mis-creaciones'
     const [mostrarMateriales, setMostrarMateriales] = useState(false);
     const [materialFiltro, setMaterialFiltro] = useState('');
     const [error, setError] = useState('');
+    const [materiales, setMateriales] = useState([]);
+    const [materialSeleccionado, setMaterialSeleccionado] = useState('');
 
     useEffect(() => {
         const u = localStorage.getItem('usuario');
-        if (u) setUsuario(JSON.parse(u));
+        if (u) {
+            const userObj = JSON.parse(u);
+            setUsuario(userObj);
+
+            const idUser = userObj.id_usuario ?? userObj.id;
+            pedirJSON(`/favoritos/${idUser}`)
+                .then((favs) => setIdsFavoritos(favs.map((f) => f.id_creacion ?? f.id)))
+                .catch(() => {});
+        }
 
         pedirJSON('/creaciones')
             .then(setCreaciones)
             .catch((err) => setError(err.message));
     }, []);
+
+    useEffect(() => {
+        pedirJSON('/materiales')
+            .then((datos) => setMateriales(Array.isArray(datos) ? datos : []))
+            .catch(() => setError('No se pudieron cargar los materiales.'));
+    }, []);
+
+    // Carga las creaciones al inicio y cada vez que cambia el material elegido
+    useEffect(() => {
+        let vigente = true;
+        const ruta = materialSeleccionado
+            ? `/creaciones?material=${materialSeleccionado}`
+            : '/creaciones';
+
+        setError('');
+        pedirJSON(ruta)
+            .then((datos) => { if (vigente) setCreaciones(mezclar(datos)); })
+            .catch((err) => { if (vigente) setError(err.message); });
+
+        return () => { vigente = false; };
+    }, [materialSeleccionado]);
 
     // Extraer materiales únicos disponibles
     const materialesDisponibles = Array.from(
@@ -52,15 +93,22 @@ export default function Home() {
             alert('Inicia sesión para guardar creaciones');
             return;
         }
+
+        const idUser = usuario.id_usuario ?? usuario.id;
+        const yaEsFavorito = idsFavoritos.includes(idCreacion);
+
         try {
-            await pedirJSON('/guardados', {
-                method: 'POST',
+            await pedirJSON('/favoritos', {
+                method: yaEsFavorito ? 'DELETE' : 'POST',
                 body: JSON.stringify({
-                    id_usuarios: usuario.id_usuario ?? usuario.id,
+                    id_usuarios: idUser,
                     id_creacion: idCreacion,
                 }),
             });
-            alert('¡Creación guardada!');
+
+            setIdsFavoritos((prev) =>
+                yaEsFavorito ? prev.filter((id) => id !== idCreacion) : [...prev, idCreacion]
+            );
         } catch (err) {
             alert(err.message);
         }
@@ -84,6 +132,22 @@ export default function Home() {
                 >
                     Mis Creaciones
                 </button>
+            </div>
+
+            <div className='filtroMateriales'>
+                <label htmlFor='filtro-material'>Filtrar por material: </label>
+                <select
+                    id='filtro-material'
+                    value={materialSeleccionado}
+                    onChange={(e) => setMaterialSeleccionado(e.target.value)}
+                >
+                    <option value=''>Todos los materiales</option>
+                    {materiales.map((m) => (
+                        <option key={m.id_materiales} value={m.id_materiales}>
+                            {m.nombre}
+                        </option>
+                    ))}
+                </select>
             </div>
 
             {/* Desplegable de Materiales */}
@@ -131,13 +195,17 @@ export default function Home() {
                         </p>
                     ) : (
                         <div className={styles.listaCreacion}>
-                            {creacionesFiltradas.map((c) => (
-                                <TargetaCreacion
-                                    key={c.id_creacion ?? c.id}
-                                    creacion={c}
-                                    onGuardar={manejarGuardar}
-                                />
-                            ))}
+                            {creacionesFiltradas.map((c) => {
+                                const idCreacion = c.id_creacion ?? c.id;
+                                return (
+                                    <TarjetaCreacion
+                                        key={idCreacion}
+                                        creacion={c}
+                                        onGuardar={manejarGuardar}
+                                        guardado={idsFavoritos.includes(idCreacion)}
+                                    />
+                                );
+                            })}
                         </div>
                     )}
                 </div>
