@@ -1,0 +1,145 @@
+.admin-contenedor {
+    min-height: 100vh;
+    background-color: #D7E5EC;
+    padding: 40px 20px;
+    display: flex;
+    justify-content: center;
+}
+
+.admin-tarjeta {
+    background-color: white;
+    width: 100%;
+    max-width: 950px;
+    padding: 40px;
+    border-radius: 12px;
+    box-shadow: 0 4px 15px rgba(0, 0, 0, 0.10);
+}
+
+.admin-tarjeta h1 {
+    color: #163A50;
+    text-align: center;
+    font-size: 28px;
+    margin-bottom: 25px;
+}
+
+.admin-tarjeta h3 {
+    color: #163A50;
+    font-size: 20px;
+    margin-bottom: 15px;
+    border-bottom: 2px solid #D7E5EC;
+    padding-bottom: 8px;
+}
+
+.seccion-formulario {
+    background-color: #f9fbfd;
+    padding: 25px;
+    border-radius: 8px;
+    border: 1px solid #5885A1;
+    margin-bottom: 35px;
+}
+
+.campo {
+    display: flex;
+    flex-direction: column;
+    margin-bottom: 20px;
+}
+
+.campo label {
+    color: #163A50;
+    font-weight: 600;
+    margin-bottom: 8px;
+}
+
+.campo input, 
+.campo select {
+    padding: 12px;
+    border: 1px solid #5885A1;
+    border-radius: 6px;
+    font-size: 14px;
+    outline: none;
+    background-color: white;
+}
+
+.campo input:focus, 
+.campo select:focus {
+    border-color: #224A63;
+}
+
+.admin-tarjeta button {
+    width: 100%;
+    padding: 13px;
+    background-color: #224A63;
+    color: white;
+    border: none;
+    border-radius: 6px;
+    font-size: 16px;
+    font-weight: bold;
+    cursor: pointer;
+    transition: background-color 0.3s;
+}
+
+.admin-tarjeta button:hover {
+    background-color: #163A50;
+}
+
+
+.tabla-contenedor {
+    overflow-x: auto;
+}
+
+.tabla-verificadores {
+    width: 100%;
+    border-collapse: collapse;
+    margin-top: 10px;
+    text-align: left;
+    font-size: 14px;
+}
+
+.tabla-verificadores th {
+    background-color: #224A63;
+    color: white;
+    padding: 12px;
+}
+
+.tabla-verificadores td {
+    padding: 12px;
+    border-bottom: 1px solid #D7E5EC;
+    color: #163A50;
+}
+
+.tabla-verificadores select {
+    padding: 6px;
+    border: 1px solid #5885A1;
+    border-radius: 4px;
+}
+
+.btn-borrar {
+    background-color: #d93025 !important;
+    padding: 8px 12px !important;
+    font-size: 13px !important;
+    width: auto !important;
+}
+
+.btn-borrar:hover {
+    background-color: #a51d12 !important;
+}
+
+.alerta-exito {
+    background-color: #e6f4ea;
+    color: #137333;
+    padding: 12px;
+    border-radius: 6px;
+    margin-bottom: 20px;
+    text-align: center;
+    font-weight: 500;
+}
+
+.alerta-error {
+    background-color: #fce8e6;
+    color: #c5221f;
+    padding: 12px;
+    border-radius: 6px;
+    margin-bottom: 20px;
+    text-align: center;
+    font-weight: 500;
+}
