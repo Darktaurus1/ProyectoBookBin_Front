@@ -34,7 +34,11 @@ export default function Login() {
             localStorage.setItem('usuario', JSON.stringify(datos.usuario));
 
             setMensaje('¡Inicio de sesión exitoso!');
-            router.push('/');
+            if (datos.usuario.tipo === 'administrador') {
+                router.push('/admin');
+            } else {
+                router.push('/');
+            }
 
         } catch (err) {
             setError(err.message);
