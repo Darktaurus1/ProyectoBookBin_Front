@@ -2,79 +2,163 @@ import Link from 'next/link';
 import { useRouter } from 'next/router';
 import { useEffect, useState } from 'react';
 import { pedirJSON } from '../../lib/api';
-import styles from './nueva.module.css';
+import ModalReporte from '../../components/ModalReporte';
+import styles from './creaciones.module.css';
 
-export default function Creacion() {
+function urlImagen(imagen) {
+    if (!imagen) return null;
+    return imagen.startsWith('http') ? imagen : `http://localhost:4000${imagen}`;
+}
+
+export default function DetalleCreacion() {
     const router = useRouter();
-    const {id} = router.query;
+    const { id } = router.query;
 
-    async function cargar() {
-        
-        const [errorCarga, setErrorCarga] = useState('');
-        const [errorGuardar, setErrorGuardar] = useState('')
-        const [exito, setExito] = useState('');
-        const [creacion, setCreacion] = useState(null);
-        const [usuario, setUsuario] = useState(null);
+    const [creacion, setCreacion] = useState(null);
+    const [usuario, setUsuario] = useState(null);
+    const [guardado, setGuardado] = useState(false);
+    const [cargando, setCargando] = useState(true);
+    const [errorCarga, setErrorCarga] = useState('');
+    const [mensaje, setMensaje] = useState('');
+    const [reportando, setReportando] = useState(false);
 
-        try {
-            setCreacion(await pedirJSON(`/creaciones/${id}`));
-            setErrorCarga('');
-        } catch (e) {
-            setErrorCarga(e.message);
+    // Carga la creación y revisa si el usuario ya la guardó
+    useEffect(() => {
+        if (!router.isReady) return;
+        let vigente = true;
+
+        let u = null;
+        try { u = JSON.parse(localStorage.getItem('usuario')); } catch { u = null; }
+        setUsuario(u);
+
+        setCargando(true);
+        setErrorCarga('');
+
+        pedirJSON(`/creaciones/${id}`)
+            .then((datos) => { if (vigente) setCreacion(datos); })
+            .catch((err) => { if (vigente) setErrorCarga(err.message); })
+            .finally(() => { if (vigente) setCargando(false); });
+
+        const idUsuario = u?.id_usuario ?? u?.id;
+        if (idUsuario) {
+            pedirJSON(`/favoritos/${idUsuario}`)
+                .then((favs) => {
+                    if (!vigente) return;
+                    setGuardado(favs.some((f) => String(f.id_creacion ?? f.id) === String(id)));
+                })
+                .catch(() => {});
         }
 
-        useEffect(() => {
-            if (!router.isReady) return;
-            cargar();
-        }, [router.isReady, id]);
-    }
+        return () => { vigente = false; };
+    }, [router.isReady, id]);
 
-    async function guardarCreacion(e) {
-        e.preventDefrault();
-        setExito('');
-        setErrorGuardar('');
-
-        if (!usuario) return setErrorGuardar('Inicia Sesion para guardar una creacion');
-        
-        if(guardados.some((a) => a.creacion_id === creacion.id && a.usuario_id === usuario.id)) return setErrorCarga('Ya has guardado esta Creacion');
+    async function alternarGuardado() {
+        setMensaje('');
+        const idUsuario = usuario?.id_usuario ?? usuario?.id;
+        if (!idUsuario) {
+            setMensaje('Inicia sesión para guardar creaciones.');
+            return;
+        }
 
         try {
             await pedirJSON('/favoritos', {
-                method: 'POST',
+                method: guardado ? 'DELETE' : 'POST',
                 body: JSON.stringify({
-                    id_usuarios: usuario.id,
-                    id_creacion: creacion.id
-                })
+                    id_usuarios: idUsuario,
+                    id_creacion: creacion.id_creacion,
+                }),
             });
+            setGuardado(!guardado);
+            setMensaje(guardado ? 'Quitada de tus guardados.' : 'Guardada en tus favoritos.');
         } catch (err) {
-            setErrorGuardar(errorToJSON.message);
+            setMensaje(err.message);
         }
-
-        if (errorCarga) return <main><p className='error'>{errorCarga}</p></main>;
-        
-        const usuarioCreacion = await pedirJSON('/musuarios', {
-            method: 'POST',
-            body: JSON.stringify({})
-        });
-
-        return (
-            <main>
-                <div className='contenedor-creacion-datos'>
-                    <h1>{creacion.nombre}</h1>
-                    <p><strong>Creacion de {usuarioCreacion.nombre}</strong></p>
-                    <p>{creacion.descripcion}</p>
-                </div>
-                <div className='contenedor-creacion-contenido'>
-                    <p>{creacion.instrucciones}</p>
-                </div>
-                <div className='contenedor-creacion-botones'>
-                    <button className='boton-1' onClick={guardarCreacion()}>Guardar</button>
-                    <Link className='Boton-Link' href='/index'>Regresar</Link>
-                    <button className='boton-2'>Reportar</button>
-                </div>
-                </main>
-        );
-
     }
 
+    function abrirReporte() {
+        if (!usuario) {
+            setMensaje('Inicia sesión para reportar.');
+            return;
+        }
+        setReportando(true);
+    }
+
+    if (cargando) {
+        return <main className={styles.fondo}><p className={styles.estado}>Cargando creación...</p></main>;
+    }
+
+    if (errorCarga || !creacion) {
+        return (
+            <main className={styles.fondo}>
+                <p className={styles.estado}>{errorCarga || 'No se encontró la creación.'}</p>
+                <Link href="/" className={styles.botonRegresar}>Regresar al inicio</Link>
+            </main>
+        );
+    }
+
+    const imagen = urlImagen(creacion.imagen);
+    const autor = creacion.musuarios?.nombre;
+    const materiales = Array.isArray(creacion.materiales) ? creacion.materiales : [];
+
+    return (
+        <main className={styles.fondo}>
+            <article className={styles.tarjeta}>
+                <div className={styles.imagenCaja}>
+                    {imagen ? (
+                        <img src={imagen} alt={creacion.nombre} />
+                    ) : (
+                        <svg width="64" height="64" viewBox="0 0 24 24" fill="#6B8797" aria-hidden="true">
+                            <path d="M21 19V5c0-1.1-.9-2-2-2H5c-1.1 0-2 .9-2 2v14c0 1.1.9 2 2 2h14c1.1 0 2-.9 2-2zM8.5 13.5l2.5 3.01L14.5 12l4.5 6H5l3.5-4.5z" />
+                        </svg>
+                    )}
+                </div>
+
+                <div className={styles.contenido}>
+                    <h1 className={styles.titulo}>{creacion.nombre}</h1>
+                    {autor && <p className={styles.autor}>Creación de {autor}</p>}
+
+                    {materiales.length > 0 && (
+                        <section>
+                            <h2>Materiales</h2>
+                            <ul className={styles.listaMateriales}>
+                                {materiales.map((m) => (
+                                    <li key={m.id_materiales ?? m.nombre}>#{m.nombre}</li>
+                                ))}
+                            </ul>
+                        </section>
+                    )}
+
+                    <section>
+                        <h2>Descripción</h2>
+                        <p className={styles.texto}>{creacion.descripcion}</p>
+                    </section>
+
+                    {creacion.instrucciones && (
+                        <section>
+                            <h2>Instrucciones</h2>
+                            <p className={styles.texto}>{creacion.instrucciones}</p>
+                        </section>
+                    )}
+
+                    {mensaje && <p className={styles.mensaje} role="status">{mensaje}</p>}
+
+                    <div className={styles.botones}>
+                        <button type="button" className={styles.botonGuardar} onClick={alternarGuardado}>
+                            {guardado ? 'Quitar de guardados' : 'Guardar'}
+                        </button>
+                        <button type="button" className={styles.botonRegresar} onClick={() => router.back()}>
+                            Regresar
+                        </button>
+                        <button type="button" className={styles.botonReportar} onClick={abrirReporte}>
+                            Reportar
+                        </button>
+                    </div>
+                </div>
+            </article>
+
+            {reportando && (
+                <ModalReporte idCreacion={creacion.id_creacion} onCerrar={() => setReportando(false)} />
+            )}
+        </main>
+    );
 }

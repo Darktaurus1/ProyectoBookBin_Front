@@ -1,0 +1,73 @@
+/* [project]/components/ModalReporte.module.css [client] (css) */
+.ModalReporte-module__LJ1dia__fondo {
+  z-index: 100;
+  background: #00000080;
+  justify-content: center;
+  align-items: center;
+  display: flex;
+  position: fixed;
+  inset: 0;
+}
+
+.ModalReporte-module__LJ1dia__caja {
+  color: #183648;
+  background: #dce6ec;
+  border-radius: 12px;
+  width: 90%;
+  max-width: 420px;
+  padding: 24px;
+}
+
+.ModalReporte-module__LJ1dia__caja form {
+  flex-direction: column;
+  gap: 8px;
+  display: flex;
+}
+
+.ModalReporte-module__LJ1dia__caja h2 {
+  margin: 0 0 8px;
+}
+
+.ModalReporte-module__LJ1dia__caja select, .ModalReporte-module__LJ1dia__caja textarea {
+  font: inherit;
+  border: 1px solid #6b8797;
+  border-radius: 8px;
+  padding: 8px;
+}
+
+.ModalReporte-module__LJ1dia__caja textarea {
+  resize: vertical;
+  min-height: 90px;
+}
+
+.ModalReporte-module__LJ1dia__error {
+  color: #7a0019;
+  margin: 0;
+}
+
+.ModalReporte-module__LJ1dia__botones {
+  justify-content: flex-end;
+  gap: 10px;
+  margin-top: 10px;
+  display: flex;
+}
+
+.ModalReporte-module__LJ1dia__botonCancelar, .ModalReporte-module__LJ1dia__botonEnviar {
+  cursor: pointer;
+  border: none;
+  border-radius: 8px;
+  padding: 8px 18px;
+  font-weight: 700;
+}
+
+.ModalReporte-module__LJ1dia__botonCancelar {
+  color: #183648;
+  background: #b6c7d1;
+}
+
+.ModalReporte-module__LJ1dia__botonEnviar {
+  color: #fff;
+  background: #183648;
+}
+
+/*# sourceMappingURL=components_ModalReporte_module_css_0uu1l2n9z-cys._.single.css.map*/

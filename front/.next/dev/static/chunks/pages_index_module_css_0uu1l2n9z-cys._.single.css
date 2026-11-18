@@ -1,0 +1,139 @@
+/* [project]/pages/index.module.css [client] (css) */
+.index-module__KWKY6G__fondo {
+  background-color: #6b8797;
+  flex-direction: column;
+  min-height: calc(100vh - 68px);
+  padding: 24px 32px;
+  display: flex;
+}
+
+.index-module__KWKY6G__pestanas {
+  justify-content: space-around;
+  gap: 24px;
+  margin-bottom: 12px;
+  display: flex;
+}
+
+.index-module__KWKY6G__pestana {
+  cursor: pointer;
+  color: #fff;
+  background-color: #183648;
+  border: none;
+  border-radius: 12px;
+  flex: 1;
+  max-width: 340px;
+  padding: 12px 24px;
+  font-size: 22px;
+  font-weight: 700;
+  transition: all .2s;
+  box-shadow: 0 3px 6px #0003;
+}
+
+.index-module__KWKY6G__pestanaActiva {
+  color: #183648;
+  background-color: #7d98a8;
+}
+
+.index-module__KWKY6G__barraMateriales {
+  background-color: #b6c7d1;
+  border-radius: 8px;
+  margin-bottom: 14px;
+  overflow: hidden;
+  box-shadow: 0 2px 5px #00000026;
+}
+
+.index-module__KWKY6G__botonMateriales {
+  color: #183648;
+  cursor: pointer;
+  background: none;
+  border: none;
+  justify-content: space-between;
+  align-items: center;
+  width: 100%;
+  padding: 8px 20px;
+  font-size: 16px;
+  font-weight: 700;
+  display: flex;
+}
+
+.index-module__KWKY6G__listaChips {
+  border-top: 1px solid #96aebc;
+  flex-wrap: wrap;
+  gap: 8px;
+  padding: 8px 20px 12px;
+  display: flex;
+}
+
+.index-module__KWKY6G__chip {
+  color: #183648;
+  cursor: pointer;
+  background-color: #dce6ec;
+  border: 1px solid #183648;
+  border-radius: 16px;
+  padding: 4px 12px;
+  font-size: 13px;
+}
+
+.index-module__KWKY6G__chipActivo {
+  color: #fff;
+  background-color: #183648;
+}
+
+.index-module__KWKY6G__contenedorLista {
+  background-color: #7590a0;
+  border: 2px solid #5b7686;
+  border-radius: 14px;
+  flex-direction: column;
+  flex: 1;
+  justify-content: space-between;
+  max-height: 68vh;
+  padding: 20px;
+  display: flex;
+  overflow-y: auto;
+}
+
+.index-module__KWKY6G__contenedorLista::-webkit-scrollbar {
+  width: 24px;
+}
+
+.index-module__KWKY6G__contenedorLista::-webkit-scrollbar-track {
+  background: #466475;
+  border-radius: 10px;
+}
+
+.index-module__KWKY6G__contenedorLista::-webkit-scrollbar-thumb {
+  background: #183648;
+  border: 4px solid #466475;
+  border-radius: 10px;
+}
+
+.index-module__KWKY6G__listaCreacion {
+  flex-direction: column;
+  gap: 16px;
+  display: flex;
+}
+
+.index-module__KWKY6G__contenedorBotonNueva {
+  justify-content: center;
+  margin-top: 32px;
+  margin-bottom: 12px;
+  display: flex;
+}
+
+.index-module__KWKY6G__botonNuevaCreacion {
+  color: #fff;
+  background-color: #183648;
+  border-radius: 12px;
+  padding: 14px 36px;
+  font-size: 24px;
+  font-weight: 700;
+  text-decoration: none;
+  transition: background-color .2s;
+  box-shadow: 0 4px 8px #00000040;
+}
+
+.index-module__KWKY6G__botonNuevaCreacion:hover {
+  background-color: #0f2431;
+}
+
+/*# sourceMappingURL=pages_index_module_css_0uu1l2n9z-cys._.single.css.map*/
