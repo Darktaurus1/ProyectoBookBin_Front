@@ -1,14 +1,14 @@
 /* Los colores están aquí arriba: cambia estos valores y se actualiza toda la página */
 .pagina {
-    --fondo: #7897AB;
-    --panel: #A9BFCC;
-    --tarjeta: #7595A8;
-    --campo: #D7E5EC;
-    --texto: #163A50;
-    --boton: #163A50;
-    --boton-peligro: #5E2840;
-    --icono: #46565F;
-    --foco: #F2B84B;
+    --fondo: linear-gradient(135deg, #95D5B2 0%, #74C69D 50%, #52B788 100%);
+    --panel: #16382C;          /* Verde esmeralda profundo */
+    --tarjeta: #112A21;        /* Verde esmeralda aún más oscuro para contraste */
+    --campo: #1E4D3B;          /* Campo de entrada oscuro y legible */
+    --texto: #E8EFEA;          /* Blanco cálido con toque menta para lectura cómoda */
+    --boton: #D4AF37;          /* Dorado clásico intenso */
+    --boton-peligro: #6f0505cc;  /* Color de peligro conservado para contraste */
+    --icono: #95B8A6;          /* Verde salvia claro */
+    --foco: #F3D078;           /* Dorado brillante / champán para el enfoque */
 
     min-height: calc(100vh - 70px);
     background: var(--fondo);
@@ -28,13 +28,15 @@
     max-width: 860px;
     margin: 0 auto;
     background: var(--panel);
+    border: 1px solid #C5A059; /* Borde dorado metálico sutil */
     border-radius: 18px;
     padding: 24px;
-    box-shadow: 0 3px 6px rgba(0, 0, 0, 0.25);
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.3);
 }
 
 .cuenta {
     background: var(--tarjeta);
+    border: 1px solid #C5A059; /* Borde dorado para la tarjeta */
     border-radius: 14px;
     padding: 20px 36px 32px;
     box-shadow: 0 3px 6px rgba(0, 0, 0, 0.2);
@@ -45,6 +47,7 @@
     text-align: center;
     font-size: 1.5rem;
     font-weight: 600;
+    color: #F3D078; /* Título en dorado brillante */
 }
 
 .fila {
@@ -59,12 +62,14 @@
 .etiqueta {
     font-size: 1.1rem;
     font-weight: 600;
+    color: #E8EFEA;
 }
 
 .valor {
     font-size: 1.1rem;
     font-weight: 600;
     overflow-wrap: anywhere;
+    color: #E8EFEA;
 }
 
 .entrada {
@@ -75,6 +80,10 @@
     background: var(--campo);
     color: var(--texto);
     font: inherit;
+}
+
+.entrada:focus {
+    border-color: var(--foco);
 }
 
 .editar {
@@ -93,7 +102,9 @@
 
 .editar:hover,
 .editar[aria-pressed='true'] {
-    background: rgba(255, 255, 255, 0.25);
+    background: rgba(197, 160, 89, 0.2);
+    border-color: #D4AF37;
+    color: #F3D078;
 }
 
 .confirmar {
@@ -120,15 +131,26 @@
     padding: 13px;
     border: 0;
     border-radius: 6px;
-    color: #fff;
+    color: #112A21; /* Texto oscuro sobre botón dorado para mayor contraste */
     font: inherit;
-    font-weight: 600;
+    font-weight: 700;
     cursor: pointer;
     box-shadow: 0 3px 5px rgba(0, 0, 0, 0.25);
+    transition: background 0.2s;
 }
 
-.guardar { background: var(--boton); }
-.cerrar { background: var(--boton-peligro); }
+.guardar { 
+    background: var(--boton); 
+}
+
+.guardar:hover {
+    background: #F3D078; /* Efecto hover dorado más claro */
+}
+
+.cerrar { 
+    background: var(--boton-peligro); 
+    color: #fff;
+}
 
 .guardar:disabled {
     opacity: 0.5;
@@ -144,8 +166,8 @@
     font-weight: 600;
 }
 
-.error { color: #8A1F3D; }
-.exito { color: #1D5A3A; }
+.error { color: #FFB3C6; }
+.exito { color: #95D5B2; }
 
 .aviso {
     max-width: 860px;
@@ -153,12 +175,13 @@
     padding: 20px;
     border-radius: 14px;
     background: var(--panel);
+    border: 1px solid #C5A059;
     text-align: center;
     font-weight: 600;
 }
 
 .aviso a {
-    color: var(--texto);
+    color: #F3D078;
 }
 
 .pagina button:focus-visible,
