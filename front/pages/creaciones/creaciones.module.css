@@ -1,11 +1,16 @@
 .fondo {
     min-height: calc(100vh - 68px);
-    background-color: #6B8797;
+    background: linear-gradient(
+        135deg,
+        #95D5B2 0%,
+        #74C69D 50%,
+        #52B788 100%
+    );
     padding: 24px 32px;
 }
 
 .estado {
-    color: #DCE6EC;
+    color: #081C15;
     text-align: center;
     font-size: 18px;
     margin: 40px 0 16px;
@@ -14,10 +19,18 @@
 .tarjeta {
     max-width: 960px;
     margin: 0 auto;
-    background-color: #DCE6EC;
-    color: #183648;
+    background: linear-gradient(
+        145deg,
+        rgba(216, 243, 220, 0.97),
+        rgba(183, 228, 199, 0.97)
+    );
+    color: #081C15;
+    border: 1px solid rgba(255, 255, 255, 0.75);
     border-radius: 16px;
-    box-shadow: 0 4px 10px rgba(0, 0, 0, 0.25);
+    box-shadow:
+        0 5px 15px rgba(8, 28, 21, 0.2),
+        inset 0 2px 5px rgba(255, 255, 255, 0.7),
+        inset 0 -2px 4px rgba(45, 106, 79, 0.1);
     display: flex;
     gap: 28px;
     padding: 24px;
@@ -26,12 +39,20 @@
 .imagenCaja {
     flex: 0 0 340px;
     height: 340px;
-    background-color: #B6C7D1;
+    background: linear-gradient(
+        145deg,
+        #B7E4C7,
+        #74C69D
+    );
+    border: 1px solid rgba(255, 255, 255, 0.65);
     border-radius: 12px;
     overflow: hidden;
     display: flex;
     align-items: center;
     justify-content: center;
+    box-shadow:
+        0 3px 8px rgba(8, 28, 21, 0.18),
+        inset 0 1px 3px rgba(255, 255, 255, 0.5);
 }
 
 .imagenCaja img {
@@ -51,18 +72,20 @@
 .titulo {
     margin: 0;
     font-size: 30px;
+    color: #081C15;
     overflow-wrap: anywhere;
 }
 
 .autor {
     margin: -6px 0 0;
     font-weight: 700;
-    color: #5885A1;
+    color: #2D6A4F;
 }
 
 .contenido h2 {
     margin: 0 0 6px;
     font-size: 18px;
+    color: #1B4332;
 }
 
 .texto {
@@ -70,6 +93,7 @@
     line-height: 1.5;
     white-space: pre-line;
     overflow-wrap: anywhere;
+    color: #1B4332;
 }
 
 .listaMateriales {
@@ -82,16 +106,24 @@
 }
 
 .listaMateriales li {
-    background-color: #183648;
-    color: white;
+    background: linear-gradient(
+        145deg,
+        #40916C,
+        #1B4332
+    );
+    color: #FFFFFF;
     padding: 4px 12px;
     border-radius: 999px;
     font-size: 14px;
+    box-shadow:
+        0 2px 5px rgba(8, 28, 21, 0.18),
+        inset 0 1px 2px rgba(255, 255, 255, 0.25);
 }
 
 .mensaje {
     margin: 0;
     font-weight: 700;
+    color: #2D6A4F;
 }
 
 .botones {
@@ -106,18 +138,76 @@
 .botonRegresar,
 .botonReportar {
     padding: 10px 20px;
-    border: none;
+    border: 1px solid rgba(255, 255, 255, 0.3);
     border-radius: 10px;
     font: inherit;
     font-weight: 700;
     cursor: pointer;
     text-decoration: none;
     display: inline-block;
+    transition: all 0.2s;
 }
 
-.botonGuardar { background-color: #183648; color: white; }
-.botonRegresar { background-color: #B6C7D1; color: #183648; }
-.botonReportar { background-color: #7a0019; color: white; margin-left: auto; }
+.botonGuardar {
+    background: linear-gradient(
+        145deg,
+        #40916C,
+        #1B4332
+    );
+    color: #FFFFFF;
+    box-shadow:
+        0 3px 7px rgba(8, 28, 21, 0.2),
+        inset 0 1px 2px rgba(255, 255, 255, 0.25);
+}
+
+.botonGuardar:hover {
+    background: linear-gradient(
+        145deg,
+        #2D6A4F,
+        #081C15
+    );
+}
+
+.botonRegresar {
+    background: linear-gradient(
+        145deg,
+        #B7E4C7,
+        #74C69D
+    );
+    color: #081C15;
+    box-shadow:
+        0 3px 7px rgba(45, 106, 79, 0.15),
+        inset 0 1px 3px rgba(255, 255, 255, 0.6);
+}
+
+.botonRegresar:hover {
+    background: linear-gradient(
+        145deg,
+        #95D5B2,
+        #52B788
+    );
+}
+
+.botonReportar {
+    background: linear-gradient(
+        145deg,
+        #8B2635,
+        #5C1421
+    );
+    color: #FFFFFF;
+    margin-left: auto;
+    box-shadow:
+        0 3px 7px rgba(50, 0, 10, 0.2),
+        inset 0 1px 2px rgba(255, 255, 255, 0.2);
+}
+
+.botonReportar:hover {
+    background: linear-gradient(
+        145deg,
+        #741D2B,
+        #3F0D17
+    );
+}
 
 @media (max-width: 760px) {
     .fondo { padding: 16px; }

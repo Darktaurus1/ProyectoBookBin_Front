@@ -8,13 +8,15 @@
     width: 120px;
     min-width: 120px;
     height: 120px;
-    background-color: #DCE6EC;
+    background: linear-gradient(145deg, #183D30, #0D231B);
+    border: 1px solid #C5A059;
     border-radius: 10px;
     display: flex;
     align-items: center;
     justify-content: center;
     overflow: hidden;
-    box-shadow: 0 3px 6px rgba(0, 0, 0, 0.15);
+    box-shadow: 0 8px 20px rgba(8, 28, 21, 0.35),
+        inset 0 1px 3px rgba(243, 208, 120, 0.15);
 }
 
 .imagenCaja img {
@@ -25,14 +27,16 @@
 
 .contenido {
     flex: 1;
-    background-color: #DCE6EC;
+    background: linear-gradient(145deg, #183D30 0%, #0D231B 100%);
+    border: 1px solid #C5A059;
     border-radius: 10px;
     padding: 12px 18px;
     display: flex;
     flex-direction: column;
     justify-content: space-between;
     position: relative;
-    box-shadow: 0 3px 6px rgba(0, 0, 0, 0.15);
+    box-shadow: 0 8px 20px rgba(8, 28, 21, 0.35),
+        inset 0 1px 4px rgba(243, 208, 120, 0.12);
 }
 
 .encabezado {
@@ -43,10 +47,9 @@
 }
 
 .titulo {
-    margin: 0;  
-    margin: 0;  
+    margin: 0;
     font-size: 18px;
-    color: #183648;
+    color: #F3D078;
     text-decoration: underline;
     font-weight: 700;
 }
@@ -58,12 +61,14 @@
     background: none;
     border: none;
     cursor: pointer;
-    color: #183648;
+    color: #D4AF37;
     padding: 4px;
+    transition: all 0.2s;
 }
 
 .botonGuardar:hover {
     transform: scale(1.1);
+    color: #F3D078;
 }
 
 .filaMateriales {
@@ -71,7 +76,7 @@
     justify-content: space-between;
     align-items: center;
     font-size: 13px;
-    color: #3B6075;
+    color: #95B8A6;
     margin: 4px 0;
     padding-right: 30px;
 }
@@ -81,7 +86,7 @@
     justify-content: space-between;
     align-items: flex-end;
     font-size: 14px;
-    color: #183648;
+    color: #E8EFEA;
     gap: 12px;
 }
 
@@ -94,10 +99,16 @@
 
 .verMas {
     font-size: 12px;
-    color: #183648;
+    color: #D4AF37;
     text-decoration: underline;
     white-space: nowrap;
+    transition: color 0.2s;
 }
+
+.verMas:hover {
+    color: #F3D078;
+}
+
 .botonMenu {
     position: absolute;
     top: 46px;
@@ -106,20 +117,26 @@
     background: none;
     border: none;
     cursor: pointer;
-    color: #183648;
+    color: #D4AF37;
     font-size: 22px;
     line-height: 1;
     padding: 4px 0;
     text-align: center;
+    transition: color 0.2s;
+}
+
+.botonMenu:hover {
+    color: #F3D078;
 }
 
 .menuOpciones {
     position: absolute;
     top: 44px;
     right: 46px;
-    background: white;
+    background: linear-gradient(145deg, #183D30, #0D231B);
+    border: 1px solid #C5A059;
     border-radius: 8px;
-    box-shadow: 0 3px 8px rgba(0, 0, 0, 0.25);
+    box-shadow: 0 8px 20px rgba(8, 28, 21, 0.35);
     z-index: 10;
     overflow: hidden;
 }
@@ -129,8 +146,12 @@
     border: none;
     padding: 10px 18px;
     cursor: pointer;
-    color: #7a0019;
+    color: #F3D078;
     font-weight: 700;
+    transition: background 0.2s, color 0.2s;
 }
 
-.menuOpciones button:hover { background: #F1F5F7; }
+.menuOpciones button:hover {
+    background: #244B3B;
+    color: #FFFFFF;
+}
