@@ -1,6 +1,11 @@
 .fondo {
     min-height: calc(100vh - 68px);
-    background-color: #6B8797;
+    background: linear-gradient(
+        135deg,
+        #74C69D 0%,
+        #52B788 50%,
+        #40916C 100%
+    );
     padding: 24px 32px;
     display: flex;
     flex-direction: column;
@@ -11,10 +16,18 @@
 .tarjetaFormulario {
     width: 100%;
     max-width: 1160px;
-    background-color: #93A9B6;
+    background: linear-gradient(
+    145deg,
+    rgba(183, 228, 199, 0.98),
+    rgba(149, 213, 178, 0.98)
+);
+    border: 1px solid rgba(255, 255, 255, 0.75);
     border-radius: 22px;
     padding: 22px 42px 28px;
-    box-shadow: 0 4px 10px rgba(0, 0, 0, 0.18);
+    box-shadow:
+        0 5px 15px rgba(8, 28, 21, 0.2),
+        inset 0 2px 5px rgba(255, 255, 255, 0.7),
+        inset 0 -2px 4px rgba(45, 106, 79, 0.1);
     display: flex;
     flex-direction: column;
     gap: 14px;
@@ -22,7 +35,7 @@
 
 .titulo {
     text-align: center;
-    color: #183648;
+    color: #081C15;
     font-size: 28px;
     margin: 0 0 4px;
     font-weight: 700;
@@ -31,13 +44,19 @@
 .inputNombre {
     width: 100%;
     padding: 10px 24px;
-    background-color: #D5E1E8;
-    border: none;
+    background: linear-gradient(
+    145deg,
+    #D8F3DC,
+    #B7E4C7
+);
+    border: 1px solid rgba(116, 198, 157, 0.55);
     border-radius: 10px;
     font-size: 16px;
-    color: #183648;
+    color: #081C15;
     outline: none;
-    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.12);
+    box-shadow:
+        inset 0 2px 4px rgba(45, 106, 79, 0.12),
+        0 2px 5px rgba(8, 28, 21, 0.1);
     box-sizing: border-box;
 }
 
@@ -50,7 +69,12 @@
 .cajaImagen {
     width: 280px;
     min-width: 280px;
-    background-color: #D5E1E8;
+    background: linear-gradient(
+    145deg,
+    #95D5B2,
+    #74C69D
+);
+    border: 1px solid rgba(255, 255, 255, 0.7);
     border-radius: 10px;
     padding: 12px;
     display: flex;
@@ -58,7 +82,9 @@
     align-items: center;
     justify-content: space-between;
     cursor: pointer;
-    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.12);
+    box-shadow:
+        0 3px 7px rgba(8, 28, 21, 0.14),
+        inset 0 2px 4px rgba(255, 255, 255, 0.65);
     overflow: hidden;
     position: relative;
 }
@@ -66,7 +92,7 @@
 .textoImagen {
     font-size: 15px;
     font-weight: 600;
-    color: #6B8797;
+    color: #2D6A4F;
     text-align: center;
 }
 
@@ -79,23 +105,36 @@
 
 .cajaDescripcion {
     flex: 1;
-    background-color: #D5E1E8;
+    background: linear-gradient(
+        145deg,
+        #FFFFFF,
+        #D8F3DC
+    );
     border-radius: 10px;
     padding: 14px 18px;
-    border: none;
+    border: 1px solid rgba(116, 198, 157, 0.55);
     resize: none;
     font-size: 15px;
     font-family: inherit;
-    color: #183648;
+    color: #081C15;
     outline: none;
-    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.12);
+    box-shadow:
+        inset 0 2px 4px rgba(45, 106, 79, 0.12),
+        0 2px 5px rgba(8, 28, 21, 0.1);
 }
 
 .bloqueMateriales {
-    background-color: #D5E1E8;
+    background: linear-gradient(
+    145deg,
+    #B7E4C7,
+    #95D5B2
+);
+    border: 1px solid rgba(255, 255, 255, 0.7);
     border-radius: 10px;
     overflow: hidden;
-    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.12);
+    box-shadow:
+        0 3px 7px rgba(8, 28, 21, 0.12),
+        inset 0 1px 3px rgba(255, 255, 255, 0.6);
 }
 
 .cabeceraMateriales {
@@ -104,17 +143,17 @@
     justify-content: space-between;
     align-items: center;
     font-weight: 700;
-    color: #183648;
-    border-bottom: 1px solid #9EB3C0;
+    color: #1B4332;
+    border-bottom: 1px solid rgba(64, 145, 108, 0.4);
 }
 
 .inputMateriales {
     width: 100%;
     padding: 8px 24px;
-    background-color: #D5E1E8;
+    background: rgba(216, 243, 220, 0.75);
     border: none;
     font-size: 15px;
-    color: #183648;
+    color: #081C15;
     outline: none;
     box-sizing: border-box;
 }
@@ -122,26 +161,39 @@
 .cajaInstrucciones {
     width: 100%;
     min-height: 180px;
-    background-color: #D5E1E8;
+    background: linear-gradient(
+        145deg,
+        #FFFFFF,
+        #D8F3DC
+    );
     border-radius: 10px;
     padding: 14px 24px;
-    border: none;
+    border: 1px solid rgba(116, 198, 157, 0.55);
     resize: vertical;
     font-size: 15px;
     font-family: inherit;
-    color: #183648;
+    color: #081C15;
     outline: none;
-    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.12);
+    box-shadow:
+        inset 0 2px 4px rgba(45, 106, 79, 0.12),
+        0 2px 5px rgba(8, 28, 21, 0.1);
     box-sizing: border-box;
 }
 
 .tarjetaAcciones {
     width: 100%;
     max-width: 1160px;
-    background-color: #93A9B6;
+    background: linear-gradient(
+        145deg,
+        rgba(216, 243, 220, 0.96),
+        rgba(183, 228, 199, 0.96)
+    );
+    border: 1px solid rgba(255, 255, 255, 0.75);
     border-radius: 22px;
     padding: 20px 42px;
-    box-shadow: 0 4px 10px rgba(0, 0, 0, 0.18);
+    box-shadow:
+        0 5px 15px rgba(8, 28, 21, 0.2),
+        inset 0 2px 5px rgba(255, 255, 255, 0.7);
     display: flex;
     flex-direction: column;
     gap: 14px;
@@ -155,72 +207,129 @@
 .botonBorrador {
     flex: 1;
     padding: 14px;
-    background-color: #183648;
-    color: white;
-    border: none;
+    background: linear-gradient(
+        145deg,
+        #40916C,
+        #1B4332
+    );
+    color: #FFFFFF;
+    border: 1px solid rgba(255, 255, 255, 0.25);
     border-radius: 10px;
     font-size: 22px;
     font-weight: 700;
     cursor: pointer;
-    box-shadow: 0 3px 6px rgba(0, 0, 0, 0.2);
+    box-shadow:
+        0 3px 7px rgba(8, 28, 21, 0.2),
+        inset 0 1px 3px rgba(255, 255, 255, 0.25);
+    transition: all 0.2s;
+}
+
+.botonBorrador:hover {
+    background: linear-gradient(
+        145deg,
+        #2D6A4F,
+        #081C15
+    );
 }
 
 .botonCancelar {
     flex: 1;
     padding: 14px;
-    background-color: #5D273A;
-    color: white;
-    border: none;
+    background: linear-gradient(
+        145deg,
+        #8B2635,
+        #5C1421
+    );
+    color: #FFFFFF;
+    border: 1px solid rgba(255, 255, 255, 0.25);
     border-radius: 10px;
     font-size: 22px;
     font-weight: 700;
     cursor: pointer;
-    box-shadow: 0 3px 6px rgba(0, 0, 0, 0.2);
+    box-shadow:
+        0 3px 7px rgba(50, 0, 10, 0.2),
+        inset 0 1px 3px rgba(255, 255, 255, 0.2);
+    transition: all 0.2s;
+}
+
+.botonCancelar:hover {
+    background: linear-gradient(
+        145deg,
+        #741D2B,
+        #3F0D17
+    );
 }
 
 .botonPublicar {
     width: 100%;
     padding: 14px;
-    background-color: #485A66;
-    color: white;
-    border: none;
+    background: linear-gradient(
+        145deg,
+        #52B788,
+        #2D6A4F
+    );
+    color: #FFFFFF;
+    border: 1px solid rgba(255, 255, 255, 0.3);
     border-radius: 10px;
     font-size: 22px;
     font-weight: 700;
     cursor: pointer;
-    box-shadow: 0 3px 6px rgba(0, 0, 0, 0.2);
+    box-shadow:
+        0 3px 7px rgba(8, 28, 21, 0.2),
+        inset 0 1px 3px rgba(255, 255, 255, 0.3);
+    transition: all 0.2s;
 }
 
 .botonPublicar:hover {
-    background-color: #183648;
+    background: linear-gradient(
+        145deg,
+        #40916C,
+        #1B4332
+    );
 }
+
 .contenedorChipsMateriales {
     padding: 12px 18px;
     display: flex;
     flex-wrap: wrap;
     gap: 8px;
-    background-color: #D5E1E8;
+    background: rgba(216, 243, 220, 0.85);
     border-radius: 0 0 10px 10px;
 }
 
 .chipMaterial {
     padding: 6px 14px;
     border-radius: 20px;
-    border: 1px solid #183648;
-    background-color: #FFFFFF;
-    color: #183648;
+    border: 1px solid rgba(64, 145, 108, 0.7);
+    background: linear-gradient(
+        145deg,
+        #FFFFFF,
+        #D8F3DC
+    );
+    color: #1B4332;
     font-size: 14px;
     font-weight: 600;
     cursor: pointer;
     transition: all 0.2s ease;
+    box-shadow:
+        0 2px 4px rgba(8, 28, 21, 0.1),
+        inset 0 1px 2px rgba(255, 255, 255, 0.7);
 }
 
 .chipMaterial:hover {
-    background-color: #B6C7D1;
+    background: linear-gradient(
+        145deg,
+        #B7E4C7,
+        #95D5B2
+    );
 }
 
 .chipSeleccionado {
-    background-color: #183648;
+    background: linear-gradient(
+        145deg,
+        #40916C,
+        #1B4332
+    );
     color: #FFFFFF;
-    border-color: #183648;
+    border-color: #1B4332;
 }
