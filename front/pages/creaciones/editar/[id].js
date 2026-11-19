@@ -21,6 +21,8 @@ export default function EditarCreacion() {
     const [catalogoMateriales, setCatalogoMateriales] = useState([]);
     const [materialesSeleccionados, setMaterialesSeleccionados] = useState([]);
     const [cantidades, setCantidades] = useState({});
+    const [catalogoHerramientas, setCatalogoHerramientas] = useState([]);
+    const [herramientasSeleccionadas, setHerramientasSeleccionadas] = useState([]);
     const [imagen, setImagen] = useState(null);
     const [preview, setPreview] = useState('');
     const [cargando, setCargando] = useState(true);
@@ -42,8 +44,12 @@ export default function EditarCreacion() {
         }
         setUsuario(u);
 
-        Promise.all([pedirJSON(`/creaciones/${id}`), pedirJSON('/materiales')])
-            .then(([creacion, materiales]) => {
+        Promise.all([
+            pedirJSON(`/creaciones/${id}`),
+            pedirJSON('/materiales'),
+            pedirJSON('/herramientas').catch(() => []),
+        ])
+            .then(([creacion, materiales, herramientas]) => {
                 if (!vigente) return;
 
                 if (Number(creacion.id_usuario) !== Number(idUsuario)) {
@@ -56,6 +62,10 @@ export default function EditarCreacion() {
                 setInstrucciones(aPasos(creacion.instrucciones).join('\n'));
                 setPreview(urlImagen(creacion.imagen));
                 setCatalogoMateriales(Array.isArray(materiales) ? materiales : []);
+                setCatalogoHerramientas(Array.isArray(herramientas) ? herramientas : []);
+                setHerramientasSeleccionadas(
+                    (creacion.herramientas || []).map((h) => h.id_herramientas).filter(Boolean)
+                );
                 const materialesCreacion = (creacion.materiales || []).filter((m) => m.id_materiales);
                 setMaterialesSeleccionados(materialesCreacion.map((m) => m.id_materiales));
                 setCantidades(Object.fromEntries(
@@ -100,6 +110,7 @@ export default function EditarCreacion() {
         formData.append('descripcion', descripcion);
         formData.append('instrucciones', limpiarPasos(instrucciones));
         formData.append('id_materiales', JSON.stringify(materialesSeleccionados));
+        formData.append('id_herramientas', JSON.stringify(herramientasSeleccionadas));
         formData.append('cantidades', JSON.stringify(
             Object.fromEntries(materialesSeleccionados.map((idM) => [idM, cantidades[idM] ?? 1]))
         ));
@@ -186,6 +197,16 @@ export default function EditarCreacion() {
                     cantidades={cantidades}
                     onCambiarCantidades={setCantidades}
                     cargando={catalogoMateriales.length === 0}
+                />
+
+                <SelectorMateriales
+                    catalogo={catalogoHerramientas}
+                    seleccionados={herramientasSeleccionadas}
+                    onCambiar={setHerramientasSeleccionadas}
+                    campoId="id_herramientas"
+                    titulo="Herramientas (opcional)"
+                    textoBuscar="Busca una herramienta: tijeras, cúter, pistola de silicón..."
+                    nombrePlural="herramientas"
                 />
 
                 <EditorPasos value={instrucciones} onChange={setInstrucciones} />

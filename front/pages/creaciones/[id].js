@@ -101,6 +101,7 @@ export default function DetalleCreacion() {
     const imagen = urlImagen(creacion.imagen);
     const autor = creacion.musuarios?.nombre;
     const materiales = Array.isArray(creacion.materiales) ? creacion.materiales : [];
+    const herramientas = Array.isArray(creacion.herramientas) ? creacion.herramientas : [];
     const idUsuarioActual = usuario?.id_usuario ?? usuario?.id;
     const esMio = idUsuarioActual != null && Number(creacion.id_usuario) === Number(idUsuarioActual);
 
@@ -130,6 +131,17 @@ export default function DetalleCreacion() {
                                         <span className={styles.cantidadMaterial}>{m.cantidad ?? 1}×</span>
                                         {m.nombre}
                                     </li>
+                                ))}
+                            </ul>
+                        </section>
+                    )}
+
+                    {herramientas.length > 0 && (
+                        <section>
+                            <h2>Herramientas</h2>
+                            <ul className={styles.listaHerramientas}>
+                                {herramientas.map((h) => (
+                                    <li key={h.id_herramientas ?? h.nombre}>{h.nombre}</li>
                                 ))}
                             </ul>
                         </section>

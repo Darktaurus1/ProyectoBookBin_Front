@@ -47,6 +47,11 @@ export default function SelectorMateriales({
     onCambiarCantidades,
     cargando = false,
     error = '',
+    // Para reutilizarlo con herramientas u otro catálogo
+    campoId = 'id_materiales',
+    titulo = 'Materiales utilizados',
+    textoBuscar = 'Busca un material: plástico, cartón, vidrio...',
+    nombrePlural = 'materiales',
 }) {
     const idLista = useId();
     const inputRef = useRef(null);
@@ -55,13 +60,13 @@ export default function SelectorMateriales({
     const [activo, setActivo] = useState(0);
 
     const materialesSeleccionados = seleccionados
-        .map((idM) => catalogo.find((m) => m.id_materiales === idM))
+        .map((idM) => catalogo.find((m) => m[campoId] === idM))
         .filter(Boolean);
 
     // Coincidencias: primero los que empiezan con lo escrito, luego los que lo contienen
     const resultados = useMemo(() => {
         const q = normalizar(busqueda);
-        const disponibles = catalogo.filter((m) => !seleccionados.includes(m.id_materiales));
+        const disponibles = catalogo.filter((m) => !seleccionados.includes(m[campoId]));
         if (!q) return disponibles;
 
         const empiezan = [];
@@ -76,8 +81,8 @@ export default function SelectorMateriales({
     }, [busqueda, catalogo, seleccionados]);
 
     const agregar = (material) => {
-        onCambiar([...seleccionados, material.id_materiales]);
-        onCambiarCantidades?.({ ...cantidades, [material.id_materiales]: 1 });
+        onCambiar([...seleccionados, material[campoId]]);
+        onCambiarCantidades?.({ ...cantidades, [material[campoId]]: 1 });
         setBusqueda('');
         setActivo(0);
         inputRef.current?.focus();
@@ -120,23 +125,23 @@ export default function SelectorMateriales({
     };
 
     const mostrarLista = abierto && !cargando && catalogo.length > 0;
-    const idActivo = mostrarLista && resultados[activo] ? `${idLista}-${resultados[activo].id_materiales}` : undefined;
+    const idActivo = mostrarLista && resultados[activo] ? `${idLista}-${resultados[activo][campoId]}` : undefined;
 
     return (
         <div className={styles.bloque}>
             <div className={styles.cabecera}>
-                <label htmlFor={`${idLista}-buscar`}>Materiales utilizados</label>
+                <label htmlFor={`${idLista}-buscar`}>{titulo}</label>
                 <span>{seleccionados.length} seleccionados</span>
             </div>
 
             <div className={styles.cuerpo}>
                 {/* Materiales ya elegidos, con su cantidad */}
                 {materialesSeleccionados.length > 0 && (
-                    <ul className={styles.elegidos} aria-label="Materiales seleccionados">
+                    <ul className={styles.elegidos} aria-label={`${titulo}: seleccionados`}>
                         {materialesSeleccionados.map((m) => {
-                            const cantidad = cantidades[m.id_materiales] ?? 1;
+                            const cantidad = cantidades[m[campoId]] ?? 1;
                             return (
-                                <li key={m.id_materiales} className={styles.fila}>
+                                <li key={m[campoId]} className={styles.fila}>
                                     <span className={styles.nombreFila}>{m.nombre}</span>
 
                                     {onCambiarCantidades && (
@@ -146,7 +151,7 @@ export default function SelectorMateriales({
                                                 className={styles.botonCantidad}
                                                 aria-label={`Quitar uno de ${m.nombre}`}
                                                 disabled={cantidad <= 1}
-                                                onClick={() => cambiarCantidad(m.id_materiales, cantidad - 1)}
+                                                onClick={() => cambiarCantidad(m[campoId], cantidad - 1)}
                                             >
                                                 −
                                             </button>
@@ -154,14 +159,14 @@ export default function SelectorMateriales({
                                                 valor={cantidad}
                                                 className={styles.numeroCantidad}
                                                 etiqueta={`Cantidad de ${m.nombre}`}
-                                                onCambiar={(v) => cambiarCantidad(m.id_materiales, v)}
+                                                onCambiar={(v) => cambiarCantidad(m[campoId], v)}
                                             />
                                             <button
                                                 type="button"
                                                 className={styles.botonCantidad}
                                                 aria-label={`Agregar uno de ${m.nombre}`}
                                                 disabled={cantidad >= CANTIDAD_MAXIMA}
-                                                onClick={() => cambiarCantidad(m.id_materiales, cantidad + 1)}
+                                                onClick={() => cambiarCantidad(m[campoId], cantidad + 1)}
                                             >
                                                 +
                                             </button>
@@ -172,7 +177,7 @@ export default function SelectorMateriales({
                                         type="button"
                                         className={styles.quitar}
                                         aria-label={`Quitar ${m.nombre}`}
-                                        onClick={() => quitar(m.id_materiales)}
+                                        onClick={() => quitar(m[campoId])}
                                     >
                                         ×
                                     </button>
@@ -194,7 +199,7 @@ export default function SelectorMateriales({
                         id={`${idLista}-buscar`}
                         type="text"
                         className={styles.input}
-                        placeholder={cargando ? 'Cargando materiales...' : 'Busca un material: plástico, cartón, vidrio...'}
+                        placeholder={cargando ? `Cargando ${nombrePlural}...` : textoBuscar}
                         autoComplete="off"
                         disabled={cargando}
                         role="combobox"
@@ -217,13 +222,13 @@ export default function SelectorMateriales({
                         <ul id={idLista} role="listbox" className={styles.lista}>
                             {resultados.length === 0 ? (
                                 <li className={styles.vacio}>
-                                    {busqueda ? `No hay materiales que coincidan con "${busqueda}"` : 'Ya seleccionaste todos los materiales'}
+                                    {busqueda ? `No hay ${nombrePlural} que coincidan con "${busqueda}"` : `Ya seleccionaste todos los ${nombrePlural}`}
                                 </li>
                             ) : (
                                 resultados.map((m, i) => (
                                     <li
-                                        key={m.id_materiales}
-                                        id={`${idLista}-${m.id_materiales}`}
+                                        key={m[campoId]}
+                                        id={`${idLista}-${m[campoId]}`}
                                         role="option"
                                         aria-selected={i === activo}
                                         className={`${styles.opcion} ${i === activo ? styles.opcionActiva : ''}`}

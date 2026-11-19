@@ -18,6 +18,11 @@ export default function NuevaCreacion() {
     // Cantidad de cada material: { idMaterial: cantidad }
     const [cantidades, setCantidades] = useState({});
 
+    // Catálogo de herramientas y las seleccionadas (opcionales)
+    const [catalogoHerramientas, setCatalogoHerramientas] = useState([]);
+    const [herramientasSeleccionadas, setHerramientasSeleccionadas] = useState([]);
+    const [cargandoHerramientas, setCargandoHerramientas] = useState(true);
+
     const [imagen, setImagen] = useState(null);
     const [preview, setPreview] = useState('');
     const [error, setError] = useState('');
@@ -45,6 +50,9 @@ export default function NuevaCreacion() {
                 if (datosBorrador.cantidades && typeof datosBorrador.cantidades === 'object') {
                     setCantidades(datosBorrador.cantidades);
                 }
+                if (Array.isArray(datosBorrador.herramientas)) {
+                    setHerramientasSeleccionadas(datosBorrador.herramientas);
+                }
             } catch {
             }
         }
@@ -59,6 +67,18 @@ export default function NuevaCreacion() {
                 }
             })
             .catch(() => setError('No se pudieron cargar los materiales disponibles.'));
+
+        // Cargar catálogo de herramientas desde la BD
+        pedirJSON('/herramientas')
+            .then((datos) => {
+                if (Array.isArray(datos)) {
+                    setCatalogoHerramientas(datos);
+                    const idsValidos = datos.map((h) => h.id_herramientas);
+                    setHerramientasSeleccionadas((prev) => prev.filter((id) => idsValidos.includes(id)));
+                }
+            })
+            .catch(() => setError('No se pudieron cargar las herramientas disponibles.'))
+            .finally(() => setCargandoHerramientas(false));
     }, [router]);
 
     const manejarCambioImagen = (e) => {
@@ -78,6 +98,7 @@ export default function NuevaCreacion() {
                 instrucciones,
                 materiales: materialesSeleccionados,
                 cantidades,
+                herramientas: herramientasSeleccionadas,
             })
         );
         setMensaje('Borrador guardado correctamente.');
@@ -108,6 +129,7 @@ export default function NuevaCreacion() {
             formData.append('id_usuario', usuario.id_usuario ?? usuario.id);
             formData.append('accion', 'publicar');
             formData.append('id_materiales', JSON.stringify(materialesSeleccionados));
+            formData.append('id_herramientas', JSON.stringify(herramientasSeleccionadas));
             formData.append('cantidades', JSON.stringify(
                 Object.fromEntries(materialesSeleccionados.map((idM) => [idM, cantidades[idM] ?? 1]))
             ));
@@ -186,6 +208,17 @@ export default function NuevaCreacion() {
                     cantidades={cantidades}
                     onCambiarCantidades={setCantidades}
                     cargando={catalogoMateriales.length === 0}
+                />
+
+                <SelectorMateriales
+                    catalogo={catalogoHerramientas}
+                    seleccionados={herramientasSeleccionadas}
+                    onCambiar={setHerramientasSeleccionadas}
+                    cargando={cargandoHerramientas}
+                    campoId="id_herramientas"
+                    titulo="Herramientas (opcional)"
+                    textoBuscar="Busca una herramienta: tijeras, cúter, pistola de silicón..."
+                    nombrePlural="herramientas"
                 />
 
                 <EditorPasos value={instrucciones} onChange={setInstrucciones} maxCaracteres={500} />
