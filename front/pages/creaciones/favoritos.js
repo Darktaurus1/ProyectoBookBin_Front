@@ -56,12 +56,14 @@ export default function Guardados() {
     if (usuario === null) {
         return (
             <main className={styles.fondo}>
-                <p style={{ color: '#DCE6EC', textAlign: 'center', marginTop: '40px' }}>
-                    Inicia sesión para ver tus creaciones guardadas.{' '}
-                    <Link href="/login" style={{ color: '#FFFFFF', textDecoration: 'underline' }}>
-                        Ir a iniciar sesión
-                    </Link>
-                </p>
+                <div className={styles.avisoContenedor}>
+                    <p className={styles.avisoTexto}>
+                        Inicia sesión para ver tus creaciones guardadas.{' '}
+                        <Link href="/login" className={styles.avisoEnlace}>
+                            Ir a iniciar sesión
+                        </Link>
+                    </p>
+                </div>
             </main>
         );
     }

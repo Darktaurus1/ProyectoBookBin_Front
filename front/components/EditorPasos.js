@@ -24,7 +24,7 @@ function ajustarAltura(el) {
     el.style.height = `${el.scrollHeight}px`;
 }
 
-export default function EditorPasos({ value, onChange, maxCaracteres = 500 }) {
+export default function EditorPasos({ value, onChange}) {
     const idBase = useId();
     const refs = useRef([]);
     const enfocar = useRef(null); // { indice, alFinal }
@@ -126,9 +126,6 @@ export default function EditorPasos({ value, onChange, maxCaracteres = 500 }) {
         <div className={styles.bloque}>
             <div className={styles.cabecera}>
                 <span id={`${idBase}-titulo`}>Instrucciones paso a paso</span>
-                <span className={usados > maxCaracteres ? styles.contadorExcedido : styles.contador}>
-                    {usados}/{maxCaracteres}
-                </span>
             </div>
 
             <ol className={styles.lista} aria-labelledby={`${idBase}-titulo`}>
