@@ -156,3 +156,8 @@
         font-size: 24px;
     }
 }
+.registro-contenedor {
+    position: relative;
+    isolation: isolate;
+    /* ...lo que ya tienes */
+}

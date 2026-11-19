@@ -2,6 +2,7 @@ import { useState } from 'react';
 import { useRouter } from 'next/router';
 import Link from 'next/link';
 import styles from './registro.module.css';
+import FondoReciclaje from '../components/FondoReciclaje';
 
 export default function Login() {
     const router = useRouter();
@@ -46,7 +47,8 @@ export default function Login() {
     };
 
     return (
-        <main className={styles['registro-contenedor']}>
+            <main className={styles['registro-contenedor']}>
+    <FondoReciclaje />
             <div className={styles['registro-tarjeta']}>
                 <h3 className={styles['registro-encabezado']}>
                     ¡Inicia sesión y volvamos a armar!
