@@ -4,6 +4,7 @@ import { useEffect, useState } from 'react';
 import { pedirJSON } from '../../lib/api';
 import ModalReporte from '../../components/ModalReporte';
 import styles from './creaciones.module.css';
+import { aPasos } from '../../components/EditorPasos';
 
 function urlImagen(imagen) {
     if (!imagen) return null;
@@ -136,13 +137,17 @@ export default function DetalleCreacion() {
                         <p className={styles.texto}>{creacion.descripcion}</p>
                     </section>
 
-                    {creacion.instrucciones && (
+                    
+                    {aPasos(creacion.instrucciones).length > 0 && (
                         <section>
                             <h2>Instrucciones</h2>
-                            <p className={styles.texto}>{creacion.instrucciones}</p>
+                            <ol className={styles.pasos}>
+                                {aPasos(creacion.instrucciones).map((paso, i) => (
+                                    <li key={i}>{paso}</li>
+                                ))}
+                            </ol>
                         </section>
                     )}
-
                     {mensaje && <p className={styles.mensaje} role="status">{mensaje}</p>}
 
                     <div className={styles.botones}>

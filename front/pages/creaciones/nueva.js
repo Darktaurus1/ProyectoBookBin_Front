@@ -3,6 +3,7 @@ import { useRouter } from 'next/router';
 import { pedirJSON } from '../../lib/api';
 import styles from './nueva.module.css';
 import SelectorMateriales from '../../components/SelectorMateriales';
+import EditorPasos, { limpiarPasos } from '../../components/EditorPasos';
 
 export default function NuevaCreacion() {
     const router = useRouter();
@@ -55,8 +56,6 @@ export default function NuevaCreacion() {
             .catch(() => setError('No se pudieron cargar los materiales disponibles.'));
     }, [router]);
 
-   
-
     const manejarCambioImagen = (e) => {
         const archivo = e.target.files[0];
         if (!archivo) return;
@@ -90,12 +89,16 @@ export default function NuevaCreacion() {
             setError('Selecciona al menos un material de la lista.');
             return;
         }
+        if (!limpiarPasos(instrucciones)) {
+            setError('Agrega al menos un paso en las instrucciones.');
+            return;
+        }
 
         try {
             const formData = new FormData();
             formData.append('nombre', nombre);
             formData.append('descripcion', descripcion);
-            formData.append('instrucciones', instrucciones);
+            formData.append('instrucciones', limpiarPasos(instrucciones));
             formData.append('id_usuario', usuario.id_usuario ?? usuario.id);
             formData.append('accion', 'publicar');
             formData.append('id_materiales', JSON.stringify(materialesSeleccionados));
@@ -166,6 +169,7 @@ export default function NuevaCreacion() {
                         required
                     />
                 </div>
+
                 <SelectorMateriales
                     catalogo={catalogoMateriales}
                     seleccionados={materialesSeleccionados}
@@ -173,13 +177,7 @@ export default function NuevaCreacion() {
                     cargando={catalogoMateriales.length === 0}
                 />
 
-                <textarea
-                    className={styles.cajaInstrucciones}
-                    placeholder="Instrucciones..."
-                    value={instrucciones}
-                    onChange={(e) => setInstrucciones(e.target.value)}
-                    required
-                />
+                <EditorPasos value={instrucciones} onChange={setInstrucciones} maxCaracteres={500} />
             </div>
 
             {/* Tarjeta de acciones recuperada con Borrador, Cancelar y Publicar */}

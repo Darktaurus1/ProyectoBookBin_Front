@@ -3,6 +3,7 @@ import { useRouter } from 'next/router';
 import { pedirJSON } from '../../../lib/api';
 import styles from '../nueva.module.css';
 import SelectorMateriales from '../../../components/SelectorMateriales';
+import EditorPasos, { aPasos, limpiarPasos } from '../../../components/EditorPasos';
 
 function urlImagen(imagen) {
     if (!imagen) return '';
@@ -51,7 +52,7 @@ export default function EditarCreacion() {
 
                 setNombre(creacion.nombre || '');
                 setDescripcion(creacion.descripcion || '');
-                setInstrucciones(creacion.instrucciones || '');
+                setInstrucciones(aPasos(creacion.instrucciones).join('\n'));
                 setPreview(urlImagen(creacion.imagen));
                 setCatalogoMateriales(Array.isArray(materiales) ? materiales : []);
                 setMaterialesSeleccionados(
@@ -181,15 +182,7 @@ export default function EditarCreacion() {
                     cargando={catalogoMateriales.length === 0}
                 />
 
-                <textarea
-                    className={styles.cajaInstrucciones}
-                    placeholder="Instrucciones..."
-                    aria-label="Instrucciones"
-                    maxLength={500}
-                    value={instrucciones}
-                    onChange={(e) => setInstrucciones(e.target.value)}
-                    required
-                />
+                <EditorPasos value={instrucciones} onChange={setInstrucciones} maxCaracteres={500} />
             </div>
 
             <div className={styles.tarjetaAcciones}>
