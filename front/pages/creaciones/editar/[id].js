@@ -168,7 +168,7 @@ export default function EditarCreacion() {
                         className={styles.cajaDescripcion}
                         placeholder="Descripción..."
                         aria-label="Descripción"
-                        maxLength={100}
+                        maxLength={400}
                         value={descripcion}
                         onChange={(e) => setDescripcion(e.target.value)}
                         required
@@ -182,7 +182,7 @@ export default function EditarCreacion() {
                     cargando={catalogoMateriales.length === 0}
                 />
 
-                <EditorPasos value={instrucciones} onChange={setInstrucciones} maxCaracteres={500} />
+                <EditorPasos value={instrucciones} onChange={setInstrucciones} />
             </div>
 
             <div className={styles.tarjetaAcciones}>
