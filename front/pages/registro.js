@@ -104,6 +104,12 @@ export default function Registro() {
                         ¡Inicia sesión!
                     </Link>
                 </p>
+                <p className={styles['registro-enlace']}>
+                    Quieres solo ver las creaciones?{' '}
+                    <Link href="/">
+                        ¡Entra como invitado!
+                    </Link>
+                </p>
             </div>
         </main>
     );
