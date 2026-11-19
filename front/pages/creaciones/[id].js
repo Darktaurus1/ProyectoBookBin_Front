@@ -21,6 +21,7 @@ export default function DetalleCreacion() {
     const [errorCarga, setErrorCarga] = useState('');
     const [mensaje, setMensaje] = useState('');
     const [reportando, setReportando] = useState(false);
+    
 
     // Carga la creación y revisa si el usuario ya la guardó
     useEffect(() => {
@@ -99,6 +100,8 @@ export default function DetalleCreacion() {
     const imagen = urlImagen(creacion.imagen);
     const autor = creacion.musuarios?.nombre;
     const materiales = Array.isArray(creacion.materiales) ? creacion.materiales : [];
+    const idUsuarioActual = usuario?.id_usuario ?? usuario?.id;
+    const esMio = idUsuarioActual != null && Number(creacion.id_usuario) === Number(idUsuarioActual);
 
     return (
         <main className={styles.fondo}>
@@ -149,9 +152,15 @@ export default function DetalleCreacion() {
                         <button type="button" className={styles.botonRegresar} onClick={() => router.back()}>
                             Regresar
                         </button>
-                        <button type="button" className={styles.botonReportar} onClick={abrirReporte}>
-                            Reportar
-                        </button>
+                        {esMio ? (
+                         <Link href={`/creaciones/editar/${creacion.id_creacion}`} className={styles.botonEditar}>
+                                        Editar
+                                    </Link>
+                                ) : (
+                                    <button type="button" className={styles.botonReportar} onClick={abrirReporte}>
+                                        Reportar
+                                    </button>
+                                        )}
                     </div>
                 </div>
             </article>
