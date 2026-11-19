@@ -187,7 +187,9 @@ export default function Reporte() {
         <p>{reporte.contenido}</p>
       </article>
       <div className={styles.botones}>
-        <button >Aprobar Verificación</button>
+        <button type="button" className={styles.botonAprobar} onClick={aprobar}>Aprobar Verificación</button>
+        <button type="button" className={styles.botonBanear} onClick={banear}>Banear</button>
+        <button type="button" className={styles.botonRegresar} onClick={Regresar}>Verificar más tarde y regresar</button>
       </div>
     </main>
   );
