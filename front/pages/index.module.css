@@ -107,9 +107,9 @@
 }
 
 .listaCreacion {
-    display: flex;
-    flex-direction: column;
-    gap: 16px;
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(240px, 1fr));
+    gap: 20px;
 }
 
 .contenedorBotonNueva {

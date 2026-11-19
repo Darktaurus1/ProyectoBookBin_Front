@@ -13,46 +13,48 @@ export default function TarjetaCreacion({ creacion, onGuardar, guardado = false 
     const [reportando, setReportando] = useState(false);
 
     return (
-        <article className={styles.fila}>
+        <article className={styles.tarjeta}>
             <div className={styles.imagenCaja}>
                 {creacion.imagen ? (
                     <img
                         src={creacion.imagen.startsWith('http') ? creacion.imagen : `http://localhost:4000${creacion.imagen}`}
-                        alt={creacion.nombre}
+                        alt=""
                     />
                 ) : (
-                    <svg width="48" height="48" viewBox="0 0 24 24" fill="#6B8797">
+                    <svg width="48" height="48" viewBox="0 0 24 24" fill="#6B8797" aria-hidden="true">
                         <path d="M21 19V5c0-1.1-.9-2-2-2H5c-1.1 0-2 .9-2 2v14c0 1.1.9 2 2 2h14c1.1 0 2-.9 2-2zM8.5 13.5l2.5 3.01L14.5 12l4.5 6H5l3.5-4.5z" />
                     </svg>
                 )}
             </div>
 
-            <div className={styles.contenido}>
+            {/* Guardar y tres puntitos, encima de la imagen */}
+            <div className={styles.acciones}>
                 <button
                     type="button"
-                    className={styles.botonGuardar}
+                    className={styles.botonIcono}
                     title={guardado ? 'Quitar de guardados' : 'Guardar creación'}
                     aria-label={guardado ? 'Quitar de guardados' : 'Guardar creación'}
                     onClick={() => onGuardar && onGuardar(id)}
                 >
                     <svg
-                        width="20"
-                        height="24"
+                        width="18"
+                        height="20"
                         viewBox="0 0 24 24"
                         fill={guardado ? 'currentColor' : 'none'}
                         stroke="currentColor"
                         strokeWidth="2"
+                        aria-hidden="true"
                     >
                         <path d="M19 21l-7-5-7 5V5a2 2 0 0 1 2-2h10a2 2 0 0 1 2 2z" />
                     </svg>
                 </button>
 
-                {/* Tres puntitos: abre y cierra el menú de opciones */}
                 <button
                     type="button"
-                    className={styles.botonMenu}
+                    className={styles.botonIcono}
                     title="Más opciones"
                     aria-label="Más opciones"
+                    aria-expanded={menuAbierto}
                     onClick={() => setMenuAbierto(!menuAbierto)}
                 >
                     ⋮
@@ -71,25 +73,17 @@ export default function TarjetaCreacion({ creacion, onGuardar, guardado = false 
                         </button>
                     </div>
                 )}
-
-                <div className={styles.encabezado}>
-                    <Link href={`/creaciones/${id}`} className={styles.titulo}>
-                        {creacion.nombre}
-                    </Link>
-                </div>
-
-                <div className={styles.filaMateriales}>
-                    <span>{materialesTexto}</span>
-                    <Link href={`/creaciones/${id}`} className={styles.verMas}>Más..</Link>
-                </div>
-
-                <div className={styles.filaDescripcion}>
-                    <p className={styles.descripcionTexto}>{creacion.descripcion}</p>
-                    <Link href={`/creaciones/${id}`} className={styles.verMas}>Más...</Link>
-                </div>
             </div>
 
-            {/* Formulario de reporte: solo se muestra al elegir "Reportar" */}
+            <div className={styles.contenido}>
+                {/* El enlace del título cubre toda la tarjeta: clic en cualquier parte abre el detalle */}
+                <Link href={`/creaciones/${id}`} className={styles.titulo}>
+                    {creacion.nombre}
+                </Link>
+                <p className={styles.materiales}>{materialesTexto}</p>
+                <p className={styles.descripcion}>{creacion.descripcion}</p>
+            </div>
+
             {reportando && (
                 <ModalReporte idCreacion={id} onCerrar={() => setReportando(false)} />
             )}
