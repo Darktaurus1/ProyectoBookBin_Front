@@ -2,6 +2,7 @@ import { useEffect, useState } from 'react';
 import { useRouter } from 'next/router';
 import { pedirJSON } from '../../lib/api';
 import styles from './nueva.module.css';
+import SelectorMateriales from '../../components/SelectorMateriales';
 
 export default function NuevaCreacion() {
     const router = useRouter();
@@ -54,14 +55,7 @@ export default function NuevaCreacion() {
             .catch(() => setError('No se pudieron cargar los materiales disponibles.'));
     }, [router]);
 
-    // Activar o desactivar la selección de un material
-    const alternarMaterial = (idMaterial) => {
-        setMaterialesSeleccionados((prev) =>
-            prev.includes(idMaterial)
-                ? prev.filter((id) => id !== idMaterial)
-                : [...prev, idMaterial]
-        );
-    };
+   
 
     const manejarCambioImagen = (e) => {
         const archivo = e.target.files[0];
@@ -172,36 +166,12 @@ export default function NuevaCreacion() {
                         required
                     />
                 </div>
-
-                {/* Selección interactiva de materiales */}
-                <div className={styles.bloqueMateriales}>
-                    <div className={styles.cabeceraMateriales}>
-                        <span>Selecciona los materiales utilizados</span>
-                        <span>({materialesSeleccionados.length} seleccionados)</span>
-                    </div>
-                    
-                    <div className={styles.contenedorChipsMateriales}>
-                        {catalogoMateriales.length === 0 ? (
-                            <p style={{ padding: '10px', color: '#6B8797' }}>
-                                {error ? 'No se pudieron obtener materiales de la BD.' : 'Cargando materiales...'}
-                            </p>
-                        ) : (
-                            catalogoMateriales.map((mat) => {
-                                const estaSeleccionado = materialesSeleccionados.includes(mat.id_materiales);
-                                return (
-                                    <button
-                                        key={mat.id_materiales}
-                                        type="button"
-                                        className={`${styles.chipMaterial} ${estaSeleccionado ? styles.chipSeleccionado : ''}`}
-                                        onClick={() => alternarMaterial(mat.id_materiales)}
-                                    >
-                                        {estaSeleccionado ? '✓ ' : '+ '} {mat.nombre}
-                                    </button>
-                                );
-                            })
-                        )}
-                    </div>
-                </div>
+                <SelectorMateriales
+                    catalogo={catalogoMateriales}
+                    seleccionados={materialesSeleccionados}
+                    onCambiar={setMaterialesSeleccionados}
+                    cargando={catalogoMateriales.length === 0}
+                />
 
                 <textarea
                     className={styles.cajaInstrucciones}
