@@ -2,6 +2,7 @@ import { useState } from 'react';
 import { useRouter } from 'next/router';
 import Link from 'next/link';
 import styles from './registro.module.css';
+import FondoReciclaje from '../components/FondoReciclaje';
 
 export default function Registro() {
     const router = useRouter();
@@ -40,7 +41,8 @@ export default function Registro() {
     };
 
     return (
-        <main className={styles['registro-contenedor']}>
+       <main className={styles['registro-contenedor']}>
+    <FondoReciclaje />
             <div className={styles['registro-tarjeta']}>
                 <h3 className={styles['registro-encabezado']}>
                     Regístrate y empieza a armar
@@ -102,6 +104,12 @@ export default function Registro() {
                     ¿Ya cuentas con una cuenta?{' '}
                     <Link href="/login">
                         ¡Inicia sesión!
+                    </Link>
+                </p>
+                <p className={styles['registro-enlace']}>
+                    Quieres solo ver las creaciones?{' '}
+                    <Link href="/">
+                        ¡Entra como invitado!
                     </Link>
                 </p>
             </div>

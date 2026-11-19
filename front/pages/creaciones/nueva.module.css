@@ -123,40 +123,9 @@
         0 2px 5px rgba(8, 28, 21, 0.1);
 }
 
-.bloqueMateriales {
-    background: linear-gradient(
-    145deg,
-    #B7E4C7,
-    #95D5B2
-);
-    border: 1px solid rgba(255, 255, 255, 0.7);
-    border-radius: 10px;
-    overflow: hidden;
-    box-shadow:
-        0 3px 7px rgba(8, 28, 21, 0.12),
-        inset 0 1px 3px rgba(255, 255, 255, 0.6);
-}
 
-.cabeceraMateriales {
-    padding: 8px 24px;
-    display: flex;
-    justify-content: space-between;
-    align-items: center;
-    font-weight: 700;
-    color: #1B4332;
-    border-bottom: 1px solid rgba(64, 145, 108, 0.4);
-}
 
-.inputMateriales {
-    width: 100%;
-    padding: 8px 24px;
-    background: rgba(216, 243, 220, 0.75);
-    border: none;
-    font-size: 15px;
-    color: #081C15;
-    outline: none;
-    box-sizing: border-box;
-}
+
 
 .cajaInstrucciones {
     width: 100%;
@@ -288,48 +257,5 @@
     );
 }
 
-.contenedorChipsMateriales {
-    padding: 12px 18px;
-    display: flex;
-    flex-wrap: wrap;
-    gap: 8px;
-    background: rgba(216, 243, 220, 0.85);
-    border-radius: 0 0 10px 10px;
-}
 
-.chipMaterial {
-    padding: 6px 14px;
-    border-radius: 20px;
-    border: 1px solid rgba(64, 145, 108, 0.7);
-    background: linear-gradient(
-        145deg,
-        #FFFFFF,
-        #D8F3DC
-    );
-    color: #1B4332;
-    font-size: 14px;
-    font-weight: 600;
-    cursor: pointer;
-    transition: all 0.2s ease;
-    box-shadow:
-        0 2px 4px rgba(8, 28, 21, 0.1),
-        inset 0 1px 2px rgba(255, 255, 255, 0.7);
-}
 
-.chipMaterial:hover {
-    background: linear-gradient(
-        145deg,
-        #B7E4C7,
-        #95D5B2
-    );
-}
-
-.chipSeleccionado {
-    background: linear-gradient(
-        145deg,
-        #40916C,
-        #1B4332
-    );
-    color: #FFFFFF;
-    border-color: #1B4332;
-}

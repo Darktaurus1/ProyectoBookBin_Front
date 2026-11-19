@@ -2,6 +2,7 @@ import { useEffect, useState } from 'react';
 import { useRouter } from 'next/router';
 import { pedirJSON } from '../../../lib/api';
 import styles from '../nueva.module.css';
+import SelectorMateriales from '../../../components/SelectorMateriales';
 
 function urlImagen(imagen) {
     if (!imagen) return '';
@@ -63,13 +64,7 @@ export default function EditarCreacion() {
         return () => { vigente = false; };
     }, [router.isReady, id]);
 
-    const alternarMaterial = (idMaterial) => {
-        setMaterialesSeleccionados((prev) =>
-            prev.includes(idMaterial)
-                ? prev.filter((idM) => idM !== idMaterial)
-                : [...prev, idMaterial]
-        );
-    };
+ 
 
     const manejarCambioImagen = (e) => {
         const archivo = e.target.files[0];
@@ -179,29 +174,12 @@ export default function EditarCreacion() {
                     />
                 </div>
 
-                <div className={styles.bloqueMateriales}>
-                    <div className={styles.cabeceraMateriales}>
-                        <span>Materiales utilizados</span>
-                        <span>({materialesSeleccionados.length} seleccionados)</span>
-                    </div>
-
-                    <div className={styles.contenedorChipsMateriales}>
-                        {catalogoMateriales.map((mat) => {
-                            const estaSeleccionado = materialesSeleccionados.includes(mat.id_materiales);
-                            return (
-                                <button
-                                    key={mat.id_materiales}
-                                    type="button"
-                                    aria-pressed={estaSeleccionado}
-                                    className={`${styles.chipMaterial} ${estaSeleccionado ? styles.chipSeleccionado : ''}`}
-                                    onClick={() => alternarMaterial(mat.id_materiales)}
-                                >
-                                    {estaSeleccionado ? '✓ ' : '+ '} {mat.nombre}
-                                </button>
-                            );
-                        })}
-                    </div>
-                </div>
+                <SelectorMateriales
+                    catalogo={catalogoMateriales}
+                    seleccionados={materialesSeleccionados}
+                    onCambiar={setMaterialesSeleccionados}
+                    cargando={catalogoMateriales.length === 0}
+                />
 
                 <textarea
                     className={styles.cajaInstrucciones}
