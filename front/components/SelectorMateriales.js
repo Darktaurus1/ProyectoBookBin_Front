@@ -1,4 +1,4 @@
-import { useId, useMemo, useRef, useState } from 'react';
+import { useEffect, useId, useMemo, useRef, useState } from 'react';
 import styles from './SelectorMateriales.module.css';
 
 // Quita acentos y mayúsculas: "Plástico" y "plastico" cuentan igual
@@ -10,7 +10,44 @@ function normalizar(texto) {
         .trim();
 }
 
-export default function SelectorMateriales({ catalogo, seleccionados, onCambiar, cargando = false, error = '' }) {
+export const CANTIDAD_MAXIMA = 999;
+
+// Campo numérico que deja borrar y reescribir; si queda vacío, al salir regresa al valor anterior
+function CampoCantidad({ valor, onCambiar, etiqueta, className }) {
+    const [texto, setTexto] = useState(String(valor));
+
+    useEffect(() => {
+        setTexto(String(valor));
+    }, [valor]);
+
+    return (
+        <input
+            type="number"
+            inputMode="numeric"
+            min={1}
+            max={CANTIDAD_MAXIMA}
+            className={className}
+            aria-label={etiqueta}
+            value={texto}
+            onChange={(e) => {
+                setTexto(e.target.value);
+                if (e.target.value !== '') onCambiar(e.target.value);
+            }}
+            onBlur={() => setTexto(String(valor))}
+            onFocus={(e) => e.target.select()}
+        />
+    );
+}
+
+export default function SelectorMateriales({
+    catalogo,
+    seleccionados,
+    onCambiar,
+    cantidades = {},
+    onCambiarCantidades,
+    cargando = false,
+    error = '',
+}) {
     const idLista = useId();
     const inputRef = useRef(null);
     const [busqueda, setBusqueda] = useState('');
@@ -40,6 +77,7 @@ export default function SelectorMateriales({ catalogo, seleccionados, onCambiar,
 
     const agregar = (material) => {
         onCambiar([...seleccionados, material.id_materiales]);
+        onCambiarCantidades?.({ ...cantidades, [material.id_materiales]: 1 });
         setBusqueda('');
         setActivo(0);
         inputRef.current?.focus();
@@ -47,6 +85,17 @@ export default function SelectorMateriales({ catalogo, seleccionados, onCambiar,
 
     const quitar = (idMaterial) => {
         onCambiar(seleccionados.filter((idM) => idM !== idMaterial));
+        if (onCambiarCantidades) {
+            const { [idMaterial]: _, ...resto } = cantidades;
+            onCambiarCantidades(resto);
+        }
+    };
+
+    // Cantidad entre 1 y 999; si escriben algo inválido se queda en 1
+    const cambiarCantidad = (idMaterial, valor) => {
+        const numero = Math.round(Number(valor));
+        const cantidad = Number.isFinite(numero) ? Math.min(Math.max(numero, 1), CANTIDAD_MAXIMA) : 1;
+        onCambiarCantidades?.({ ...cantidades, [idMaterial]: cantidad });
     };
 
     const manejarTeclas = (e) => {
@@ -81,22 +130,55 @@ export default function SelectorMateriales({ catalogo, seleccionados, onCambiar,
             </div>
 
             <div className={styles.cuerpo}>
-                {/* Materiales ya elegidos */}
+                {/* Materiales ya elegidos, con su cantidad */}
                 {materialesSeleccionados.length > 0 && (
                     <ul className={styles.elegidos} aria-label="Materiales seleccionados">
-                        {materialesSeleccionados.map((m) => (
-                            <li key={m.id_materiales} className={styles.chip}>
-                                {m.nombre}
-                                <button
-                                    type="button"
-                                    className={styles.quitar}
-                                    aria-label={`Quitar ${m.nombre}`}
-                                    onClick={() => quitar(m.id_materiales)}
-                                >
-                                    ×
-                                </button>
-                            </li>
-                        ))}
+                        {materialesSeleccionados.map((m) => {
+                            const cantidad = cantidades[m.id_materiales] ?? 1;
+                            return (
+                                <li key={m.id_materiales} className={styles.fila}>
+                                    <span className={styles.nombreFila}>{m.nombre}</span>
+
+                                    {onCambiarCantidades && (
+                                        <div className={styles.cantidad} role="group" aria-label={`Cantidad de ${m.nombre}`}>
+                                            <button
+                                                type="button"
+                                                className={styles.botonCantidad}
+                                                aria-label={`Quitar uno de ${m.nombre}`}
+                                                disabled={cantidad <= 1}
+                                                onClick={() => cambiarCantidad(m.id_materiales, cantidad - 1)}
+                                            >
+                                                −
+                                            </button>
+                                            <CampoCantidad
+                                                valor={cantidad}
+                                                className={styles.numeroCantidad}
+                                                etiqueta={`Cantidad de ${m.nombre}`}
+                                                onCambiar={(v) => cambiarCantidad(m.id_materiales, v)}
+                                            />
+                                            <button
+                                                type="button"
+                                                className={styles.botonCantidad}
+                                                aria-label={`Agregar uno de ${m.nombre}`}
+                                                disabled={cantidad >= CANTIDAD_MAXIMA}
+                                                onClick={() => cambiarCantidad(m.id_materiales, cantidad + 1)}
+                                            >
+                                                +
+                                            </button>
+                                        </div>
+                                    )}
+
+                                    <button
+                                        type="button"
+                                        className={styles.quitar}
+                                        aria-label={`Quitar ${m.nombre}`}
+                                        onClick={() => quitar(m.id_materiales)}
+                                    >
+                                        ×
+                                    </button>
+                                </li>
+                            );
+                        })}
                     </ul>
                 )}
 

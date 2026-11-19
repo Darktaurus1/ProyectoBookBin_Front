@@ -43,50 +43,109 @@
     margin: 0;
     padding: 0;
     display: flex;
-    flex-wrap: wrap;
+    flex-direction: column;
     gap: 8px;
 }
 
-.chip {
-    display: inline-flex;
+/* Una fila por material: nombre, cantidad y botón para quitar */
+.fila {
+    display: flex;
     align-items: center;
-    gap: 6px;
-    padding: 5px 6px 5px 14px;
-    border-radius: 999px;
-    background: linear-gradient(
-        145deg,
-        #40916C,
-        #1B4332
-    );
-    color: #FFFFFF;
-    font-size: 14px;
+    gap: 12px;
+    padding: 6px 8px 6px 16px;
+    background: #FFFFFF;
+    border: 1px solid #B7E4C7;
+    border-radius: 12px;
+    box-shadow: 0 1px 3px rgba(8, 28, 21, 0.08);
+}
+
+.nombreFila {
+    flex: 1;
+    min-width: 0;
+    font-size: 15px;
     font-weight: 600;
-    box-shadow:
-        0 2px 4px rgba(8, 28, 21, 0.18),
-        inset 0 1px 2px rgba(255, 255, 255, 0.25);
+    color: #1B4332;
+    overflow-wrap: anywhere;
+}
+
+.cantidad {
+    display: flex;
+    align-items: center;
+    border: 1px solid #74C69D;
+    border-radius: 999px;
+    overflow: hidden;
+}
+
+.botonCantidad {
+    width: 32px;
+    height: 32px;
+    border: none;
+    background: #D8F3DC;
+    color: #1B4332;
+    font-size: 18px;
+    font-weight: 700;
+    line-height: 1;
+    cursor: pointer;
+}
+
+.botonCantidad:hover:not(:disabled) {
+    background: #B7E4C7;
+}
+
+.botonCantidad:disabled {
+    color: #95B8A6;
+    cursor: not-allowed;
+}
+
+.numeroCantidad {
+    width: 48px;
+    height: 32px;
+    box-sizing: border-box;
+    border: none;
+    text-align: center;
+    font: inherit;
+    font-size: 15px;
+    font-weight: 700;
+    color: #081C15;
+    background: #FFFFFF;
+    -moz-appearance: textfield;
+}
+
+.numeroCantidad::-webkit-outer-spin-button,
+.numeroCantidad::-webkit-inner-spin-button {
+    -webkit-appearance: none;
+    margin: 0;
+}
+
+.botonCantidad:focus-visible,
+.numeroCantidad:focus-visible {
+    outline: 2px solid #1B4332;
+    outline-offset: -2px;
 }
 
 .quitar {
-    width: 22px;
-    height: 22px;
+    width: 30px;
+    height: 30px;
+    flex: 0 0 30px;
     display: flex;
     align-items: center;
     justify-content: center;
     border: none;
     border-radius: 50%;
-    background: rgba(255, 255, 255, 0.2);
-    color: #FFFFFF;
-    font-size: 16px;
+    background: transparent;
+    color: #52796F;
+    font-size: 20px;
     line-height: 1;
     cursor: pointer;
 }
 
 .quitar:hover {
-    background: rgba(255, 255, 255, 0.4);
+    background: rgba(122, 0, 25, 0.1);
+    color: #7a0019;
 }
 
 .quitar:focus-visible {
-    outline: 2px solid #FFFFFF;
+    outline: 2px solid #1B4332;
     outline-offset: 1px;
 }
 
