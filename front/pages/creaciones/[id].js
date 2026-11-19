@@ -123,10 +123,13 @@ export default function DetalleCreacion() {
 
                     {materiales.length > 0 && (
                         <section>
-                            <h2>Materiales</h2>
+                            <h2>Materiales que necesitas</h2>
                             <ul className={styles.listaMateriales}>
                                 {materiales.map((m) => (
-                                    <li key={m.id_materiales ?? m.nombre}>#{m.nombre}</li>
+                                    <li key={m.id_materiales ?? m.nombre}>
+                                        <span className={styles.cantidadMaterial}>{m.cantidad ?? 1}×</span>
+                                        {m.nombre}
+                                    </li>
                                 ))}
                             </ul>
                         </section>

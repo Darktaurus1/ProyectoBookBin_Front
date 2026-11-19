@@ -15,6 +15,8 @@ export default function NuevaCreacion() {
     // Lista completa de materiales de la BD y lista de IDs seleccionados
     const [catalogoMateriales, setCatalogoMateriales] = useState([]);
     const [materialesSeleccionados, setMaterialesSeleccionados] = useState([]);
+    // Cantidad de cada material: { idMaterial: cantidad }
+    const [cantidades, setCantidades] = useState({});
 
     const [imagen, setImagen] = useState(null);
     const [preview, setPreview] = useState('');
@@ -39,6 +41,9 @@ export default function NuevaCreacion() {
                 setInstrucciones(datosBorrador.instrucciones || '');
                 if (Array.isArray(datosBorrador.materiales)) {
                     setMaterialesSeleccionados(datosBorrador.materiales);
+                }
+                if (datosBorrador.cantidades && typeof datosBorrador.cantidades === 'object') {
+                    setCantidades(datosBorrador.cantidades);
                 }
             } catch {
             }
@@ -72,6 +77,7 @@ export default function NuevaCreacion() {
                 descripcion,
                 instrucciones,
                 materiales: materialesSeleccionados,
+                cantidades,
             })
         );
         setMensaje('Borrador guardado correctamente.');
@@ -102,6 +108,9 @@ export default function NuevaCreacion() {
             formData.append('id_usuario', usuario.id_usuario ?? usuario.id);
             formData.append('accion', 'publicar');
             formData.append('id_materiales', JSON.stringify(materialesSeleccionados));
+            formData.append('cantidades', JSON.stringify(
+                Object.fromEntries(materialesSeleccionados.map((idM) => [idM, cantidades[idM] ?? 1]))
+            ));
 
             if (imagen) {
                 formData.append('imagen', imagen);
@@ -174,6 +183,8 @@ export default function NuevaCreacion() {
                     catalogo={catalogoMateriales}
                     seleccionados={materialesSeleccionados}
                     onCambiar={setMaterialesSeleccionados}
+                    cantidades={cantidades}
+                    onCambiarCantidades={setCantidades}
                     cargando={catalogoMateriales.length === 0}
                 />
 

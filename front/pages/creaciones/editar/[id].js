@@ -20,6 +20,7 @@ export default function EditarCreacion() {
     const [instrucciones, setInstrucciones] = useState('');
     const [catalogoMateriales, setCatalogoMateriales] = useState([]);
     const [materialesSeleccionados, setMaterialesSeleccionados] = useState([]);
+    const [cantidades, setCantidades] = useState({});
     const [imagen, setImagen] = useState(null);
     const [preview, setPreview] = useState('');
     const [cargando, setCargando] = useState(true);
@@ -55,17 +56,17 @@ export default function EditarCreacion() {
                 setInstrucciones(aPasos(creacion.instrucciones).join('\n'));
                 setPreview(urlImagen(creacion.imagen));
                 setCatalogoMateriales(Array.isArray(materiales) ? materiales : []);
-                setMaterialesSeleccionados(
-                    (creacion.materiales || []).map((m) => m.id_materiales).filter(Boolean)
-                );
+                const materialesCreacion = (creacion.materiales || []).filter((m) => m.id_materiales);
+                setMaterialesSeleccionados(materialesCreacion.map((m) => m.id_materiales));
+                setCantidades(Object.fromEntries(
+                    materialesCreacion.map((m) => [m.id_materiales, m.cantidad ?? 1])
+                ));
             })
             .catch((err) => { if (vigente) setError(err.message); })
             .finally(() => { if (vigente) setCargando(false); });
 
         return () => { vigente = false; };
     }, [router.isReady, id]);
-
- 
 
     const manejarCambioImagen = (e) => {
         const archivo = e.target.files[0];
@@ -97,8 +98,11 @@ export default function EditarCreacion() {
         formData.append('id_usuario', usuario.id_usuario ?? usuario.id);
         formData.append('nombre', nombre);
         formData.append('descripcion', descripcion);
-        formData.append('instrucciones', instrucciones);
+        formData.append('instrucciones', limpiarPasos(instrucciones));
         formData.append('id_materiales', JSON.stringify(materialesSeleccionados));
+        formData.append('cantidades', JSON.stringify(
+            Object.fromEntries(materialesSeleccionados.map((idM) => [idM, cantidades[idM] ?? 1]))
+        ));
         if (imagen) formData.append('imagen', imagen);
 
         setGuardando(true);
@@ -179,6 +183,8 @@ export default function EditarCreacion() {
                     catalogo={catalogoMateriales}
                     seleccionados={materialesSeleccionados}
                     onCambiar={setMaterialesSeleccionados}
+                    cantidades={cantidades}
+                    onCambiarCantidades={setCantidades}
                     cargando={catalogoMateriales.length === 0}
                 />
 
