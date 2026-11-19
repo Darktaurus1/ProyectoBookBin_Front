@@ -1,40 +1,69 @@
+@font-face {
+    font-family: 'Ropeman';
+    src: url('/fonts/Ropeman.ttf') format('truetype');
+    font-weight: normal;
+    font-style: normal;
+}
+
 .admin-contenedor {
     min-height: 100vh;
-    background-color: #D7E5EC;
+    background: linear-gradient(
+        135deg,
+        #95D5B2 0%,
+        #74C69D 50%,
+        #52B788 100%
+    );
     padding: 40px 20px;
     display: flex;
     justify-content: center;
+    font-family: 'Ropeman', sans-serif;
+}
+
+.admin-contenedor * {
+    font-family: 'Ropeman', sans-serif;
 }
 
 .admin-tarjeta {
-    background-color: white;
+    background: linear-gradient(
+        145deg,
+        rgba(216, 243, 220, 0.97),
+        rgba(183, 228, 199, 0.97)
+    );
     width: 100%;
     max-width: 950px;
     padding: 40px;
-    border-radius: 12px;
-    box-shadow: 0 4px 15px rgba(0, 0, 0, 0.10);
+    border-radius: 18px;
+    border: 1px solid rgba(255, 255, 255, 0.75);
+    box-shadow:
+        0 5px 15px rgba(8, 28, 21, 0.2),
+        inset 0 2px 5px rgba(255, 255, 255, 0.7),
+        inset 0 -2px 4px rgba(45, 106, 79, 0.1);
 }
 
 .admin-tarjeta h1 {
-    color: #163A50;
+    color: #081C15;
     text-align: center;
     font-size: 28px;
     margin-bottom: 25px;
 }
 
 .admin-tarjeta h3 {
-    color: #163A50;
+    color: #1B4332;
     font-size: 20px;
     margin-bottom: 15px;
-    border-bottom: 2px solid #D7E5EC;
+    border-bottom: 2px solid #74C69D;
     padding-bottom: 8px;
 }
 
 .seccion-formulario {
-    background-color: #f9fbfd;
+    background: linear-gradient(
+        145deg,
+        #D8F3DC,
+        #B7E4C7
+    );
     padding: 25px;
-    border-radius: 8px;
-    border: 1px solid #5885A1;
+    border-radius: 12px;
+    border: 1px solid #40916C;
     margin-bottom: 35px;
 }
 
@@ -45,7 +74,7 @@
 }
 
 .campo label {
-    color: #163A50;
+    color: #1B4332;
     font-weight: 600;
     margin-bottom: 8px;
 }
@@ -53,35 +82,45 @@
 .campo input, 
 .campo select {
     padding: 12px;
-    border: 1px solid #5885A1;
+    border: 1px solid #40916C;
     border-radius: 6px;
     font-size: 14px;
     outline: none;
-    background-color: white;
+    background-color: #FFFFFF;
+    color: #081C15;
 }
 
 .campo input:focus, 
 .campo select:focus {
-    border-color: #224A63;
+    border-color: #1B4332;
+    box-shadow: 0 0 0 3px rgba(64, 145, 108, 0.2);
 }
 
 .admin-tarjeta button {
     width: 100%;
     padding: 13px;
-    background-color: #224A63;
-    color: white;
+    background: linear-gradient(
+        145deg,
+        #40916C,
+        #1B4332
+    );
+    color: #FFFFFF;
     border: none;
-    border-radius: 6px;
+    border-radius: 8px;
     font-size: 16px;
     font-weight: bold;
     cursor: pointer;
-    transition: background-color 0.3s;
+    transition: all 0.2s;
+    box-shadow: 0 3px 7px rgba(8, 28, 21, 0.2);
 }
 
 .admin-tarjeta button:hover {
-    background-color: #163A50;
+    background: linear-gradient(
+        145deg,
+        #2D6A4F,
+        #081C15
+    );
 }
-
 
 .tabla-contenedor {
     overflow-x: auto;
@@ -96,37 +135,52 @@
 }
 
 .tabla-verificadores th {
-    background-color: #224A63;
-    color: white;
+    background: linear-gradient(
+        145deg,
+        #40916C,
+        #1B4332
+    );
+    color: #FFFFFF;
     padding: 12px;
 }
 
 .tabla-verificadores td {
     padding: 12px;
-    border-bottom: 1px solid #D7E5EC;
-    color: #163A50;
+    border-bottom: 1px solid #74C69D;
+    color: #1B4332;
 }
 
 .tabla-verificadores select {
     padding: 6px;
-    border: 1px solid #5885A1;
+    border: 1px solid #40916C;
     border-radius: 4px;
+    background-color: #FFFFFF;
+    color: #1B4332;
 }
 
 .btn-borrar {
-    background-color: #d93025 !important;
+    background: linear-gradient(
+        145deg,
+        #8B2635,
+        #5C1421
+    ) !important;
     padding: 8px 12px !important;
     font-size: 13px !important;
     width: auto !important;
 }
 
 .btn-borrar:hover {
-    background-color: #a51d12 !important;
+    background: linear-gradient(
+        145deg,
+        #741D2B,
+        #3F0D17
+    ) !important;
 }
 
 .alerta-exito {
-    background-color: #e6f4ea;
-    color: #137333;
+    background-color: #D8F3DC;
+    color: #1B4332;
+    border: 1px solid #40916C;
     padding: 12px;
     border-radius: 6px;
     margin-bottom: 20px;
@@ -135,8 +189,9 @@
 }
 
 .alerta-error {
-    background-color: #fce8e6;
-    color: #c5221f;
+    background-color: #FCE8E6;
+    color: #8B2635;
+    border: 1px solid #8B2635;
     padding: 12px;
     border-radius: 6px;
     margin-bottom: 20px;
