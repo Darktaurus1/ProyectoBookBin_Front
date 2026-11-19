@@ -78,6 +78,15 @@ export default function EditarCreacion() {
         setPreview(URL.createObjectURL(archivo));
     };
 
+    // Vuelve al detalle quitando la página de edición del historial
+    const volverAlDetalle = () => {
+        if (window.history.length > 1) {
+            router.back();
+        } else {
+            router.replace(`/creaciones/${id}`);
+        }
+    };
+
     const guardarCambios = async (e) => {
         e.preventDefault();
         setError('');
@@ -109,7 +118,7 @@ export default function EditarCreacion() {
             }
 
             setMensaje('¡Cambios guardados!');
-            setTimeout(() => router.push(`/creaciones/${id}`), 900);
+            setTimeout(volverAlDetalle, 900);
         } catch (err) {
             setError(err.message);
         } finally {
@@ -210,7 +219,7 @@ export default function EditarCreacion() {
                     <button
                         type="button"
                         className={styles.botonCancelar}
-                        onClick={() => router.push(`/creaciones/${id}`)}
+                        onClick={volverAlDetalle}
                     >
                         Cancelar
                     </button>

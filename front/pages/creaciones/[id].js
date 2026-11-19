@@ -149,9 +149,11 @@ export default function DetalleCreacion() {
                         <button type="button" className={styles.botonGuardar} onClick={alternarGuardado}>
                             {guardado ? 'Quitar de guardados' : 'Guardar'}
                         </button>
-                        <button type="button" className={styles.botonRegresar} onClick={() => router.back()}>
-                            Regresar
-                        </button>
+                        <button
+                                type="button"
+                                className={styles.botonRegresar}
+                                onClick={() => (window.history.length > 1 ? router.back() : router.push('/'))}
+                            >Regresar</button>
                         {esMio ? (
                          <Link href={`/creaciones/editar/${creacion.id_creacion}`} className={styles.botonEditar}>
                                         Editar
