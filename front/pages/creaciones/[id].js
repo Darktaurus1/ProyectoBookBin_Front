@@ -4,6 +4,7 @@ import { useEffect, useState } from 'react';
 import { pedirJSON } from '../../lib/api';
 import ModalReporte from '../../components/ModalReporte';
 import styles from './creaciones.module.css';
+import { aPasos } from '../../components/EditorPasos';
 
 function urlImagen(imagen) {
     if (!imagen) return null;
