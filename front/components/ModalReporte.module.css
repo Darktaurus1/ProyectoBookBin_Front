@@ -1,3 +1,4 @@
+
 .fondo {
     position: fixed;
     inset: 0;
@@ -6,36 +7,59 @@
     align-items: center;
     justify-content: center;
     z-index: 100;
+    font-family: 'Ropeman', sans-serif;
 }
 
 .caja {
-    background: #DCE6EC;
-    color: #183648;
+    background: #D8F3DC;
+    color: #081C15;
     border-radius: 12px;
     padding: 24px;
     width: 90%;
     max-width: 420px;
+    font-family: 'Ropeman', sans-serif;
 }
 
 .caja form {
     display: flex;
     flex-direction: column;
     gap: 8px;
+    font-family: 'Ropeman', sans-serif;
 }
 
-.caja h2 { margin: 0 0 8px; }
+.caja h2 {
+    margin: 0 0 8px;
+    font-family: 'Ropeman', sans-serif;
+}
 
 .caja select,
 .caja textarea {
     padding: 8px;
-    border: 1px solid #6B8797;
+    border: 1px solid #40916C;
     border-radius: 8px;
     font: inherit;
+    font-family: 'Ropeman', sans-serif;
+    color: #081C15;
+    background: #FFFFFF;
 }
 
-.caja textarea { min-height: 90px; resize: vertical; }
+.caja textarea {
+    min-height: 90px;
+    resize: vertical;
+}
 
-.error { color: #7a0019; margin: 0; }
+.caja select,
+.caja textarea,
+.botonCancelar,
+.botonEnviar {
+    font-size: inherit;
+}
+
+.error {
+    color: #7a0019;
+    margin: 0;
+    font-family: 'Ropeman', sans-serif;
+}
 
 .botones {
     display: flex;
@@ -51,7 +75,15 @@
     border-radius: 8px;
     font-weight: 700;
     cursor: pointer;
+    font-family: 'Ropeman', sans-serif;
 }
 
-.botonCancelar { background: #B6C7D1; color: #183648; }
-.botonEnviar { background: #183648; color: white; }
+.botonCancelar {
+    background: #95D5B2;
+    color: #081C15;
+}
+
+.botonEnviar {
+    background: #2D6A4F;
+    color: #FFFFFF;
+}

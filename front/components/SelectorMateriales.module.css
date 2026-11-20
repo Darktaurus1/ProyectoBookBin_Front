@@ -1,3 +1,4 @@
+
 .bloque {
     background: linear-gradient(
         145deg,
@@ -9,6 +10,7 @@
     box-shadow:
         0 3px 7px rgba(8, 28, 21, 0.12),
         inset 0 1px 3px rgba(255, 255, 255, 0.6);
+    font-family: 'Ropeman', sans-serif;
 }
 
 .cabecera {
@@ -19,12 +21,14 @@
     font-weight: 700;
     color: #1B4332;
     border-bottom: 1px solid rgba(64, 145, 108, 0.4);
+    font-family: 'Ropeman', sans-serif;
 }
 
 .cabecera span {
     font-size: 14px;
     font-weight: 600;
     color: #2D6A4F;
+    font-family: 'Ropeman', sans-serif;
 }
 
 .cuerpo {
@@ -34,6 +38,7 @@
     gap: 12px;
     background: rgba(216, 243, 220, 0.85);
     border-radius: 0 0 10px 10px;
+    font-family: 'Ropeman', sans-serif;
 }
 
 /* ---------- Materiales elegidos ---------- */
@@ -45,6 +50,7 @@
     display: flex;
     flex-direction: column;
     gap: 8px;
+    font-family: 'Ropeman', sans-serif;
 }
 
 /* Una fila por material: nombre, cantidad y botón para quitar */
@@ -57,6 +63,7 @@
     border: 1px solid #B7E4C7;
     border-radius: 12px;
     box-shadow: 0 1px 3px rgba(8, 28, 21, 0.08);
+    font-family: 'Ropeman', sans-serif;
 }
 
 .nombreFila {
@@ -66,6 +73,7 @@
     font-weight: 600;
     color: #1B4332;
     overflow-wrap: anywhere;
+    font-family: 'Ropeman', sans-serif;
 }
 
 .cantidad {
@@ -86,6 +94,7 @@
     font-weight: 700;
     line-height: 1;
     cursor: pointer;
+    font-family: 'Ropeman', sans-serif;
 }
 
 .botonCantidad:hover:not(:disabled) {
@@ -108,7 +117,8 @@
     font-weight: 700;
     color: #081C15;
     background: #FFFFFF;
-    -moz-appearance: textfield;
+    
+    font-family: 'Ropeman', sans-serif;
 }
 
 .numeroCantidad::-webkit-outer-spin-button,
@@ -137,6 +147,7 @@
     font-size: 20px;
     line-height: 1;
     cursor: pointer;
+    font-family: 'Ropeman', sans-serif;
 }
 
 .quitar:hover {
@@ -176,6 +187,7 @@
     border-radius: 999px;
     outline: none;
     transition: border-color 0.2s, box-shadow 0.2s;
+    font-family: 'Ropeman', sans-serif;
 }
 
 .input:hover {
@@ -208,6 +220,7 @@
     border: 1px solid #95D5B2;
     border-radius: 12px;
     box-shadow: 0 10px 24px rgba(8, 28, 21, 0.2);
+    font-family: 'Ropeman', sans-serif;
 }
 
 .opcion {
@@ -217,6 +230,7 @@
     padding: 9px 12px;
     border-radius: 8px;
     cursor: pointer;
+    font-family: 'Ropeman', sans-serif;
 }
 
 .opcionActiva {
@@ -227,6 +241,7 @@
     font-size: 15px;
     font-weight: 600;
     color: #1B4332;
+    font-family: 'Ropeman', sans-serif;
 }
 
 .detalleOpcion {
@@ -235,6 +250,7 @@
     overflow: hidden;
     text-overflow: ellipsis;
     white-space: nowrap;
+    font-family: 'Ropeman', sans-serif;
 }
 
 .vacio {
@@ -242,12 +258,14 @@
     font-size: 14px;
     color: #52796F;
     text-align: center;
+    font-family: 'Ropeman', sans-serif;
 }
 
 .ayuda,
 .error {
     margin: 0;
     font-size: 13px;
+    font-family: 'Ropeman', sans-serif;
 }
 
 .ayuda {
