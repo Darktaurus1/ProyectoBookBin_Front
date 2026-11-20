@@ -2,6 +2,9 @@ import { useEffect, useState } from "react";
 import { useRouter } from "next/router";
 import { pedirJSON } from "../../lib/api";
 
+import Bano from "./baneo";
+import Rechazo from "./rechazar";
+
 function urlImagen(imagen) {
   if (!imagen) return null;
   return imagen.startsWith("http") ? imagen : `http://localhost:4000${imagen}`;
@@ -69,9 +72,23 @@ export default function verificar() {
   function aprobar() {
     // funcion aprobar
   }
-  function desaprobar() {}
-  function banear() {}
+  function desaprobar() {
+    setModal("rechazo");
+  }
+  function banear() {
+    setModal("baneo")
+  }
   function Regresar() {}
+
+  function confirmarRechazo(razon) {
+    // insertar el reporte en la base de datos    
+  }
+
+  function confirmarBaneo(razon) {
+    //insertar un reporte, y quitar la creacion de la base de datos
+    
+    pedirJSON(`/mcreaciones/${id}/baneado`, {method: "POST", body: JSON.stringify({razon}) })
+  }
 
   const imagen = urlImagen(creacion.imagen);
   const autor = creacion.musuarios?.nombre;
