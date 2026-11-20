@@ -1,3 +1,4 @@
+
 .fondo {
     min-height: calc(100vh - 68px);
     background: linear-gradient(
@@ -11,16 +12,17 @@
     flex-direction: column;
     align-items: center;
     gap: 18px;
+    font-family: 'Ropeman', sans-serif;
 }
 
 .tarjetaFormulario {
     width: 100%;
     max-width: 1160px;
     background: linear-gradient(
-    145deg,
-    rgba(183, 228, 199, 0.98),
-    rgba(149, 213, 178, 0.98)
-);
+        145deg,
+        rgba(183, 228, 199, 0.98),
+        rgba(149, 213, 178, 0.98)
+    );
     border: 1px solid rgba(255, 255, 255, 0.75);
     border-radius: 22px;
     padding: 22px 42px 28px;
@@ -31,6 +33,7 @@
     display: flex;
     flex-direction: column;
     gap: 14px;
+    font-family: 'Ropeman', sans-serif;
 }
 
 .titulo {
@@ -39,16 +42,17 @@
     font-size: 28px;
     margin: 0 0 4px;
     font-weight: 700;
+    font-family: 'Ropeman', sans-serif;
 }
 
 .inputNombre {
     width: 100%;
     padding: 10px 24px;
     background: linear-gradient(
-    145deg,
-    #D8F3DC,
-    #B7E4C7
-);
+        145deg,
+        #D8F3DC,
+        #B7E4C7
+    );
     border: 1px solid rgba(116, 198, 157, 0.55);
     border-radius: 10px;
     font-size: 16px;
@@ -58,6 +62,7 @@
         inset 0 2px 4px rgba(45, 106, 79, 0.12),
         0 2px 5px rgba(8, 28, 21, 0.1);
     box-sizing: border-box;
+    font-family: 'Ropeman', sans-serif;
 }
 
 .filaMedia {
@@ -70,10 +75,10 @@
     width: 280px;
     min-width: 280px;
     background: linear-gradient(
-    145deg,
-    #95D5B2,
-    #74C69D
-);
+        145deg,
+        #95D5B2,
+        #74C69D
+    );
     border: 1px solid rgba(255, 255, 255, 0.7);
     border-radius: 10px;
     padding: 12px;
@@ -94,6 +99,7 @@
     font-weight: 600;
     color: #2D6A4F;
     text-align: center;
+    font-family: 'Ropeman', sans-serif;
 }
 
 .previewImagen {
@@ -115,17 +121,13 @@
     border: 1px solid rgba(116, 198, 157, 0.55);
     resize: none;
     font-size: 15px;
-    font-family: inherit;
+    font-family: 'Ropeman', sans-serif;
     color: #081C15;
     outline: none;
     box-shadow:
         inset 0 2px 4px rgba(45, 106, 79, 0.12),
         0 2px 5px rgba(8, 28, 21, 0.1);
 }
-
-
-
-
 
 .cajaInstrucciones {
     width: 100%;
@@ -140,7 +142,7 @@
     border: 1px solid rgba(116, 198, 157, 0.55);
     resize: vertical;
     font-size: 15px;
-    font-family: inherit;
+    font-family: 'Ropeman', sans-serif;
     color: #081C15;
     outline: none;
     box-shadow:
@@ -166,6 +168,7 @@
     display: flex;
     flex-direction: column;
     gap: 14px;
+    font-family: 'Ropeman', sans-serif;
 }
 
 .filaBotones {
@@ -191,6 +194,7 @@
         0 3px 7px rgba(8, 28, 21, 0.2),
         inset 0 1px 3px rgba(255, 255, 255, 0.25);
     transition: all 0.2s;
+    font-family: 'Ropeman', sans-serif;
 }
 
 .botonBorrador:hover {
@@ -219,6 +223,7 @@
         0 3px 7px rgba(50, 0, 10, 0.2),
         inset 0 1px 3px rgba(255, 255, 255, 0.2);
     transition: all 0.2s;
+    font-family: 'Ropeman', sans-serif;
 }
 
 .botonCancelar:hover {
@@ -247,6 +252,7 @@
         0 3px 7px rgba(8, 28, 21, 0.2),
         inset 0 1px 3px rgba(255, 255, 255, 0.3);
     transition: all 0.2s;
+    font-family: 'Ropeman', sans-serif;
 }
 
 .botonPublicar:hover {
@@ -256,6 +262,3 @@
         #1B4332
     );
 }
-
-
-
