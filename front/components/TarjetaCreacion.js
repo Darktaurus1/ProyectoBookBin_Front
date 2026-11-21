@@ -1,6 +1,7 @@
 import { useState } from 'react';
 import Link from 'next/link';
 import ModalReporte from './ModalReporte';
+import ModalEliminacion from './ModalEliminacion';
 import styles from './TarjetaCreacion.module.css';
 
 export default function TarjetaCreacion({ creacion, onGuardar, guardado = false }) {
@@ -11,6 +12,7 @@ export default function TarjetaCreacion({ creacion, onGuardar, guardado = false 
 
     const [menuAbierto, setMenuAbierto] = useState(false);
     const [reportando, setReportando] = useState(false);
+    const [eliminando, setEliminando] = useState(false);
 
     return (
         <article className={styles.tarjeta}>
@@ -71,6 +73,17 @@ export default function TarjetaCreacion({ creacion, onGuardar, guardado = false 
                         >
                             Reportar
                         </button>
+                        {creacion.id_usuario === (JSON.parse(localStorage.getItem('usuario'))?.id_usuario ?? JSON.parse(localStorage.getItem('usuario'))?.id) && (
+                            <button
+                                type="button"
+                                onClick={() => {
+                                    setMenuAbierto(false);
+                                    setEliminando(true);
+                                }}
+                            >
+                                Eliminar
+                            </button>
+                        )}
                     </div>
                 )}
             </div>
@@ -86,6 +99,9 @@ export default function TarjetaCreacion({ creacion, onGuardar, guardado = false 
 
             {reportando && (
                 <ModalReporte idCreacion={id} onCerrar={() => setReportando(false)} />
+            )}
+            {eliminando && (
+                <ModalEliminacion idCreacion={id} onCerrar={() => setEliminando(false)} />
             )}
         </article>
     );
