@@ -1,6 +1,6 @@
 import { useEffect, useState } from 'react';
 import { useRouter } from 'next/router';
-import { pedirJSON } from '../../lib/api';
+import { pedirJSON, fetchConSesion } from '../../lib/api';
 import styles from './nueva.module.css';
 import SelectorMateriales from '../../components/SelectorMateriales';
 import EditorPasos, { limpiarPasos } from '../../components/EditorPasos';
@@ -138,7 +138,7 @@ export default function NuevaCreacion() {
                 formData.append('imagen', imagen);
             }
 
-            const respuesta = await fetch('/api/creaciones', {
+            const respuesta = await fetchConSesion('/api/creaciones', {
                 method: 'POST',
                 body: formData,
             });
