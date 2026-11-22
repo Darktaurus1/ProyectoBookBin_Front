@@ -1,6 +1,7 @@
 import { useEffect, useState } from 'react';
 import { useRouter } from 'next/router';
 import styles from './admin.module.css';
+import { cerrarSesion as cerrarSesionServidor } from '../../lib/api';
 
 export default function PerfilAdmin() {
     const router = useRouter();
@@ -17,10 +18,10 @@ export default function PerfilAdmin() {
         setAdmin(u);
     }, []);
 
-    const cerrarSesion = () => {
-        localStorage.removeItem('usuario');
-        router.replace('/login');
-    };
+    const cerrarSesion = async () => {
+    await cerrarSesionServidor();
+    router.replace('/login');
+};
 
     if (!admin) return null;
 

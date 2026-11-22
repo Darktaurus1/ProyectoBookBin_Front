@@ -33,10 +33,11 @@ export default function Login() {
             // Aqui vamos a guardar el usuario en el navegador.
             // Más adelante esto creo se reemplaza por un token (JWT) o una cookie o algo asi lei XD no se pero creo era asi
             localStorage.setItem('usuario', JSON.stringify(datos.usuario));
+            localStorage.setItem('token', datos.token);
 
             setMensaje('¡Inicio de sesión exitoso!');
             if (datos.usuario.tipo === 'administrador') {
-                router.push('/admin');
+                router.push('/admin');  
             } else {
                 router.push('/');
             }

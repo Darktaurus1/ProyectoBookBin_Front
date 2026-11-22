@@ -1,6 +1,8 @@
 import { useEffect, useState } from 'react';
 import { useRouter } from 'next/router';
 import { pedirJSON } from '../../../lib/api';
+import { pedirJSON, fetchConSesion } from '../../lib/api';      // nueva.js
+import { pedirJSON, fetchConSesion } from '../../../lib/api';   // editar/[id].js
 import styles from '../nueva.module.css';
 import SelectorMateriales from '../../../components/SelectorMateriales';
 import EditorPasos, { aPasos, limpiarPasos } from '../../../components/EditorPasos';
