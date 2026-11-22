@@ -1,7 +1,5 @@
 import { useEffect, useState } from 'react';
 import { useRouter } from 'next/router';
-import { pedirJSON } from '../../../lib/api';
-import { pedirJSON, fetchConSesion } from '../../lib/api';      // nueva.js
 import { pedirJSON, fetchConSesion } from '../../../lib/api';   // editar/[id].js
 import styles from '../nueva.module.css';
 import SelectorMateriales from '../../../components/SelectorMateriales';
@@ -120,7 +118,7 @@ export default function EditarCreacion() {
 
         setGuardando(true);
         try {
-            const respuesta = await fetch(`/api/creaciones/${id}`, {
+            const respuesta = await fetchConSesion(`/api/creaciones/${id}`, {
                 method: 'PUT',
                 body: formData,
             });
