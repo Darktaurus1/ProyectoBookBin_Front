@@ -157,3 +157,21 @@
 .menuOpciones button:hover {
     background: #B7E4C7;
 }
+
+
+/* ---------- Celular ---------- */
+@media (max-width: 760px) {
+    .imagenCaja {
+        height: 170px;
+    }
+
+    /* Botones un poco más grandes para el dedo */
+    .botonIcono {
+        width: 40px;
+        height: 40px;
+    }
+
+    .menuOpciones {
+        top: 46px;
+    }
+}

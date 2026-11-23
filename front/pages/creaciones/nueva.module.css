@@ -262,3 +262,67 @@
         #1B4332
     );
 }
+
+
+/* El ancho incluye el relleno: sin esto las tarjetas se salen de la pantalla */
+.tarjetaFormulario,
+.tarjetaAcciones,
+.cajaImagen,
+.cajaDescripcion {
+    box-sizing: border-box;
+}
+
+/* ---------- Celular ---------- */
+@media (max-width: 760px) {
+    .fondo {
+        padding: 12px;
+        gap: 12px;
+    }
+
+    .tarjetaFormulario,
+    .tarjetaAcciones {
+        padding: 16px;
+        border-radius: 16px;
+    }
+
+    .titulo {
+        font-size: 22px;
+    }
+
+    /* Imagen arriba y descripción abajo, a lo ancho */
+    .filaMedia {
+        flex-direction: column;
+        min-height: 0;
+    }
+
+    .cajaImagen {
+        width: 100%;
+        min-width: 0;
+        min-height: 150px;
+    }
+
+    .previewImagen {
+        height: 180px;
+    }
+
+    .cajaDescripcion {
+        width: 100%;
+        min-height: 120px;
+    }
+
+    .inputNombre,
+    .cajaDescripcion {
+        font-size: 16px; /* 16px o más: iPhone no hace zoom al escribir */
+    }
+
+    .filaBotones {
+        gap: 10px;
+    }
+
+    .botonBorrador,
+    .botonCancelar,
+    .botonPublicar {
+        padding: 12px;
+        font-size: 17px;
+    }
+}

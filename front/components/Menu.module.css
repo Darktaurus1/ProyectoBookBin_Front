@@ -102,3 +102,49 @@
         #1B4332
     );
 }
+
+
+/* ---------- Celular ---------- */
+/* Fila 1: logo y "Mi perfil" · Fila 2: buscador completo · Fila 3: los demás enlaces */
+@media (max-width: 760px) {
+    .menu {
+        flex-wrap: wrap;
+        justify-content: space-between;
+        gap: 10px 8px;
+        padding: 10px 14px 12px;
+    }
+
+    .logo {
+        margin-right: auto;
+        font-size: 24px;
+    }
+
+    .menu a {
+        order: 3;
+        flex: 1;
+        padding: 8px 4px;
+        border-radius: 8px;
+        background: rgba(255, 255, 255, 0.08);
+        font-size: 14px;
+        text-align: center;
+    }
+
+    /* "Mi perfil" sube junto al logo */
+    .menu a[href="/perfil"] {
+        order: 1;
+        flex: 0 0 auto;
+        padding: 6px 12px;
+    }
+
+    .searchBox {
+        order: 2;
+        flex: 1 1 100%;
+    }
+
+    .searchBox input {
+        flex: 1;
+        min-width: 0;
+        width: auto;
+        font-size: 16px; /* 16px o más: iPhone no hace zoom al escribir */
+    }
+}

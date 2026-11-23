@@ -161,3 +161,15 @@
     isolation: isolate;
     /* ...lo que ya tienes */
 }
+
+
+/* El alto incluye el relleno: así no aparece un scroll de más */
+.registro-contenedor {
+    box-sizing: border-box;
+}
+
+@media (max-width: 480px) {
+    .campo input {
+        font-size: 16px; /* 16px o más: iPhone no hace zoom al escribir */
+    }
+}

@@ -87,3 +87,30 @@
     background: #2D6A4F;
     color: #FFFFFF;
 }
+
+
+/* ---------- Celular ---------- */
+@media (max-width: 600px) {
+    .caja {
+        box-sizing: border-box;
+        width: calc(100% - 24px);
+        max-height: 90vh;
+        overflow-y: auto;
+        padding: 18px;
+    }
+
+    .caja select,
+    .caja textarea {
+        font-size: 16px; /* 16px o más: iPhone no hace zoom al escribir */
+    }
+
+    .botones {
+        flex-wrap: wrap;
+    }
+
+    .botonCancelar,
+    .botonEnviar {
+        flex: 1;
+        padding: 12px;
+    }
+}

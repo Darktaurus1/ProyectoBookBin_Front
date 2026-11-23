@@ -276,3 +276,27 @@
     color: #7a0019;
     font-weight: 600;
 }
+
+
+/* ---------- Celular ---------- */
+@media (max-width: 600px) {
+    .cabecera {
+        flex-wrap: wrap;
+        gap: 2px 10px;
+        padding: 8px 14px;
+    }
+
+    .cuerpo {
+        padding: 12px;
+    }
+
+    .fila {
+        gap: 8px;
+        padding: 6px 6px 6px 12px;
+    }
+
+    .input,
+    .numeroCantidad {
+        font-size: 16px; /* 16px o más: iPhone no hace zoom al escribir */
+    }
+}
