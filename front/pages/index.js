@@ -46,15 +46,15 @@ export default function Home() {
         }
     }, []);
 
-   
-    //lee el parametro
+    // Carga el catálogo de materiales una sola vez
     useEffect(() => {
-        if (!router.isReady) return;
-        const materialUrl = router.query.material;
-        if (materialUrl) {
-            setMaterialSeleccionado(String(materialUrl));
-        }
-    }, [router.isReady, router.query.material]);
+        pedirJSON('/materiales')
+            .then((datos) => setMateriales(Array.isArray(datos) ? datos : []))
+            .catch(() => setError('No se pudieron cargar los materiales.'))
+            .finally(() => setCargandoMateriales(false));
+    }, []);
+
+   
 
     // Carga las creaciones cada vez que cambia la búsqueda o el material
     useEffect(() => {
