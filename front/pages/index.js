@@ -46,14 +46,7 @@ export default function Home() {
         }
     }, []);
 
-    // Carga el catálogo de materiales una sola vez
-    useEffect(() => {
-        pedirJSON('/materiales')
-            .then((datos) => setMateriales(Array.isArray(datos) ? datos : []))
-            .catch(() => setError('No se pudieron cargar los materiales.'))
-            .finally(() => setCargandoMateriales(false));
-    }, []);
-
+   
     //lee el parametro
     useEffect(() => {
         if (!router.isReady) return;
