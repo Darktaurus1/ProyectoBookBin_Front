@@ -1,0 +1,85 @@
+.buscador {
+    position: relative;
+    flex: 1 1 260px;
+    max-width: 380px;
+}
+
+.lupa {
+    position: absolute;
+    left: 14px;
+    top: 50%;
+    transform: translateY(-50%);
+    color: #2D6A4F;
+    pointer-events: none;
+}
+
+.input {
+    box-sizing: border-box;
+    width: 100%;
+    padding: 10px 16px 10px 40px;
+    font: inherit;
+    font-size: 15px;
+    color: #081C15;
+    background: #FFFFFF;
+    border: 1px solid #74C69D;
+    border-radius: 999px;
+    outline: none;
+    transition: border-color 0.2s, box-shadow 0.2s;
+}
+
+.input:hover {
+    border-color: #2D6A4F;
+}
+
+.input:focus {
+    border-color: #2D6A4F;
+    box-shadow: 0 0 0 3px rgba(64, 145, 108, 0.35);
+}
+
+.input:disabled {
+    background: #EAF6EE;
+    cursor: wait;
+}
+
+.lista {
+    position: absolute;
+    top: calc(100% + 6px);
+    left: 0;
+    right: 0;
+    z-index: 30;
+    max-height: 280px;
+    overflow-y: auto;
+    margin: 0;
+    padding: 6px;
+    list-style: none;
+    background: #FFFFFF;
+    border: 1px solid #95D5B2;
+    border-radius: 12px;
+    box-shadow: 0 10px 24px rgba(8, 28, 21, 0.2);
+}
+
+.opcion {
+    padding: 9px 12px;
+    border-radius: 8px;
+    font-size: 15px;
+    font-weight: 600;
+    color: #1B4332;
+    cursor: pointer;
+}
+
+.opcionActiva {
+    background: #D8F3DC;
+}
+
+.vacio {
+    padding: 12px;
+    font-size: 14px;
+    color: #52796F;
+    text-align: center;
+}
+
+@media (max-width: 600px) {
+    .buscador {
+        max-width: none;
+    }
+}
