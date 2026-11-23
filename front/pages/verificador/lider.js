@@ -1,6 +1,6 @@
 import { useEffect, useState } from "react";
 import { pedirJSON } from "../../lib/api";
-import Link from "next/Link";
+import Link from "next/link";
 import TargetaCreacion from "../components/TargetaCreacion";
 
 export default function liderHome() {

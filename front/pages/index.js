@@ -54,38 +54,68 @@ export default function Home() {
             .finally(() => setCargandoMateriales(false));
     }, []);
 
-    //lee el parametro
-    useEffect(() => {
-        if (!router.isReady) return;
-        const materialUrl = router.query.material;
-        if (materialUrl) {
-            setMaterialSeleccionado(String(materialUrl));
-        }
-    }, [router.isReady, router.query.material]);
+    // Id del usuario con sesión (null si no hay)
+    const idActual = usuario?.id_usuario ?? usuario?.id ?? null;
+    const enMisCreaciones = pestana === 'mis-creaciones';
+    // Solo importa en la pestaña "Mis Creaciones": así Recomendados no se recarga al leer el usuario
+    const idParaMisCreaciones = enMisCreaciones ? idActual : null;
 
-    // Carga las creaciones cada vez que cambia la búsqueda o el material
+    // Carga las creaciones cada vez que cambia la búsqueda, el material, la pestaña o el usuario
     useEffect(() => {
         if (!router.isReady) return;
         let vigente = true;
 
-        const parametros = new URLSearchParams();
-        if (busqueda) parametros.set('q', busqueda);
-        if (idMaterial) parametros.set('material', idMaterial);
-        const ruta = parametros.toString() ? `/creaciones?${parametros}` : '/creaciones';
+        // Mis Creaciones: sin sesión no hay nada que pedir
+        if (enMisCreaciones && !idParaMisCreaciones) {
+            setCreaciones([]);
+            setCargando(false);
+            return;
+        }
+
+        let ruta;
+        if (enMisCreaciones) {
+            // Trae todas las mías (aprobadas, pendientes y borradores)
+            ruta = `/creaciones/usuario/${idParaMisCreaciones}`;
+        } else {
+            const parametros = new URLSearchParams();
+            if (busqueda) parametros.set('q', busqueda);
+            if (idMaterial) parametros.set('material', idMaterial);
+            ruta = parametros.toString() ? `/creaciones?${parametros}` : '/creaciones';
+        }
 
         setError('');
         setCargando(true);
         pedirJSON(ruta)
             .then((datos) => {
                 if (!vigente) return;
-                // Al buscar se respeta el orden del backend; si no, se muestran al azar
-                setCreaciones(busqueda ? datos : mezclar(datos));
+                if (enMisCreaciones) {
+                    // Esta ruta no filtra: la búsqueda y el material se aplican aquí
+                    const texto = busqueda.toLowerCase();
+                    const propias = datos.filter((c) => {
+                        if (texto) {
+                            const nombre = (c.nombre || '').toLowerCase();
+                            const descripcion = (c.descripcion || '').toLowerCase();
+                            if (!nombre.includes(texto) && !descripcion.includes(texto)) return false;
+                        }
+                        if (idMaterial) {
+                            const usaMaterial = (c.materiales || []).some(
+                                (m) => String(m.id_materiales) === idMaterial
+                            );
+                            if (!usaMaterial) return false;
+                        }
+                        return true;
+                    });
+                    setCreaciones(propias);
+                } else {
+                    // Al buscar se respeta el orden del backend; si no, se muestran al azar
+                    setCreaciones(busqueda ? datos : mezclar(datos));
+                }
             })
             .catch((err) => { if (vigente) setError(err.message); })
             .finally(() => { if (vigente) setCargando(false); });
 
         return () => { vigente = false; };
-    }, [router.isReady, busqueda, idMaterial]);
+    }, [router.isReady, busqueda, idMaterial, enMisCreaciones, idParaMisCreaciones]);
 
     // Cambia uno o varios filtros en la URL; un valor vacío lo quita
     function actualizarFiltros(cambios) {
@@ -99,15 +129,8 @@ export default function Home() {
     const materialActivo = materiales.find((m) => String(m.id_materiales) === idMaterial);
     const hayFiltros = Boolean(busqueda || idMaterial);
 
-    // El filtro por material y la búsqueda los aplica el backend; aquí solo se filtra por pestaña
-    const creacionesFiltradas = creaciones.filter((c) => {
-        if (pestana === 'mis-creaciones') {
-            const idUsuarioActual = usuario?.id_usuario ?? usuario?.id;
-            const idAutor = c.id_usuario ?? c.usuario_id;
-            if (!idUsuarioActual || idAutor !== idUsuarioActual) return false;
-        }
-        return true;
-    });
+    // Recomendados: filtra el backend. Mis Creaciones: ya llegan solo las mías y filtradas arriba
+    const creacionesFiltradas = creaciones;
 
     async function manejarGuardar(idCreacion) {
         if (!usuario) {
@@ -239,13 +262,43 @@ export default function Home() {
                         <div className={styles.listaCreacion}>
                             {creacionesFiltradas.map((c) => {
                                 const idCreacion = c.id_creacion ?? c.id;
-                                return (
+                                const tarjeta = (
                                     <TarjetaCreacion
                                         key={idCreacion}
                                         creacion={c}
                                         onGuardar={manejarGuardar}
                                         guardado={idsFavoritos.includes(idCreacion)}
                                     />
+                                );
+                                if (!enMisCreaciones) return tarjeta;
+
+                                // En Mis Creaciones se indica si falta verificar o es borrador
+                                const estado = c.borrador === 1
+                                    ? 'Borrador'
+                                    : c.aprovado !== 1
+                                        ? 'Pendiente de verificación'
+                                        : null;
+                                return (
+                                    <div key={idCreacion} style={{ position: 'relative' }}>
+                                        {estado && (
+                                            <span
+                                                style={{
+                                                    position: 'absolute',
+                                                    top: 8,
+                                                    left: 8,
+                                                    zIndex: 2,
+                                                    padding: '3px 8px',
+                                                    borderRadius: 6,
+                                                    background: '#FFF3CD',
+                                                    color: '#664D03',
+                                                    fontSize: 13,
+                                                }}
+                                            >
+                                                {estado}
+                                            </span>
+                                        )}
+                                        {tarjeta}
+                                    </div>
                                 );
                             })}
                         </div>

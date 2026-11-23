@@ -1,4 +1,5 @@
 import { useState } from "react";
+import styles from "./verificador.module.css"
 
 export default function Rechazo({ onConfirmar, onCancelar}) {
     const [razon, setRazon] = useState("");
@@ -28,5 +29,4 @@ return (
       </div>
     </div>
   );
-
 }

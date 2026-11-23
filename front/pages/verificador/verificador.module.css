@@ -1,0 +1,460 @@
+/* Páginas del verificador: lista, verificar, reporte, baneo y rechazo.
+   Mismo estilo que el resto del sitio (verde, tipografía Ropeman). */
+
+.fondo {
+    box-sizing: border-box;
+    min-height: calc(100vh - 68px);
+    background: linear-gradient(
+        135deg,
+        #95D5B2 0%,
+        #74C69D 50%,
+        #52B788 100%
+    );
+    padding: 28px clamp(16px, 3vw, 48px);
+    font-family: 'Ropeman', sans-serif;
+    color: #081C15;
+}
+
+.estado {
+    color: #081C15;
+    text-align: center;
+    font-size: 18px;
+    margin: 40px 0 16px;
+    font-family: 'Ropeman', sans-serif;
+}
+
+/* ---------- Lista de creaciones por verificar ---------- */
+
+.contenedorLista {
+    max-width: 1400px;
+    margin: 0 auto;
+    font-family: 'Ropeman', sans-serif;
+}
+
+.contenedorLista > p {
+    text-align: center;
+    font-size: 18px;
+    color: #081C15;
+    margin: 40px 0;
+}
+
+.listaCreacion {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(240px, 1fr));
+    gap: 20px;
+}
+
+.error {
+    margin: 0 auto 16px;
+    max-width: 900px;
+    padding: 10px 16px;
+    border-radius: 10px;
+    background: rgba(255, 255, 255, 0.85);
+    border: 1px solid #8B2635;
+    color: #7a0019;
+    font-weight: 700;
+    text-align: center;
+    font-family: 'Ropeman', sans-serif;
+}
+
+/* ---------- Detalle para verificar ---------- */
+
+.detalle {
+    box-sizing: border-box;
+    width: 100%;
+    max-width: 900px;
+    margin: 0 auto 24px;
+    background: linear-gradient(
+        145deg,
+        rgba(216, 243, 220, 0.97),
+        rgba(183, 228, 199, 0.97)
+    );
+    color: #081C15;
+    border: 1px solid rgba(255, 255, 255, 0.75);
+    border-radius: 18px;
+    box-shadow:
+        0 5px 15px rgba(8, 28, 21, 0.2),
+        inset 0 2px 5px rgba(255, 255, 255, 0.7),
+        inset 0 -2px 4px rgba(45, 106, 79, 0.1);
+    padding: clamp(20px, 3vw, 40px);
+    display: flex;
+    flex-direction: column;
+    gap: 20px;
+    font-family: 'Ropeman', sans-serif;
+}
+
+.detalle h1 {
+    margin: 0;
+    font-size: clamp(26px, 3vw, 38px);
+    line-height: 1.15;
+    color: #081C15;
+    font-family: 'Ropeman', sans-serif;
+}
+
+.detalle h2 {
+    margin: 0 0 8px;
+    font-size: 19px;
+    color: #1B4332;
+    font-family: 'Ropeman', sans-serif;
+}
+
+.detalle > h2:first-of-type {
+    margin: -8px 0 0;
+    font-size: clamp(20px, 2.2vw, 28px);
+    overflow-wrap: anywhere;
+}
+
+.detalle section {
+    margin: 0;
+}
+
+.titulo {
+    margin: 0;
+    font-size: clamp(26px, 3vw, 38px);
+    color: #081C15;
+    font-family: 'Ropeman', sans-serif;
+}
+
+.autor {
+    margin: -10px 0 0;
+    font-weight: 700;
+    color: #2D6A4F;
+    font-family: 'Ropeman', sans-serif;
+}
+
+.imagenCaja {
+    width: 100%;
+    aspect-ratio: 4 / 3;
+    max-height: 420px;
+    background: linear-gradient(145deg, #B7E4C7, #74C69D);
+    border: 1px solid rgba(255, 255, 255, 0.65);
+    border-radius: 14px;
+    overflow: hidden;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    box-shadow:
+        0 3px 8px rgba(8, 28, 21, 0.18),
+        inset 0 1px 3px rgba(255, 255, 255, 0.5);
+}
+
+.imagenCaja img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+}
+
+.texto {
+    margin: 0;
+    max-width: 70ch;
+    font-size: 17px;
+    line-height: 1.6;
+    white-space: pre-line;
+    overflow-wrap: anywhere;
+    color: #1B4332;
+    font-family: 'Ropeman', sans-serif;
+}
+
+.listaMateriales {
+    list-style: none;
+    margin: 0;
+    padding: 0;
+    display: flex;
+    flex-wrap: wrap;
+    gap: 8px;
+    font-family: 'Ropeman', sans-serif;
+}
+
+.listaMateriales li {
+    background: linear-gradient(145deg, #40916C, #1B4332);
+    color: #FFFFFF;
+    padding: 5px 14px;
+    border-radius: 999px;
+    font-size: 14px;
+    box-shadow:
+        0 2px 5px rgba(8, 28, 21, 0.18),
+        inset 0 1px 2px rgba(255, 255, 255, 0.25);
+}
+
+.pasos {
+    list-style: none;
+    counter-reset: paso;
+    margin: 0;
+    padding: 0;
+    max-width: 70ch;
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+    font-family: 'Ropeman', sans-serif;
+}
+
+.pasos li {
+    counter-increment: paso;
+    display: flex;
+    align-items: flex-start;
+    gap: 12px;
+    padding: 10px 14px;
+    background: rgba(255, 255, 255, 0.55);
+    border-radius: 10px;
+    font-size: 17px;
+    line-height: 1.55;
+    color: #1B4332;
+    overflow-wrap: anywhere;
+}
+
+.pasos li::before {
+    content: counter(paso);
+    flex: 0 0 30px;
+    height: 30px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    border-radius: 50%;
+    background: linear-gradient(145deg, #40916C, #1B4332);
+    color: #FFFFFF;
+    font-size: 14px;
+    font-weight: 700;
+}
+
+/* ---------- Botones de decisión ---------- */
+
+.botones {
+    max-width: 900px;
+    margin: 0 auto;
+    display: flex;
+    flex-wrap: wrap;
+    gap: 12px;
+}
+
+.botonAprobar,
+.botonCancelar,
+.botonBanear,
+.botonRegresar {
+    padding: 12px 24px;
+    border: 1px solid rgba(255, 255, 255, 0.3);
+    border-radius: 10px;
+    font: inherit;
+    font-size: 16px;
+    font-weight: 700;
+    cursor: pointer;
+    text-decoration: none;
+    display: inline-block;
+    transition: all 0.2s;
+    font-family: 'Ropeman', sans-serif;
+}
+
+.botonAprobar {
+    background: linear-gradient(145deg, #40916C, #1B4332);
+    color: #FFFFFF;
+    box-shadow:
+        0 3px 7px rgba(8, 28, 21, 0.2),
+        inset 0 1px 2px rgba(255, 255, 255, 0.25);
+}
+
+.botonAprobar:hover {
+    background: linear-gradient(145deg, #2D6A4F, #081C15);
+}
+
+.botonCancelar {
+    background: linear-gradient(145deg, #FFFFFF, #D8F3DC);
+    color: #1B4332;
+    border-color: #40916C;
+    box-shadow:
+        0 3px 7px rgba(45, 106, 79, 0.15),
+        inset 0 1px 3px rgba(255, 255, 255, 0.8);
+}
+
+.botonCancelar:hover {
+    background: linear-gradient(145deg, #D8F3DC, #B7E4C7);
+}
+
+.botonBanear {
+    background: linear-gradient(145deg, #8B2635, #5C1421);
+    color: #FFFFFF;
+    box-shadow:
+        0 3px 7px rgba(50, 0, 10, 0.2),
+        inset 0 1px 2px rgba(255, 255, 255, 0.2);
+}
+
+.botonBanear:hover {
+    background: linear-gradient(145deg, #741D2B, #3F0D17);
+}
+
+.botonRegresar {
+    background: linear-gradient(145deg, #B7E4C7, #74C69D);
+    color: #081C15;
+    box-shadow:
+        0 3px 7px rgba(45, 106, 79, 0.15),
+        inset 0 1px 3px rgba(255, 255, 255, 0.6);
+}
+
+.botonRegresar:hover {
+    background: linear-gradient(145deg, #95D5B2, #52B788);
+}
+
+.botonAprobar:focus-visible,
+.botonCancelar:focus-visible,
+.botonBanear:focus-visible,
+.botonRegresar:focus-visible {
+    outline: 3px solid #081C15;
+    outline-offset: 2px;
+}
+
+.botonAprobar:disabled,
+.botonCancelar:disabled,
+.botonBanear:disabled,
+.botonRegresar:disabled {
+    opacity: 0.55;
+    cursor: not-allowed;
+}
+
+/* ---------- Ventanas de rechazo y baneo ---------- */
+
+.modalFondo {
+    position: fixed;
+    inset: 0;
+    background: rgba(0, 0, 0, 0.5);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    z-index: 100;
+    font-family: 'Ropeman', sans-serif;
+}
+
+.modalCaja {
+    box-sizing: border-box;
+    background: #D8F3DC;
+    color: #081C15;
+    border-radius: 12px;
+    padding: 24px;
+    width: 90%;
+    max-width: 420px;
+    font-family: 'Ropeman', sans-serif;
+}
+
+.modalCaja h2 {
+    margin: 0 0 8px;
+    font-family: 'Ropeman', sans-serif;
+}
+
+.modalCaja textarea {
+    box-sizing: border-box;
+    width: 100%;
+    min-height: 110px;
+    margin: 4px 0 10px;
+    padding: 8px;
+    border: 1px solid #40916C;
+    border-radius: 8px;
+    font: inherit;
+    font-family: 'Ropeman', sans-serif;
+    color: #081C15;
+    background: #FFFFFF;
+    resize: vertical;
+}
+
+.modalBotones {
+    display: flex;
+    justify-content: flex-end;
+    gap: 10px;
+    margin-top: 10px;
+}
+
+.modalBotones button {
+    padding: 8px 18px;
+    border: none;
+    border-radius: 8px;
+    font-weight: 700;
+    font-family: 'Ropeman', sans-serif;
+    cursor: pointer;
+    background: #95D5B2;
+    color: #081C15;
+}
+
+.modalBotones button:first-child {
+    background: #8B2635;
+    color: #FFFFFF;
+}
+
+.modalBotones button:disabled {
+    opacity: 0.5;
+    cursor: not-allowed;
+}
+
+/* ---------- Celular ---------- */
+
+@media (max-width: 800px) {
+    .botones {
+        flex-direction: column;
+    }
+
+    .botonAprobar,
+    .botonCancelar,
+    .botonBanear,
+    .botonRegresar {
+        width: 100%;
+        text-align: center;
+        box-sizing: border-box;
+    }
+}
+
+@media (max-width: 600px) {
+    .modalCaja {
+        width: calc(100% - 24px);
+        max-height: 90vh;
+        overflow-y: auto;
+        padding: 18px;
+    }
+
+    .modalCaja textarea {
+        font-size: 16px; /* 16px o más: iPhone no hace zoom al escribir */
+    }
+
+    .modalBotones {
+        flex-wrap: wrap;
+    }
+
+    .modalBotones button {
+        flex: 1;
+        padding: 12px;
+    }
+}
+
+/* ---------- Etiquetas: rechazada antes / corregida ---------- */
+
+.etiquetas {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 8px;
+    margin: 4px 0 8px;
+    font-family: 'Ropeman', sans-serif;
+}
+
+.etiquetaRechazo,
+.etiquetaCorregida,
+.etiquetaSinCorregir {
+    display: inline-block;
+    padding: 4px 12px;
+    border-radius: 999px;
+    font-size: 13px;
+    font-weight: 700;
+    font-family: 'Ropeman', sans-serif;
+    box-shadow:
+        0 2px 5px rgba(8, 28, 21, 0.18),
+        inset 0 1px 2px rgba(255, 255, 255, 0.25);
+}
+
+.etiquetaRechazo {
+    background: linear-gradient(145deg, #8B2635, #5C1421);
+    color: #FFFFFF;
+}
+
+.etiquetaCorregida {
+    background: linear-gradient(145deg, #40916C, #1B4332);
+    color: #FFFFFF;
+}
+
+.etiquetaSinCorregir {
+    background: linear-gradient(145deg, #FFFFFF, #D8F3DC);
+    color: #7a0019;
+    border: 1px solid #8B2635;
+}
