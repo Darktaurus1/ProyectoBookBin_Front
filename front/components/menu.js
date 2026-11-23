@@ -17,6 +17,7 @@ export default function Menu() {
   const router = useRouter();
   const [esAdmin, setEsAdmin] = useState(false);
   const [verif, setVerif] = useState(false);
+  const [esLider, setEsLider] = useState(false);
   const [texto, setTexto] = useState("");
   const [sinLeer, setSinLeer] = useState(0);
 
@@ -53,7 +54,9 @@ export default function Menu() {
   }, [router.asPath]);
 
   useEffect(() => {
-    setVerif(leerUsuario()?.tipo === "verificador");
+    const tipo = leerUsuario()?.tipo;
+    setVerif(esVerificador(tipo));
+    setEsLider(tipo === "verificador_lider");
   }, [router.asPath]);
 
   // En el inicio, el buscador muestra lo que se está buscando; en otras páginas queda vacío
@@ -93,9 +96,10 @@ export default function Menu() {
       <nav className={`${styles.menu} ${styles.menuVerificador}`}>
         <h2 className={styles.logo}>BookBin</h2>
         <Link href="/verificador">Inicio</Link>
-        <Link href="/verificador/verificacion">Verificación</Link>
-        <Link href="/verificador/apelaciones">Apelaciones</Link>
-        
+        <Link href="/verificador/reportes">Reportes</Link>
+        <Link href="/verificador/apelaciones-lista">Apelaciones</Link>
+        {esLider && <Link href="/verificador/apelaciones">Apelaciones</Link>}
+
         <Link href="/verificador/perfil" className={styles.perfilVerif}>Mi perfil</Link>
       </nav>
     );

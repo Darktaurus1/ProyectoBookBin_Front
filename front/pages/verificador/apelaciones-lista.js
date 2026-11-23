@@ -1,11 +1,12 @@
 import ListaReportesVerificador from "../../components/ListaReportesVerificador";
 
-export default function Reportes() {
+// Solo el verificador líder puede ver esta lista (lo exige el backend)
+export default function Apelaciones() {
   return (
     <ListaReportesVerificador
-      titulo="Reportes pendientes"
-      ruta="/verificador/reportes"
-      vacio="No hay reportes pendientes."
+      titulo="Apelaciones"
+      ruta="/verificador/apelaciones"
+      vacio="No hay apelaciones pendientes."
     />
   );
 }
