@@ -1,8 +1,8 @@
 import { useEffect, useState } from 'react';
 import Link from 'next/link';
 import { useRouter } from 'next/router';
-import { pedirJSON } from '../lib/api';
-import styles from './perfil.module.css';
+import { pedirJSON } from '../../lib/api';
+import styles from '../perfil.module.css';
 
 const CAMPOS = [
     { clave: 'correo', etiqueta: 'Correo electrónico', tipo: 'email', maximo: 45 },

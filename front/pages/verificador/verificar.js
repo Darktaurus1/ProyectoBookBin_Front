@@ -3,7 +3,7 @@ import { useRouter } from "next/router";
 import { pedirJSON } from "../../lib/api";
 
 import Bano from "./baneo";
-import Rechazo from "./rechazar";
+import Rechazo from "./rechazo";
 
 function urlImagen(imagen) {
   if (!imagen) return null;
