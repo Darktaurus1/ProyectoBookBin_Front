@@ -1,0 +1,302 @@
+
+.bloque {
+    background: linear-gradient(
+        145deg,
+        #B7E4C7,
+        #95D5B2
+    );
+    border: 1px solid rgba(255, 255, 255, 0.7);
+    border-radius: 10px;
+    box-shadow:
+        0 3px 7px rgba(8, 28, 21, 0.12),
+        inset 0 1px 3px rgba(255, 255, 255, 0.6);
+    font-family: 'Ropeman', sans-serif;
+}
+
+.cabecera {
+    padding: 8px 24px;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    font-weight: 700;
+    color: #1B4332;
+    border-bottom: 1px solid rgba(64, 145, 108, 0.4);
+    font-family: 'Ropeman', sans-serif;
+}
+
+.cabecera span {
+    font-size: 14px;
+    font-weight: 600;
+    color: #2D6A4F;
+    font-family: 'Ropeman', sans-serif;
+}
+
+.cuerpo {
+    padding: 14px 18px 16px;
+    display: flex;
+    flex-direction: column;
+    gap: 12px;
+    background: rgba(216, 243, 220, 0.85);
+    border-radius: 0 0 10px 10px;
+    font-family: 'Ropeman', sans-serif;
+}
+
+/* ---------- Materiales elegidos ---------- */
+
+.elegidos {
+    list-style: none;
+    margin: 0;
+    padding: 0;
+    display: flex;
+    flex-direction: column;
+    gap: 8px;
+    font-family: 'Ropeman', sans-serif;
+}
+
+/* Una fila por material: nombre, cantidad y botón para quitar */
+.fila {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+    padding: 6px 8px 6px 16px;
+    background: #FFFFFF;
+    border: 1px solid #B7E4C7;
+    border-radius: 12px;
+    box-shadow: 0 1px 3px rgba(8, 28, 21, 0.08);
+    font-family: 'Ropeman', sans-serif;
+}
+
+.nombreFila {
+    flex: 1;
+    min-width: 0;
+    font-size: 15px;
+    font-weight: 600;
+    color: #1B4332;
+    overflow-wrap: anywhere;
+    font-family: 'Ropeman', sans-serif;
+}
+
+.cantidad {
+    display: flex;
+    align-items: center;
+    border: 1px solid #74C69D;
+    border-radius: 999px;
+    overflow: hidden;
+}
+
+.botonCantidad {
+    width: 32px;
+    height: 32px;
+    border: none;
+    background: #D8F3DC;
+    color: #1B4332;
+    font-size: 18px;
+    font-weight: 700;
+    line-height: 1;
+    cursor: pointer;
+    font-family: 'Ropeman', sans-serif;
+}
+
+.botonCantidad:hover:not(:disabled) {
+    background: #B7E4C7;
+}
+
+.botonCantidad:disabled {
+    color: #95B8A6;
+    cursor: not-allowed;
+}
+
+.numeroCantidad {
+    width: 48px;
+    height: 32px;
+    box-sizing: border-box;
+    border: none;
+    text-align: center;
+    font: inherit;
+    font-size: 15px;
+    font-weight: 700;
+    color: #081C15;
+    background: #FFFFFF;
+    
+    font-family: 'Ropeman', sans-serif;
+}
+
+.numeroCantidad::-webkit-outer-spin-button,
+.numeroCantidad::-webkit-inner-spin-button {
+    -webkit-appearance: none;
+    margin: 0;
+}
+
+.botonCantidad:focus-visible,
+.numeroCantidad:focus-visible {
+    outline: 2px solid #1B4332;
+    outline-offset: -2px;
+}
+
+.quitar {
+    width: 30px;
+    height: 30px;
+    flex: 0 0 30px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    border: none;
+    border-radius: 50%;
+    background: transparent;
+    color: #52796F;
+    font-size: 20px;
+    line-height: 1;
+    cursor: pointer;
+    font-family: 'Ropeman', sans-serif;
+}
+
+.quitar:hover {
+    background: rgba(122, 0, 25, 0.1);
+    color: #7a0019;
+}
+
+.quitar:focus-visible {
+    outline: 2px solid #1B4332;
+    outline-offset: 1px;
+}
+
+/* ---------- Buscador ---------- */
+
+.buscador {
+    position: relative;
+}
+
+.lupa {
+    position: absolute;
+    left: 14px;
+    top: 50%;
+    transform: translateY(-50%);
+    color: #2D6A4F;
+    pointer-events: none;
+}
+
+.input {
+    box-sizing: border-box;
+    width: 100%;
+    padding: 11px 16px 11px 40px;
+    font: inherit;
+    font-size: 15px;
+    color: #081C15;
+    background: #FFFFFF;
+    border: 1px solid #74C69D;
+    border-radius: 999px;
+    outline: none;
+    transition: border-color 0.2s, box-shadow 0.2s;
+    font-family: 'Ropeman', sans-serif;
+}
+
+.input:hover {
+    border-color: #2D6A4F;
+}
+
+.input:focus {
+    border-color: #2D6A4F;
+    box-shadow: 0 0 0 3px rgba(64, 145, 108, 0.35);
+}
+
+.input:disabled {
+    background: #EAF6EE;
+    cursor: wait;
+}
+
+/* Lista desplegable debajo del buscador */
+.lista {
+    position: absolute;
+    top: calc(100% + 6px);
+    left: 0;
+    right: 0;
+    z-index: 20;
+    max-height: 280px;
+    overflow-y: auto;
+    margin: 0;
+    padding: 6px;
+    list-style: none;
+    background: #FFFFFF;
+    border: 1px solid #95D5B2;
+    border-radius: 12px;
+    box-shadow: 0 10px 24px rgba(8, 28, 21, 0.2);
+    font-family: 'Ropeman', sans-serif;
+}
+
+.opcion {
+    display: flex;
+    flex-direction: column;
+    gap: 2px;
+    padding: 9px 12px;
+    border-radius: 8px;
+    cursor: pointer;
+    font-family: 'Ropeman', sans-serif;
+}
+
+.opcionActiva {
+    background: #D8F3DC;
+}
+
+.nombreOpcion {
+    font-size: 15px;
+    font-weight: 600;
+    color: #1B4332;
+    font-family: 'Ropeman', sans-serif;
+}
+
+.detalleOpcion {
+    font-size: 13px;
+    color: #52796F;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    white-space: nowrap;
+    font-family: 'Ropeman', sans-serif;
+}
+
+.vacio {
+    padding: 12px;
+    font-size: 14px;
+    color: #52796F;
+    text-align: center;
+    font-family: 'Ropeman', sans-serif;
+}
+
+.ayuda,
+.error {
+    margin: 0;
+    font-size: 13px;
+    font-family: 'Ropeman', sans-serif;
+}
+
+.ayuda {
+    color: #2D6A4F;
+}
+
+.error {
+    color: #7a0019;
+    font-weight: 600;
+}
+
+
+/* ---------- Celular ---------- */
+@media (max-width: 600px) {
+    .cabecera {
+        flex-wrap: wrap;
+        gap: 2px 10px;
+        padding: 8px 14px;
+    }
+
+    .cuerpo {
+        padding: 12px;
+    }
+
+    .fila {
+        gap: 8px;
+        padding: 6px 6px 6px 12px;
+    }
+
+    .input,
+    .numeroCantidad {
+        font-size: 16px; /* 16px o más: iPhone no hace zoom al escribir */
+    }
+}

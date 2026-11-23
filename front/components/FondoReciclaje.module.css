@@ -1,0 +1,71 @@
+/*
+  Fondo animado con temática de reciclaje: botellas PET, latas, hojas y el símbolo de reciclaje.
+  El contenedor que lo use necesita: position: relative; isolation: isolate;
+*/
+.fondo-cascada {
+    position: absolute;
+    isolation: isolate;
+    overflow: hidden;
+    inset: 0;
+    z-index: -1;
+    pointer-events: none;
+
+    /* Botella PET */
+    --fc-botella: url("data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' width='520' height='640'><g transform='translate(90 110) rotate(-14)'><path d='M15 0h10v7h-10z' fill='%2340916C' fill-opacity='.55'/><path d='M14 7h12v6c0 3 9 6 9 15v40a6 6 0 0 1-6 6H11a6 6 0 0 1-6-6V28c0-9 9-12 9-15z' fill='%23ffffff' fill-opacity='.38' stroke='%23ffffff' stroke-opacity='.65' stroke-width='2'/><path d='M5 40h30M5 54h30' stroke='%23ffffff' stroke-opacity='.6' stroke-width='2'/><path d='M11 28v32' stroke='%23ffffff' stroke-opacity='.7' stroke-width='3' stroke-linecap='round'/></g></svg>");
+
+    /* Hoja */
+    --fc-hoja: url("data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' width='460' height='560'><g transform='translate(320 290) rotate(18) scale(.85)'><path d='M4 40C4 16 20 4 44 4c0 24-14 38-40 36z' fill='%23D8F3DC' fill-opacity='.7'/><path d='M8 36L34 12' stroke='%232D6A4F' stroke-opacity='.45' stroke-width='2' stroke-linecap='round'/></g></svg>");
+
+    /* Lata */
+    --fc-lata: url("data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' width='470' height='600'><g transform='translate(300 420) rotate(10) scale(.9)'><rect x='0' y='4' width='28' height='44' rx='5' fill='%23B7E4C7' fill-opacity='.65' stroke='%23ffffff' stroke-opacity='.6' stroke-width='2'/><ellipse cx='14' cy='5' rx='12' ry='3.5' fill='%23ffffff' fill-opacity='.55'/><path d='M0 16h28M0 38h28' stroke='%23ffffff' stroke-opacity='.55' stroke-width='2'/></g></svg>");
+
+    /* Símbolo de reciclaje */
+    --fc-reciclaje: url("data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' width='610' height='500'><g transform='translate(470 190) scale(.95)' fill='none' stroke='%23ffffff' stroke-opacity='.6' stroke-width='3.5' stroke-linecap='round' stroke-linejoin='round'><path d='M17 6a17 17 0 0 1 16 9'/><path d='M28 15h6v-6'/><path d='M38 27a17 17 0 0 1-12 14'/><path d='M30 44l-5-4 4-5'/><path d='M14 41A17 17 0 0 1 4 24'/><path d='M1 29l3-5 5 3'/></g></svg>");
+
+    /* Destello pequeño */
+    --fc-brillo: url("data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' width='330' height='380'><path d='M230 60v20M220 70h20' stroke='%23ffffff' stroke-opacity='.55' stroke-width='2' stroke-linecap='round'/></svg>");
+
+    background-color: #74C69D;
+    background-image: linear-gradient(160deg, #95D5B2 0%, #74C69D 50%, #40916C 100%);
+}
+
+.fondo-cascada::before,
+.fondo-cascada::after {
+    content: "";
+    position: absolute;
+    inset: 0;
+    z-index: -1;
+    pointer-events: none;
+    background-repeat: repeat;
+}
+
+/* Capa lenta: botellas, brillos y hojas */
+.fondo-cascada::before {
+    background-image: var(--fc-botella), var(--fc-brillo), var(--fc-hoja);
+    animation: fc-caida-lenta 30s linear infinite;
+}
+
+/* Capa rápida: latas, símbolos de reciclaje y brillos */
+.fondo-cascada::after {
+    background-image: var(--fc-lata), var(--fc-reciclaje), var(--fc-brillo);
+    background-position: 0 0, 0 0, 150px 190px;
+    animation: fc-caida-rapida 18s linear infinite;
+}
+
+/* Cada capa baja exactamente el alto de su mosaico, así el ciclo no da saltos */
+@keyframes fc-caida-lenta {
+    from { background-position: 0 0,     0 0,     0 0; }
+    to   { background-position: 0 640px, 0 380px, 0 560px; }
+}
+
+@keyframes fc-caida-rapida {
+    from { background-position: 0 0,     0 0,     150px 190px; }
+    to   { background-position: 0 600px, 0 500px, 150px 570px; }
+}
+
+@media (prefers-reduced-motion: reduce) {
+    .fondo-cascada::before,
+    .fondo-cascada::after {
+        animation: none;
+    }
+}

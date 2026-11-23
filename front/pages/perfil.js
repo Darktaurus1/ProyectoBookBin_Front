@@ -1,7 +1,7 @@
 import { useEffect, useState } from 'react';
 import Link from 'next/link';
 import { useRouter } from 'next/router';
-import { pedirJSON } from '../lib/api';
+import { pedirJSON, cerrarSesion as cerrarSesionServidor } from '../lib/api';
 import styles from './perfil.module.css';
 
 const CAMPOS = [
@@ -114,10 +114,10 @@ export default function Perfil() {
         }
     };
 
-    const cerrarSesion = () => {
-        localStorage.removeItem('usuario');
-        router.push('/login');
-    };
+    const cerrarSesion = async () => {
+    await cerrarSesionServidor(); // destruye la sesión y revoca el token en el backend
+    router.push('/login');
+};
 
     return (
         <main className={styles.pagina}>

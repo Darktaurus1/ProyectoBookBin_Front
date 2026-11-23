@@ -1,0 +1,328 @@
+
+.fondo {
+    min-height: calc(100vh - 68px);
+    background: linear-gradient(
+        135deg,
+        #74C69D 0%,
+        #52B788 50%,
+        #40916C 100%
+    );
+    padding: 24px 32px;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 18px;
+    font-family: 'Ropeman', sans-serif;
+}
+
+.tarjetaFormulario {
+    width: 100%;
+    max-width: 1160px;
+    background: linear-gradient(
+        145deg,
+        rgba(183, 228, 199, 0.98),
+        rgba(149, 213, 178, 0.98)
+    );
+    border: 1px solid rgba(255, 255, 255, 0.75);
+    border-radius: 22px;
+    padding: 22px 42px 28px;
+    box-shadow:
+        0 5px 15px rgba(8, 28, 21, 0.2),
+        inset 0 2px 5px rgba(255, 255, 255, 0.7),
+        inset 0 -2px 4px rgba(45, 106, 79, 0.1);
+    display: flex;
+    flex-direction: column;
+    gap: 14px;
+    font-family: 'Ropeman', sans-serif;
+}
+
+.titulo {
+    text-align: center;
+    color: #081C15;
+    font-size: 28px;
+    margin: 0 0 4px;
+    font-weight: 700;
+    font-family: 'Ropeman', sans-serif;
+}
+
+.inputNombre {
+    width: 100%;
+    padding: 10px 24px;
+    background: linear-gradient(
+        145deg,
+        #D8F3DC,
+        #B7E4C7
+    );
+    border: 1px solid rgba(116, 198, 157, 0.55);
+    border-radius: 10px;
+    font-size: 16px;
+    color: #081C15;
+    outline: none;
+    box-shadow:
+        inset 0 2px 4px rgba(45, 106, 79, 0.12),
+        0 2px 5px rgba(8, 28, 21, 0.1);
+    box-sizing: border-box;
+    font-family: 'Ropeman', sans-serif;
+}
+
+.filaMedia {
+    display: flex;
+    gap: 14px;
+    min-height: 155px;
+}
+
+.cajaImagen {
+    width: 280px;
+    min-width: 280px;
+    background: linear-gradient(
+        145deg,
+        #95D5B2,
+        #74C69D
+    );
+    border: 1px solid rgba(255, 255, 255, 0.7);
+    border-radius: 10px;
+    padding: 12px;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: space-between;
+    cursor: pointer;
+    box-shadow:
+        0 3px 7px rgba(8, 28, 21, 0.14),
+        inset 0 2px 4px rgba(255, 255, 255, 0.65);
+    overflow: hidden;
+    position: relative;
+}
+
+.textoImagen {
+    font-size: 15px;
+    font-weight: 600;
+    color: #2D6A4F;
+    text-align: center;
+    font-family: 'Ropeman', sans-serif;
+}
+
+.previewImagen {
+    width: 100%;
+    height: 115px;
+    object-fit: cover;
+    border-radius: 6px;
+}
+
+.cajaDescripcion {
+    flex: 1;
+    background: linear-gradient(
+        145deg,
+        #FFFFFF,
+        #D8F3DC
+    );
+    border-radius: 10px;
+    padding: 14px 18px;
+    border: 1px solid rgba(116, 198, 157, 0.55);
+    resize: none;
+    font-size: 15px;
+    font-family: 'Ropeman', sans-serif;
+    color: #081C15;
+    outline: none;
+    box-shadow:
+        inset 0 2px 4px rgba(45, 106, 79, 0.12),
+        0 2px 5px rgba(8, 28, 21, 0.1);
+}
+
+.cajaInstrucciones {
+    width: 100%;
+    min-height: 180px;
+    background: linear-gradient(
+        145deg,
+        #FFFFFF,
+        #D8F3DC
+    );
+    border-radius: 10px;
+    padding: 14px 24px;
+    border: 1px solid rgba(116, 198, 157, 0.55);
+    resize: vertical;
+    font-size: 15px;
+    font-family: 'Ropeman', sans-serif;
+    color: #081C15;
+    outline: none;
+    box-shadow:
+        inset 0 2px 4px rgba(45, 106, 79, 0.12),
+        0 2px 5px rgba(8, 28, 21, 0.1);
+    box-sizing: border-box;
+}
+
+.tarjetaAcciones {
+    width: 100%;
+    max-width: 1160px;
+    background: linear-gradient(
+        145deg,
+        rgba(216, 243, 220, 0.96),
+        rgba(183, 228, 199, 0.96)
+    );
+    border: 1px solid rgba(255, 255, 255, 0.75);
+    border-radius: 22px;
+    padding: 20px 42px;
+    box-shadow:
+        0 5px 15px rgba(8, 28, 21, 0.2),
+        inset 0 2px 5px rgba(255, 255, 255, 0.7);
+    display: flex;
+    flex-direction: column;
+    gap: 14px;
+    font-family: 'Ropeman', sans-serif;
+}
+
+.filaBotones {
+    display: flex;
+    gap: 20px;
+}
+
+.botonBorrador {
+    flex: 1;
+    padding: 14px;
+    background: linear-gradient(
+        145deg,
+        #40916C,
+        #1B4332
+    );
+    color: #FFFFFF;
+    border: 1px solid rgba(255, 255, 255, 0.25);
+    border-radius: 10px;
+    font-size: 22px;
+    font-weight: 700;
+    cursor: pointer;
+    box-shadow:
+        0 3px 7px rgba(8, 28, 21, 0.2),
+        inset 0 1px 3px rgba(255, 255, 255, 0.25);
+    transition: all 0.2s;
+    font-family: 'Ropeman', sans-serif;
+}
+
+.botonBorrador:hover {
+    background: linear-gradient(
+        145deg,
+        #2D6A4F,
+        #081C15
+    );
+}
+
+.botonCancelar {
+    flex: 1;
+    padding: 14px;
+    background: linear-gradient(
+        145deg,
+        #8B2635,
+        #5C1421
+    );
+    color: #FFFFFF;
+    border: 1px solid rgba(255, 255, 255, 0.25);
+    border-radius: 10px;
+    font-size: 22px;
+    font-weight: 700;
+    cursor: pointer;
+    box-shadow:
+        0 3px 7px rgba(50, 0, 10, 0.2),
+        inset 0 1px 3px rgba(255, 255, 255, 0.2);
+    transition: all 0.2s;
+    font-family: 'Ropeman', sans-serif;
+}
+
+.botonCancelar:hover {
+    background: linear-gradient(
+        145deg,
+        #741D2B,
+        #3F0D17
+    );
+}
+
+.botonPublicar {
+    width: 100%;
+    padding: 14px;
+    background: linear-gradient(
+        145deg,
+        #52B788,
+        #2D6A4F
+    );
+    color: #FFFFFF;
+    border: 1px solid rgba(255, 255, 255, 0.3);
+    border-radius: 10px;
+    font-size: 22px;
+    font-weight: 700;
+    cursor: pointer;
+    box-shadow:
+        0 3px 7px rgba(8, 28, 21, 0.2),
+        inset 0 1px 3px rgba(255, 255, 255, 0.3);
+    transition: all 0.2s;
+    font-family: 'Ropeman', sans-serif;
+}
+
+.botonPublicar:hover {
+    background: linear-gradient(
+        145deg,
+        #40916C,
+        #1B4332
+    );
+}
+
+
+/* El ancho incluye el relleno: sin esto las tarjetas se salen de la pantalla */
+.tarjetaFormulario,
+.tarjetaAcciones,
+.cajaImagen,
+.cajaDescripcion {
+    box-sizing: border-box;
+}
+
+/* ---------- Celular ---------- */
+@media (max-width: 760px) {
+    .fondo {
+        padding: 12px;
+        gap: 12px;
+    }
+
+    .tarjetaFormulario,
+    .tarjetaAcciones {
+        padding: 16px;
+        border-radius: 16px;
+    }
+
+    .titulo {
+        font-size: 22px;
+    }
+
+    /* Imagen arriba y descripción abajo, a lo ancho */
+    .filaMedia {
+        flex-direction: column;
+        min-height: 0;
+    }
+
+    .cajaImagen {
+        width: 100%;
+        min-width: 0;
+        min-height: 150px;
+    }
+
+    .previewImagen {
+        height: 180px;
+    }
+
+    .cajaDescripcion {
+        width: 100%;
+        min-height: 120px;
+    }
+
+    .inputNombre,
+    .cajaDescripcion {
+        font-size: 16px; /* 16px o más: iPhone no hace zoom al escribir */
+    }
+
+    .filaBotones {
+        gap: 10px;
+    }
+
+    .botonBorrador,
+    .botonCancelar,
+    .botonPublicar {
+        padding: 12px;
+        font-size: 17px;
+    }
+}
