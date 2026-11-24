@@ -175,3 +175,10 @@
         top: 46px;
     }
 }
+.tarjeta {
+    position: relative;
+    display: flex;
+    flex-direction: column;
+    min-width: 0; /* deja que el texto largo se corte con "..." en vez de ensanchar la tarjeta */
+    /* ...lo demás se queda igual */
+}
