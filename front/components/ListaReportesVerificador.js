@@ -17,7 +17,7 @@ function urlImagen(imagen) {
 }
 
 // Lista de reportes pendientes; cada fila lleva a la página de revisión de la creación
-export default function ListaReportesVerificador({ titulo, ruta, vacio }) {
+export default function ListaReportesVerificador({ titulo, ruta, vacio, apelaciones = false }) {
   const [filas, setFilas] = useState([]);
   const [cargando, setCargando] = useState(true);
   const [error, setError] = useState("");
@@ -53,22 +53,39 @@ export default function ListaReportesVerificador({ titulo, ruta, vacio }) {
             const imagen = urlImagen(r.mcreacion?.imagen);
             const reporto = r.musuarios?.nombre;
             return (
-              <li key={r.id_reporte} className={styles.filaReporte}>
+              <li key={apelaciones ? r.id_apelacion : r.id_reporte} className={styles.filaReporte}>
                 <div className={styles.miniatura}>
                   {imagen ? <img src={imagen} alt="" /> : null}
                 </div>
 
                 <div className={styles.datosReporte}>
                   <h2>{r.mcreacion?.nombre}</h2>
-                  <span className={styles.etiquetaRechazo}>
-                    {MOTIVOS[r.motivo] || r.motivo}
-                  </span>
-                  {r.detalle && <p>{r.detalle}</p>}
-                  {reporto && <p className={styles.reportero}>Reportó: {reporto}</p>}
+                  {apelaciones ? (
+                    <>
+                      <span className={styles.etiquetaRechazo}>Apelación</span>
+                      <p>{r.motivo}</p>
+                    </>
+                  ) : (
+                    <>
+                      <span className={styles.etiquetaRechazo}>
+                        {MOTIVOS[r.motivo] || r.motivo}
+                      </span>
+                      {r.detalle && <p>{r.detalle}</p>}
+                    </>
+                  )}
+                  {reporto && (
+                    <p className={styles.reportero}>
+                      {apelaciones ? "Apeló" : "Reportó"}: {reporto}
+                    </p>
+                  )}
                 </div>
 
                 <Link
-                  href={`/verificador/reporte?id=${r.id_creacion}`}
+                  href={
+                    apelaciones
+                      ? `/verificador/apelaciones?id=${r.id_apelacion}`
+                      : `/verificador/reporte?id=${r.id_creacion}`
+                  }
                   className={styles.botonAprobar}
                 >
                   Revisar

@@ -1,6 +1,7 @@
 import { useEffect, useState } from "react";
 import Link from "next/link";
 import { pedirJSON } from "../lib/api";
+import ModalApelacion from "../components/ModalApelacion";
 import styles from "./notificaciones.module.css";
 
 function formatearFecha(fecha) {
@@ -14,6 +15,7 @@ export default function Notificaciones() {
   const [lista, setLista] = useState([]);
   const [cargando, setCargando] = useState(true);
   const [error, setError] = useState("");
+  const [apelando, setApelando] = useState(null); // id de la notificación que se apela
 
   useEffect(() => {
     let vigente = true;
@@ -35,6 +37,7 @@ export default function Notificaciones() {
   async function marcarLeida(id) {
     try {
       await pedirJSON(`/notificaciones/${id}/leida`, { method: "PUT" });
+      window.dispatchEvent(new Event("notificaciones-actualizadas"));
       setLista((actual) =>
         actual.map((n) =>
           n.id_notificacion === id ? { ...n, leida: 1 } : n
@@ -65,7 +68,9 @@ export default function Notificaciones() {
           >
             <h2>{n.titulo}</h2>
             <p className={styles.mensaje}>
-              {n.tipo === "aprobacion" ? null : <strong>Razón: </strong>}
+              {n.tipo === "aprobacion" ? null : (
+                <strong>{n.tipo === "apelacion" ? "Respuesta: " : "Razón: "}</strong>
+              )}
               {n.mensaje}
             </p>
             <p className={styles.fecha}>{formatearFecha(n.fecha)}</p>
@@ -78,6 +83,18 @@ export default function Notificaciones() {
                   Corregir creación
                 </Link>
               )}
+              {n.tipo === "rechazo" &&
+                (n.apelada ? (
+                  <span className={styles.apelada}>Apelación enviada</span>
+                ) : (
+                  <button
+                    type="button"
+                    className={styles.botonApelar}
+                    onClick={() => setApelando(n.id_notificacion)}
+                  >
+                    Apelar
+                  </button>
+                ))}
               {!n.leida && (
                 <button
                   type="button"
@@ -90,6 +107,20 @@ export default function Notificaciones() {
           </li>
         ))}
       </ul>
+
+      {apelando !== null && (
+        <ModalApelacion
+          idNotificacion={apelando}
+          onEnviada={() =>
+            setLista((actual) =>
+              actual.map((n) =>
+                n.id_notificacion === apelando ? { ...n, apelada: true } : n
+              )
+            )
+          }
+          onCerrar={() => setApelando(null)}
+        />
+      )}
     </main>
   );
 }

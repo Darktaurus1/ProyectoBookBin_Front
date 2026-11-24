@@ -1,12 +1,13 @@
 import ListaReportesVerificador from "../../components/ListaReportesVerificador";
 
-// Solo el verificador líder puede ver esta lista (lo exige el backend)
-export default function Apelaciones() {
+// Apelaciones de autores a un rechazo; las ven todos los verificadores
+export default function ApelacionesLista() {
   return (
     <ListaReportesVerificador
       titulo="Apelaciones"
       ruta="/verificador/apelaciones"
       vacio="No hay apelaciones pendientes."
+      apelaciones
     />
   );
 }
