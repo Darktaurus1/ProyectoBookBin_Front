@@ -69,7 +69,7 @@ export default function Reporte() {
         method: "POST",
         body: JSON.stringify(cuerpo || {}),
       });
-      router.push("/verificador/reportes");
+      router.push("/verificador/por-revisar");
     } catch (err) {
       setError(err.message);
       setModal(null);
@@ -79,7 +79,7 @@ export default function Reporte() {
 
   const descartar = () => enviar("descartar");
   const confirmarBaneo = (razon) => enviar("baneado", { razon });
-  const regresar = () => router.push("/verificador/reportes");
+  const regresar = () => router.push("/verificador/por-revisar");
 
   if (cargando) {
     return (
@@ -95,7 +95,7 @@ export default function Reporte() {
         <p className={styles.estado}>
           {errorCarga || "No se encontró la creación o el reporte"}
         </p>
-        <Link href="/verificador/reportes" className={styles.botonRegresar}>
+        <Link href="/verificador/por-revisar" className={styles.botonRegresar}>
           Regresar a los reportes
         </Link>
       </main>

@@ -95,10 +95,17 @@ export default function Menu() {
     return (
       <nav className={`${styles.menu} ${styles.menuVerificador}`}>
         <h2 className={styles.logo}>BookBin</h2>
-        <Link href="/verificador">Inicio</Link>
-        <Link href="/verificador/reportes">Reportes</Link>
-        {esLider && <Link href="/verificador/apelaciones-lista">Apelaciones</Link>}
-
+         {esLider ? (
+          <>
+            <Link href="/verificador/lider">Inicio</Link>
+            <Link href="/verificador/por-revisar">Por revisar</Link>
+          </>
+        ) : (
+          <>
+            <Link href="/verificador">Inicio</Link>
+            <Link href="/verificador/por-verificar">Por verificar</Link>
+          </>
+        )}
         <Link href="/verificador/perfil" className={styles.perfilVerif}>Mi perfil</Link>
       </nav>
     );

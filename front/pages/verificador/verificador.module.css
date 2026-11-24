@@ -551,3 +551,232 @@
         box-sizing: border-box;
     }
 }
+
+/* ---------- Encabezado de las listas ---------- */
+.encabezadoLista {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    flex-wrap: wrap;
+    gap: 12px;
+}
+
+.encabezadoLista .tituloLista {
+    margin-bottom: 8px;
+}
+
+.contenedorLista > p.ayuda {
+    margin: 0 0 18px;
+    text-align: left;
+    font-size: 16px;
+    color: #1B4332;
+}
+
+.contenedorLista > p.aviso {
+    margin: 0 0 16px;
+    padding: 10px 16px;
+    border-radius: 10px;
+    background: rgba(255, 255, 255, 0.85);
+    border: 1px solid #40916C;
+    text-align: left;
+    font-size: 16px;
+    color: #1B4332;
+}
+
+/* Espacio abajo para que la barra fija no tape las últimas tarjetas */
+.contenedorLista {
+    padding-bottom: 96px;
+}
+
+/* ---------- Tarjetas seleccionables (verificador normal) ---------- */
+.tarjetaSeleccionable {
+    cursor: pointer;
+}
+
+.tarjetaSeleccionada {
+    border-color: #1B4332 !important;
+    box-shadow: 0 0 0 3px #40916C, 0 8px 20px rgba(8, 28, 21, 0.25) !important;
+}
+
+/* El título como botón que cubre la tarjeta (usa el ::after de .titulo) */
+.botonTarjeta {
+    padding: 0;
+    border: none;
+    background: none;
+    text-align: left;
+    cursor: pointer;
+    font: inherit;
+    font-size: 18px;
+    font-weight: 700;
+}
+
+/* Círculo con la palomita */
+.marca {
+    position: absolute;
+    top: 10px;
+    left: 10px;
+    z-index: 2;
+    width: 30px;
+    height: 30px;
+    border-radius: 50%;
+    border: 2px solid #FFFFFF;
+    background: rgba(8, 28, 21, 0.35);
+    color: #FFFFFF;
+    font-size: 18px;
+    font-weight: 700;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    pointer-events: none;
+}
+
+.tarjetaSeleccionada .marca {
+    background: #2D6A4F;
+}
+
+/* Botón "Soltar": encima del enlace estirado para que sí se pueda presionar */
+.botonSoltar {
+    position: relative;
+    z-index: 2;
+    align-self: flex-start;
+    margin-top: 6px;
+    padding: 8px 16px;
+    border: 1px solid #8B2635;
+    border-radius: 10px;
+    background: #FFFFFF;
+    color: #8B2635;
+    font: inherit;
+    font-size: 14px;
+    font-weight: 700;
+    cursor: pointer;
+}
+
+.botonSoltar:hover {
+    background: #FCE8EA;
+}
+
+/* ---------- Filas seleccionables (líder) ---------- */
+.filaSeleccionable {
+    width: 100%;
+    font: inherit;
+    text-align: left;
+    cursor: pointer;
+    color: inherit;
+    border: 2px solid transparent;
+}
+
+.filaSeleccionable:hover {
+    border-color: #40916C;
+}
+
+.filaSeleccionada {
+    border-color: #1B4332;
+    box-shadow: 0 0 0 3px #40916C, 0 4px 12px rgba(8, 28, 21, 0.18);
+}
+
+.filaSeleccionable:focus-visible {
+    outline: 3px solid #081C15;
+    outline-offset: 2px;
+}
+
+.marcaFila {
+    flex: 0 0 28px;
+    height: 28px;
+    border-radius: 50%;
+    border: 2px solid #2D6A4F;
+    background: #FFFFFF;
+    color: #FFFFFF;
+    font-weight: 700;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.filaSeleccionada .marcaFila {
+    background: #2D6A4F;
+}
+
+.accionesFila {
+    display: flex;
+    flex-direction: column;
+    align-items: stretch;
+    gap: 8px;
+}
+
+.accionesFila .botonSoltar {
+    align-self: stretch;
+    margin-top: 0;
+}
+
+/* ---------- Pestañas Reportes / Apelaciones ---------- */
+.pestanas {
+    display: flex;
+    gap: 10px;
+    margin-bottom: 18px;
+}
+
+.pestana {
+    padding: 10px 20px;
+    border: 1px solid #40916C;
+    border-radius: 999px;
+    background: rgba(255, 255, 255, 0.7);
+    color: #1B4332;
+    font: inherit;
+    font-size: 16px;
+    font-weight: 700;
+    cursor: pointer;
+}
+
+.pestanaActiva {
+    background: #1B4332;
+    border-color: #1B4332;
+    color: #FFFFFF;
+}
+
+/* ---------- Barra fija "Elegir estas" ---------- */
+.barraElegir {
+    position: fixed;
+    left: 50%;
+    bottom: 20px;
+    transform: translateX(-50%);
+    z-index: 50;
+    width: min(720px, calc(100% - 32px));
+    box-sizing: border-box;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 12px;
+    padding: 12px 16px 12px 22px;
+    border-radius: 14px;
+    background: #081C15;
+    color: #FFFFFF;
+    font-weight: 700;
+    box-shadow: 0 10px 30px rgba(8, 28, 21, 0.4);
+}
+
+.barraBotones {
+    display: flex;
+    gap: 10px;
+}
+
+/* ---------- Celular ---------- */
+@media (max-width: 600px) {
+    .barraElegir {
+        flex-direction: column;
+        align-items: stretch;
+        bottom: 12px;
+        text-align: center;
+    }
+
+    .barraBotones > * {
+        flex: 1;
+    }
+
+    .pestanas {
+        overflow-x: auto;
+    }
+
+    .pestana {
+        white-space: nowrap;
+    }
+}

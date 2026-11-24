@@ -55,7 +55,7 @@ export default function Verificar() {
         method: "POST",
         body: JSON.stringify(cuerpo || {}),
       });
-      router.push("/verificador");
+      router.push("/verificador/por-verificar");
     } catch (err) {
       setError(err.message);
       setModal(null);
@@ -66,7 +66,7 @@ export default function Verificar() {
   const aprobar = () => enviar("aprobar");
   const confirmarRechazo = (razon) => enviar("rechazar", { razon });
   const confirmarBaneo = (razon) => enviar("baneado", { razon });
-  const regresar = () => router.push("/verificador");
+  const regresar = () => router.push("/verificador/por-verificar");
 
   if (cargando) {
     return (
@@ -82,7 +82,7 @@ export default function Verificar() {
         <p className={styles.estado}>
           {errorCarga || "No se encontró la creación"}
         </p>
-        <Link href="/verificador" className={styles.botonRegresar}>
+        <Link href="/verificador/por-verificar" className={styles.botonRegresar}>
           Regresar a la lista
         </Link>
       </main>

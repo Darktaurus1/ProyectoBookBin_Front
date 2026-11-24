@@ -60,7 +60,7 @@ export default function Apelaciones() {
         method: "POST",
         body: JSON.stringify(cuerpo || {}),
       });
-      router.push("/verificador/apelaciones-lista");
+      router.push("/verificador/por-revisar");
     } catch (err) {
       setError(err.message);
       setModal(null);
@@ -75,7 +75,7 @@ export default function Apelaciones() {
     enviar(`/verificador/creaciones/${apelacion.id_creacion}/baneado`, {
       razon,
     });
-  const regresar = () => router.push("/verificador/apelaciones-lista");
+  const regresar = () => router.push("/verificador/por-revisar");
 
   if (cargando) {
     return (
@@ -91,7 +91,7 @@ export default function Apelaciones() {
         <p className={styles.estado}>
           {errorCarga || "No se encontró la apelación"}
         </p>
-        <Link href="/verificador/apelaciones-lista" className={styles.botonRegresar}>
+        <Link href="/verificador/por-revisar" className={styles.botonRegresar}>
           Regresar a las apelaciones
         </Link>
       </main>
