@@ -1,0 +1,186 @@
+.pagina {
+    box-sizing: border-box;
+    min-height: calc(100vh - 68px);
+    background: linear-gradient(
+        135deg,
+        #95D5B2 0%,
+        #74C69D 50%,
+        #52B788 100%
+    );
+    padding: 28px clamp(16px, 3vw, 48px);
+    font-family: 'Ropeman', sans-serif;
+    color: #081C15;
+}
+
+.contenedor {
+    max-width: 800px;
+    margin: 0 auto;
+}
+
+.titulo,
+.pagina h1 {
+    margin: 0 0 20px;
+    font-size: clamp(28px, 3vw, 40px);
+    color: #081C15;
+    font-family: 'Ropeman', sans-serif;
+}
+
+.pagina > p {
+    max-width: 800px;
+    margin: 20px auto;
+    font-size: 18px;
+    text-align: center;
+}
+
+.lista {
+    list-style: none;
+    margin: 0 auto;
+    padding: 0;
+    max-width: 800px;
+    display: flex;
+    flex-direction: column;
+    gap: 16px;
+}
+
+.item {
+    background: linear-gradient(
+        145deg,
+        rgba(216, 243, 220, 0.97),
+        rgba(183, 228, 199, 0.97)
+    );
+    color: #081C15;
+    border: 1px solid rgba(255, 255, 255, 0.75);
+    border-left: 6px solid #8B2635;
+    border-radius: 14px;
+    box-shadow:
+        0 4px 12px rgba(8, 28, 21, 0.18),
+        inset 0 2px 4px rgba(255, 255, 255, 0.6);
+    padding: 16px 20px;
+    font-family: 'Ropeman', sans-serif;
+}
+
+.item h2 {
+    margin: 0 0 8px;
+    font-size: 20px;
+    color: #1B4332;
+    overflow-wrap: anywhere;
+    font-family: 'Ropeman', sans-serif;
+}
+
+.leida {
+    opacity: 0.7;
+    border-left-color: #40916C;
+}
+
+.mensaje {
+    margin: 6px 0;
+    font-size: 17px;
+    line-height: 1.55;
+    white-space: pre-line;
+    overflow-wrap: anywhere;
+    color: #1B4332;
+}
+
+.fecha {
+    margin: 0 0 12px;
+    font-size: 14px;
+    color: #2D6A4F;
+}
+
+.acciones {
+    display: flex;
+    flex-wrap: wrap;
+    align-items: center;
+    gap: 12px;
+}
+
+.acciones a,
+.acciones button {
+    padding: 8px 18px;
+    border: 1px solid rgba(255, 255, 255, 0.3);
+    border-radius: 10px;
+    font: inherit;
+    font-size: 15px;
+    font-weight: 700;
+    text-decoration: none;
+    cursor: pointer;
+    transition: all 0.2s;
+    font-family: 'Ropeman', sans-serif;
+}
+
+.acciones a {
+    background: linear-gradient(145deg, #40916C, #1B4332);
+    color: #FFFFFF;
+    box-shadow:
+        0 3px 7px rgba(8, 28, 21, 0.2),
+        inset 0 1px 2px rgba(255, 255, 255, 0.25);
+}
+
+.acciones a:hover {
+    background: linear-gradient(145deg, #2D6A4F, #081C15);
+}
+
+.acciones button {
+    background: linear-gradient(145deg, #B7E4C7, #74C69D);
+    color: #081C15;
+    box-shadow:
+        0 3px 7px rgba(45, 106, 79, 0.15),
+        inset 0 1px 3px rgba(255, 255, 255, 0.6);
+}
+
+.acciones button:hover {
+    background: linear-gradient(145deg, #95D5B2, #52B788);
+}
+
+.acciones a:focus-visible,
+.acciones button:focus-visible {
+    outline: 3px solid #081C15;
+    outline-offset: 2px;
+}
+
+.error {
+    max-width: 800px;
+    margin: 0 auto 16px;
+    padding: 10px 16px;
+    border-radius: 10px;
+    background: rgba(255, 255, 255, 0.85);
+    border: 1px solid #8B2635;
+    color: #7a0019;
+    font-weight: 700;
+    text-align: center;
+}
+
+@media (max-width: 600px) {
+    .item {
+        padding: 14px;
+    }
+
+    .acciones a,
+    .acciones button {
+        flex: 1;
+        text-align: center;
+        padding: 12px;
+    }
+}
+
+/* Notificación de creación aprobada */
+.aprobada {
+    border-left-color: #2D6A4F;
+}
+
+.acciones .botonApelar {
+    background: linear-gradient(145deg, #8B2635, #5C1421);
+    color: #FFFFFF;
+    box-shadow:
+        0 3px 7px rgba(50, 0, 10, 0.2),
+        inset 0 1px 2px rgba(255, 255, 255, 0.2);
+}
+
+.acciones .botonApelar:hover {
+    background: linear-gradient(145deg, #741D2B, #3F0D17);
+}
+
+.apelada {
+    font-weight: 700;
+    color: #2D6A4F;
+}

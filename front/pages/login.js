@@ -38,7 +38,9 @@ export default function Login() {
             setMensaje('¡Inicio de sesión exitoso!');
             if (datos.usuario.tipo === 'administrador') {
                 router.push('/admin');  
-            } else {
+            } else if (datos.usuario.tipo === 'verificador'){
+                router.push('/verificador')
+            }else {
                 router.push('/');
             }
 

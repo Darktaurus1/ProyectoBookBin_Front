@@ -2,45 +2,27 @@ import { useEffect, useState } from "react";
 import Link from "next/link";
 import { useRouter } from "next/router";
 import { pedirJSON } from "../../lib/api";
+import { aPasos } from "../../components/EditorPasos";
 import Baneo from "./baneo";
+import styles from "./verificador.module.css";
 
 function urlImagen(imagen) {
   if (!imagen) return null;
   return imagen.startsWith("http") ? imagen : `http://localhost:4000${imagen}`;
 }
 
-function IconoCamara() {
-  return (
-    <svg
-      width="96"
-      height="96"
-      viewBox="0 0 24 24"
-      fill="none"
-      stroke="currentColor"
-      strokeWidth="1.5"
-      strokeLinecap="round"
-      strokeLinejoin="round"
-      aria-hidden="true"
-    >
-      <path d="M23 19a2 2 0 0 1-2 2H3a2 2 0 0 1-2-2V8a2 2 0 0 1 2-2h4l2-3h6l2 3h4a2 2 0 0 1 2 2z" />
-      <circle cx="12" cy="13" r="4" />
-    </svg>
-  );
-}
-
+// Revisión de una apelación: el autor explica por qué no debió rechazarse su creación
 export default function Apelaciones() {
   const router = useRouter();
   const { id } = router.query;
 
+  const [apelacion, setApelacion] = useState(null);
   const [creacion, setCreacion] = useState(null);
-  const [reporte, setReporte] = useState(null);
   const [cargando, setCargando] = useState(true);
   const [errorCarga, setErrorCarga] = useState("");
-  const [error, setError] = useState("");
-  const [mensaje, setMensaje] = useState("");
-  const [materialesAbiertos, setMaterialesAbiertos] = useState(true);
-  const [modal, setModal] = useState(null); // null | "baneo"
+  const [modal, setModal] = useState(null); // "baneo" | null
   const [enviando, setEnviando] = useState(false);
+  const [error, setError] = useState("");
 
   useEffect(() => {
     if (!router.isReady) return;
@@ -49,15 +31,14 @@ export default function Apelaciones() {
     setCargando(true);
     setErrorCarga("");
 
-    // La creación apelada y el reporte que se le hizo
-    Promise.all([
-      pedirJSON(`/creaciones/${id}`),
-      pedirJSON(`/mcreaciones/${id}/reporte`),
-    ])
-      .then(([datosCreacion, datosReporte]) => {
+    pedirJSON(`/verificador/apelaciones/${id}`)
+      .then(async (datosApelacion) => {
+        const datosCreacion = await pedirJSON(
+          `/creaciones/${datosApelacion.id_creacion}`
+        );
         if (!vigente) return;
+        setApelacion(datosApelacion);
         setCreacion(datosCreacion);
-        setReporte(datosReporte);
       })
       .catch((err) => {
         if (vigente) setErrorCarga(err.message);
@@ -71,179 +52,163 @@ export default function Apelaciones() {
     };
   }, [router.isReady, id]);
 
+  async function enviar(ruta, cuerpo) {
+    setError("");
+    setEnviando(true);
+    try {
+      await pedirJSON(ruta, {
+        method: "POST",
+        body: JSON.stringify(cuerpo || {}),
+      });
+      router.push("/verificador/apelaciones-lista");
+    } catch (err) {
+      setError(err.message);
+      setModal(null);
+      setEnviando(false);
+    }
+  }
+
+  const aprobar = () =>
+    enviar(`/verificador/creaciones/${apelacion.id_creacion}/aprobar`);
+  const mantener = () => enviar(`/verificador/apelaciones/${id}/mantener`);
+  const confirmarBaneo = (razon) =>
+    enviar(`/verificador/creaciones/${apelacion.id_creacion}/baneado`, {
+      razon,
+    });
+  const regresar = () => router.push("/verificador/apelaciones-lista");
+
   if (cargando) {
     return (
-      <main className="fondo">
-        <p className="estado">Cargando apelación...</p>
+      <main className={styles.fondo}>
+        <p className={styles.estado}>Cargando apelación...</p>
       </main>
     );
   }
 
-  if (errorCarga || !creacion) {
+  if (errorCarga || !apelacion || !creacion) {
     return (
-      <main className="fondo">
-        <p className="estado">
-          {errorCarga || "No se encontró la creación o el reporte"}
+      <main className={styles.fondo}>
+        <p className={styles.estado}>
+          {errorCarga || "No se encontró la apelación"}
         </p>
-        <Link href="/verificador" className="botonRegresar">
-          Regresar al inicio
+        <Link href="/verificador/apelaciones-lista" className={styles.botonRegresar}>
+          Regresar a las apelaciones
         </Link>
       </main>
     );
   }
 
-  async function aprobar() {
-    setError("");
-    setMensaje("");
-    setEnviando(true);
-    try {
-      await pedirJSON(`/mcreaciones/${id}/aprobar`, { method: "POST" });
-      setMensaje("La verificación fue aprobada.");
-      router.push("/verificador");
-    } catch (err) {
-      setError(err.message);
-    } finally {
-      setEnviando(false);
-    }
-  }
-
-  function banear() {
-    setModal("baneo");
-  }
-
-  async function confirmarBaneo(razon) {
-    setError("");
-    setMensaje("");
-    setEnviando(true);
-    try {
-      await pedirJSON(`/mcreaciones/${id}/baneado`, {
-        method: "POST",
-        body: JSON.stringify({ razon }),
-      });
-      setModal(null);
-      setMensaje("La creación fue baneada.");
-      router.push("/verificador");
-    } catch (err) {
-      setError(err.message);
-    } finally {
-      setEnviando(false);
-    }
-  }
-
-  function regresar() {
-    router.push("/verificador");
-  }
-
+  const resuelta = apelacion.estado !== "pendiente";
   const imagen = urlImagen(creacion.imagen);
+  const autor = creacion.musuarios?.nombre;
   const materiales = Array.isArray(creacion.materiales)
     ? creacion.materiales
     : [];
+  const pasos = aPasos(creacion.instrucciones);
 
   return (
-    <main className="fondo">
-      {/* Datos de la creación apelada */}
-      <section className="panelReporte">
-        <h1 className="titulo">Verificación de reporte</h1>
+    <main className={styles.fondo}>
+      <article className={`${styles.detalle} ${styles.cajaReporte}`}>
+        <h1>Apelación</h1>
+        <span className={styles.etiquetaRechazo}>Rechazo apelado</span>
+        {apelacion.razon_rechazo && (
+          <>
+            <h2>Razón del rechazo</h2>
+            <p className={styles.texto}>{apelacion.razon_rechazo}</p>
+          </>
+        )}
+        <h2>Lo que dice el autor</h2>
+        <p className={styles.texto}>{apelacion.contenido}</p>
+        {apelacion.musuarios?.nombre && (
+          <p className={styles.autor}>Apeló: {apelacion.musuarios.nombre}</p>
+        )}
+        {resuelta && (
+          <span className={styles.etiquetaCorregida}>Apelación ya resuelta</span>
+        )}
+      </article>
 
-        <div className="campo campoNombre">{creacion.nombre}</div>
+      <article className={styles.detalle}>
+        <h1>{creacion.nombre}</h1>
+        {autor && <p className={styles.autor}>Creación de {autor}</p>}
 
-        <div className="imagenDescripcion">
-          <div className="imagenCaja">
-            {imagen ? (
-              <img src={imagen} alt={creacion.nombre} />
-            ) : (
-              <>
-                <span className="imagenEtiqueta">Imagen agregada del usuario</span>
-                <IconoCamara />
-              </>
-            )}
-          </div>
-          <div className="descripcionCaja">
-            <p className="texto">{creacion.descripcion}</p>
-          </div>
+        <div className={styles.imagenCaja}>
+          {imagen ? <img src={imagen} alt={creacion.nombre} /> : null}
         </div>
 
-        <div className="materiales">
-          <button
-            type="button"
-            className="materialesEncabezado"
-            onClick={() => setMaterialesAbiertos(!materialesAbiertos)}
-            aria-expanded={materialesAbiertos}
-          >
-            <span>Materiales</span>
-            <span aria-hidden="true">{materialesAbiertos ? "v" : ">"}</span>
-          </button>
+        <section>
+          <h2>Descripción</h2>
+          <p className={styles.texto}>{creacion.descripcion}</p>
+        </section>
 
-          {materialesAbiertos && (
-            <ul className="listaMateriales">
-              {materiales.length === 0 ? (
-                <li>Sin materiales</li>
-              ) : (
-                materiales.map((m) => (
-                  <li key={m.id_materiales ?? m.nombre}>#{m.nombre}</li>
-                ))
-              )}
+        <section>
+          <h2>Materiales</h2>
+          {materiales.length > 0 ? (
+            <ul className={styles.listaMateriales}>
+              {materiales.map((m) => (
+                <li key={m.id_materiales ?? m.nombre}>
+                  #{m.nombre}
+                  {m.cantidad > 1 ? ` x${m.cantidad}` : ""}
+                </li>
+              ))}
             </ul>
+          ) : (
+            <p className={styles.texto}>Sin materiales.</p>
           )}
-        </div>
+        </section>
 
-        <div className="campo campoInstrucciones">
+        <section>
           <h2>Instrucciones</h2>
-          <p className="texto">{creacion.instrucciones}</p>
-        </div>
+          {pasos.length > 0 ? (
+            <ol className={styles.pasos}>
+              {pasos.map((paso, i) => (
+                <li key={i}>{paso}</li>
+              ))}
+            </ol>
+          ) : (
+            <p className={styles.texto}>Sin instrucciones.</p>
+          )}
+        </section>
+      </article>
 
-        <div className="campo campoRazon">
-          <h2>Razón de reporte</h2>
-          <p className="texto">{reporte?.contenido ?? reporte?.razon}</p>
-        </div>
-      </section>
+      {error && <p className={styles.error}>{error}</p>}
 
-      {/* Acciones del verificador */}
-      <section className="panelBotones">
-        {error && (
-          <p className="error" role="alert">
-            {error}
-          </p>
-        )}
-        {mensaje && (
-          <p className="exito" role="status">
-            {mensaje}
-          </p>
-        )}
-
-        <div className="botones">
-          <button
-            type="button"
-            className="botonAprobar"
-            onClick={aprobar}
-            disabled={enviando}
-          >
-            Aprobar verificación
-          </button>
-          <button
-            type="button"
-            className="botonBanear"
-            onClick={banear}
-            disabled={enviando}
-          >
-            Banear
-          </button>
-          <button
-            type="button"
-            className="botonRegresar"
-            onClick={regresar}
-            disabled={enviando}
-          >
-            Verificar más tarde y regresar
-          </button>
-        </div>
-      </section>
+      <div className={styles.botones}>
+        <button
+          type="button"
+          className={styles.botonAprobar}
+          onClick={aprobar}
+          disabled={enviando || resuelta}
+        >
+          Aceptar apelación y aprobar
+        </button>
+        <button
+          type="button"
+          className={styles.botonCancelar}
+          onClick={mantener}
+          disabled={enviando || resuelta}
+        >
+          Mantener rechazo
+        </button>
+        <button
+          type="button"
+          className={styles.botonBanear}
+          onClick={() => setModal("baneo")}
+          disabled={enviando || resuelta}
+        >
+          Banear
+        </button>
+        <button
+          type="button"
+          className={styles.botonRegresar}
+          onClick={regresar}
+          disabled={enviando}
+        >
+          Revisar más tarde y regresar
+        </button>
+      </div>
 
       {modal === "baneo" && (
-        <Baneo
-          onConfirmar={confirmarBaneo}
-          onCancelar={() => setModal(null)}
-        />
+        <Baneo onConfirmar={confirmarBaneo} onCancelar={() => setModal(null)} />
       )}
     </main>
   );
