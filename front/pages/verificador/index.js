@@ -12,7 +12,7 @@ export default function Home() {
   useEffect(() => {
     let vigente = true;
     setError('');
-    pedirJSON('/verificador/creaciones').then((datos) => {if (vigente) setCreaciones(datos);}).catch((err) => {if(vigente) setError(err.message);});
+    pedirJSON('/verificador/creaciones').then((datos) => {if (vigente) setCreaciones(datos.filter((c) => !(Number(c.veces_rechazada) > 0 && Number(c.corregida) !== 1)));}).catch((err) => {if(vigente) setError(err.message);});
     return () => {vigente = false;}
   }, [])
 

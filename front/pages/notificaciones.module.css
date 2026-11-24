@@ -167,3 +167,27 @@
 .aprobada {
     border-left-color: #2D6A4F;
 }
+
+.baneada {
+    border-left-color: #5C0A14;
+    background: linear-gradient(
+        145deg,
+        rgba(248, 215, 218, 0.97),
+        rgba(236, 188, 194, 0.97)
+    );
+}
+
+.baneada.leida {
+    border-left-color: #8B2635;
+}
+
+.etiquetaBaneo {
+    display: inline-block;
+    margin: 0 0 6px;
+    padding: 3px 10px;
+    border-radius: 999px;
+    background: #5C0A14;
+    color: #FFFFFF;
+    font-size: 13px;
+    font-weight: 700;
+}

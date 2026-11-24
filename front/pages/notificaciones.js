@@ -64,12 +64,23 @@ export default function Notificaciones() {
             key={n.id_notificacion}
             className={`${styles.item} ${
               n.tipo === "aprobacion" ? styles.aprobada : ""
-            } ${n.leida ? styles.leida : ""}`}
+            } ${n.baneada ? styles.baneada : ""} ${
+              n.leida ? styles.leida : ""
+            }`}
           >
             <h2>{n.titulo}</h2>
+            {n.baneada && (
+              <p className={styles.etiquetaBaneo}>Creación baneada</p>
+            )}
             <p className={styles.mensaje}>
               {n.tipo === "aprobacion" ? null : (
-                <strong>{n.tipo === "apelacion" ? "Respuesta: " : "Razón: "}</strong>
+                <strong>
+                  {n.tipo === "apelacion"
+                    ? "Respuesta: "
+                    : n.baneada
+                    ? "Razón del baneo: "
+                    : "Razón: "}
+                </strong>
               )}
               {n.mensaje}
             </p>
@@ -78,12 +89,13 @@ export default function Notificaciones() {
               {n.id_creacion && n.tipo === "aprobacion" && (
                 <Link href={`/creaciones/${n.id_creacion}`}>Ver creación</Link>
               )}
-              {n.id_creacion && n.tipo !== "aprobacion" && (
+              {n.id_creacion && n.tipo !== "aprobacion" && !n.baneada && (
                 <Link href={`/creaciones/editar/${n.id_creacion}`}>
                   Corregir creación
                 </Link>
               )}
               {n.tipo === "rechazo" &&
+                !n.baneada &&
                 (n.apelada ? (
                   <span className={styles.apelada}>Apelación enviada</span>
                 ) : (

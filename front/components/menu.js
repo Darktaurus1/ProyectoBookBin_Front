@@ -97,8 +97,7 @@ export default function Menu() {
         <h2 className={styles.logo}>BookBin</h2>
         <Link href="/verificador">Inicio</Link>
         <Link href="/verificador/reportes">Reportes</Link>
-        <Link href="/verificador/apelaciones-lista">Apelaciones</Link>
-        {esLider && <Link href="/verificador/apelaciones">Apelaciones</Link>}
+        {esLider && <Link href="/verificador/apelaciones-lista">Apelaciones</Link>}
 
         <Link href="/verificador/perfil" className={styles.perfilVerif}>Mi perfil</Link>
       </nav>
