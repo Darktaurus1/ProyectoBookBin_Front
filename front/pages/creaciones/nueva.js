@@ -88,37 +88,29 @@ export default function NuevaCreacion() {
         setPreview(URL.createObjectURL(archivo));
     };
 
-    // Función para guardar el borrador en localStorage
-    const guardarBorrador = () => {
-        localStorage.setItem(
-            'borrador_creacion',
-            JSON.stringify({
-                nombre,
-                descripcion,
-                instrucciones,
-                materiales: materialesSeleccionados,
-                cantidades,
-                herramientas: herramientasSeleccionadas,
-            })
-        );
-        setMensaje('Borrador guardado correctamente.');
-        setError('');
-    };
-
-    const publicar = async (e) => {
-        e.preventDefault();
+    // Arma el formulario y lo manda al backend.
+    // accion = 'borrador' → se guarda sin publicar (solo pide el nombre)
+    // accion = 'publicar' → se manda a verificación (pide todo)
+    const enviar = async (accion) => {
         setError('');
         setMensaje('');
-
         if (!usuario) return;
 
-        if (materialesSeleccionados.length === 0) {
-            setError('Selecciona al menos un material de la lista.');
+        const esBorrador = accion === 'borrador';
+
+        if (!nombre.trim()) {
+            setError('Ponle un nombre para poder guardarla.');
             return;
         }
-        if (!limpiarPasos(instrucciones)) {
-            setError('Agrega al menos un paso en las instrucciones.');
-            return;
+        if (!esBorrador) {
+            if (materialesSeleccionados.length === 0) {
+                setError('Selecciona al menos un material de la lista.');
+                return;
+            }
+            if (!limpiarPasos(instrucciones)) {
+                setError('Agrega al menos un paso en las instrucciones.');
+                return;
+            }
         }
 
         try {
@@ -127,33 +119,39 @@ export default function NuevaCreacion() {
             formData.append('descripcion', descripcion);
             formData.append('instrucciones', limpiarPasos(instrucciones));
             formData.append('id_usuario', usuario.id_usuario ?? usuario.id);
-            formData.append('accion', 'publicar');
+            formData.append('accion', accion);
             formData.append('id_materiales', JSON.stringify(materialesSeleccionados));
             formData.append('id_herramientas', JSON.stringify(herramientasSeleccionadas));
             formData.append('cantidades', JSON.stringify(
                 Object.fromEntries(materialesSeleccionados.map((idM) => [idM, cantidades[idM] ?? 1]))
             ));
-
-            if (imagen) {
-                formData.append('imagen', imagen);
-            }
+            if (imagen) formData.append('imagen', imagen);
 
             const respuesta = await fetchConSesion('/api/creaciones', {
                 method: 'POST',
                 body: formData,
             });
-
             const datos = await respuesta.json();
             if (!respuesta.ok) {
-                throw new Error(datos.error || 'Error al publicar la creación');
+                throw new Error(datos.error || 'No se pudo guardar la creación');
             }
 
+            // Ya está en la base de datos: el borrador local ya no hace falta
             localStorage.removeItem('borrador_creacion');
-            setMensaje('¡Creación publicada con éxito!');
+            setMensaje(esBorrador
+                ? 'Borrador guardado. Lo encuentras en Mis Creaciones.'
+                : '¡Creación enviada! Se publicará cuando un verificador la apruebe.');
             setTimeout(() => router.push('/'), 1200);
         } catch (err) {
             setError(err.message);
         }
+    };
+
+    const guardarBorrador = () => enviar('borrador');
+
+    const publicar = (e) => {
+        e.preventDefault();
+        enviar('publicar');
     };
 
     return (
