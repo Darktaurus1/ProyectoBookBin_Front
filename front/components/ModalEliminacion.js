@@ -17,7 +17,9 @@ export default function ModalEliminacion({ idCreacion, onCerrar }) {
         }
         const usuario = JSON.parse(guardado);
 
-        setEnviando(true);
+                    // Ya se eliminó: cierra la ventana y recarga para que la tarjeta desaparezca de la lista
+            onCerrar();
+            window.location.reload();
         try {
             await pedirJSON(`/creaciones/${idCreacion}`, {
                 method: 'DELETE',
