@@ -6,7 +6,7 @@ export default function ModalEliminacion({ idCreacion, onCerrar }) {
     const [error, setError] = useState('');
     const [enviando, setEnviando] = useState(false);
 
-    const enviar = async (e) => {
+        const enviar = async (e) => {
         e.preventDefault();
         setError('');
 
@@ -17,9 +17,7 @@ export default function ModalEliminacion({ idCreacion, onCerrar }) {
         }
         const usuario = JSON.parse(guardado);
 
-                    // Ya se eliminó: cierra la ventana y recarga para que la tarjeta desaparezca de la lista
-            onCerrar();
-            window.location.reload();
+        setEnviando(true);
         try {
             await pedirJSON(`/creaciones/${idCreacion}`, {
                 method: 'DELETE',
@@ -27,7 +25,9 @@ export default function ModalEliminacion({ idCreacion, onCerrar }) {
                     id_usuario: usuario.id_usuario ?? usuario.id
                 }),
             });
-            setEnviado(true);
+            // Ya se eliminó: cierra la ventana y recarga para que la tarjeta desaparezca de la lista
+            onCerrar();
+            window.location.reload();
         } catch (err) {
             setError(err.message);
         } finally {

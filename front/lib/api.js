@@ -52,7 +52,7 @@ export async function fetchConSesion(url, opciones = {}) {
         }
     }
     return res;
-}
+}  
 
 export async function pedirJSON(ruta, opciones = {}) {
     let res;

@@ -53,7 +53,7 @@ export default function EditorPasos({ value, onChange}) {
         refs.current.forEach(ajustarAltura);
     }, [pasos.length]);
 
-    const cambiarPaso = (i, texto) => {
+    const cambiarPaso = (i, texto) => { 
         // Si pegan varias líneas, cada una se vuelve un paso
         const lineas = texto.split(/\r?\n/);
         const nuevos = [...pasos];
