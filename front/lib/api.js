@@ -39,7 +39,7 @@ function renovarToken() {
 }
 
 // fetch con token: si el token expiró lo renueva y reintenta una vez; si la sesión terminó, manda al login.
-// Úsalo también para los envíos con FormData (crear y editar creaciones).
+
 export async function fetchConSesion(url, opciones = {}) {
     const hacer = () => fetch(url, { ...opciones, headers: { ...encabezadoAuth(), ...opciones.headers } });
 
