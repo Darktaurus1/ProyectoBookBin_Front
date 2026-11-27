@@ -1,77 +1,49 @@
-# BookBin – Backend
+# BookBin – Frontend
 
-API de **BookBin**, una plataforma para compartir manualidades hechas con materiales reciclados.
-Proyecto aula de Programación Intermedia · CECyT 9 "Juan de Dios Bátiz" · Grupo 5IV7 · Equipo 6.
+Interfaz web de **BookBin**, una plataforma para compartir manualidades hechas con materiales reciclados.
+Proyecto aula de Programación Intermedia · CECyT 9 · Grupo 4IV7 · Equipo 5.
 
-## Integrantes
-- Arellano Ramírez Guadalupe Donaji
-- Díaz Briseño Erick Gabriel
-- Luan Lin Emiliano
-- Meneses Hernández Luis Ángel
+🔗 **Demo:** https://bookbin-taupe.vercel.app
 
 ## Tecnologías
-- Node.js + Express
-- Supabase (PostgreSQL y Storage para las imágenes)
-- express-session + JWT (jsonwebtoken) para la autenticación
-- bcrypt para encriptar contraseñas
-- multer para subir imágenes
+- Next.js 16 (pages router)
+- React 19
+- CSS Modules (diseño responsivo para celular)
 
 ## Estructura
 ```
-backend/
-├── server.js                 # Rutas y middlewares
-├── bd-supabase.js            # Conexión a Supabase
-├── almacenamiento_imagenes.js
-├── almacen_sesiones.js       # Sesiones guardadas en Supabase
-├── validaciones.js
-├── middleware/               # Autenticación (JWT + sesión) y subida de imágenes
-├── controlador/              # Lógica de cada ruta
-└── Modelo/                   # Consultas a la base de datos
+front/
+├── pages/          # Cada archivo es una página (index, login, creaciones, verificador, admin…)
+├── components/     # Tarjetas, buscadores, editor de pasos, modales, menú
+├── lib/            # api.js: peticiones al backend con JWT y renovación del token
+└── next.config.js  # Redirige /api al backend
 ```
 
 ## Instalación
 ```bash
-cd backend
+cd front
 npm install
 ```
 
-Crea un archivo `.env` dentro de `backend/` con estas variables (pide los valores al equipo, **no los subas a GitHub**):
+Crea un archivo `.env.local` dentro de `front/` con la dirección del backend:
 
 ```
-SUPABASE_URL=https://xxxx.supabase.co
-SUPABASE_SECRET_KEY=sb_secret_...
-JWT_SECRET=una_frase_larga_y_secreta
-SESSION_SECRET=otra_frase_larga_y_secreta
+API_URL=http://localhost:4000
 ```
+(o `https://bookbin-web.onrender.com` para usar el backend en línea)
 
 ## Ejecutar
 ```bash
-npm run dev     # desarrollo (se reinicia solo al guardar)
-npm start       # producción
+npm run dev     # http://localhost:3000
+npm run build   # comprobar que compila antes de subir
 ```
-El servidor corre en `http://localhost:4000`.
 
-## Tipos de cuenta
-| Cuenta | Qué puede hacer |
-|---|---|
-| Invitado | Ver, buscar y filtrar creaciones |
-| Usuario | Publicar, editar, guardar en favoritos, reportar y apelar |
-| Verificador | Elegir y aprobar, rechazar o banear creaciones |
-| Verificador líder | Revisar reportes y apelaciones |
-| Administrador | Crear, cambiar de rol y eliminar verificadores |
-
-## Rutas principales
-| Método | Ruta | Acceso |
-|---|---|---|
-| POST | `/api/registrar`, `/api/login`, `/api/logout`, `/api/refresh` | Público |
-| GET | `/api/creaciones`, `/api/creaciones/:id` | Público |
-| POST / PUT / DELETE | `/api/creaciones` | Usuario |
-| GET / POST / DELETE | `/api/favoritos` | Usuario |
-| POST | `/api/creaciones/:id/reportes` | Usuario |
-| GET / PUT / POST | `/api/notificaciones` | Usuario |
-| — | `/api/verificador/...` | Verificadores |
-| — | `/api/admin/verificadores` | Administrador |
+## Funciones
+- Inicio con creaciones aleatorias, búsqueda y filtro por material
+- Detalle con materiales, cantidades, herramientas e instrucciones paso a paso
+- Crear, editar, guardar como borrador y eliminar creaciones
+- Favoritos, reportes, notificaciones y apelaciones
+- Panel de verificadores y de administrador
 
 ## Despliegue
-Desplegado en **Render** (Root Directory: `backend`, Build: `npm install`, Start: `npm start`).
-Las variables del `.env` se configuran en Render → Environment.
+Desplegado en **Vercel** (Root Directory: `front`) con la variable `API_URL` apuntando al backend en Render.
