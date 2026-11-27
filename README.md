@@ -10,6 +10,12 @@ Proyecto aula de Programación Intermedia · CECyT 9 · Grupo 4IV7 · Equipo 5.
 - React 19
 - CSS Modules (diseño responsivo para celular)
 
+- ## Integrantes
+- Arellano Ramírez Guadalupe Donaji
+- Díaz Briseño Erick Gabriel
+- Luan Lin Emiliano
+- Meneses Hernández Luis Ángel
+
 ## Estructura
 ```
 front/
